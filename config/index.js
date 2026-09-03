@@ -22,21 +22,21 @@ const pkg = (() => {
 })();
 
 module.exports = {
-  BOT_NAME:    c.nickNameBot || 'GoatBot-IG',
+  BOT_NAME:    c.nickNameBot || 'InstaBOT',
   BOT_VERSION: pkg.version   || '1.0.0',
-  AUTHOR:      pkg.author    || 'Gtajisan',
+  AUTHOR:      pkg.author    || 'Gtajisan && frnAlt',
 
   ACCOUNT_EMAIL:    process.env.ACCOUNT_EMAIL    || c.instagramAccount?.email    || '',
   ACCOUNT_PASSWORD: process.env.ACCOUNT_PASSWORD || c.instagramAccount?.password || '',
   ACCOUNT_2FA_SECRET: c.instagramAccount?.['2FASecret'] || '',
   ACCOUNT_I_USER:   c.instagramAccount?.i_user || '',
   ACCOUNT_PROXY:    c.instagramAccount?.proxy   || null,
-  ACCOUNT_USER_AGENT: c.instagramAccount?.userAgent || '',
+  ACCOUNT_USER_AGENT: process.env.ACCOUNT_USER_AGENT || c.instagramAccount?.userAgent || 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
   INTERVAL_GET_NEW_COOKIE: c.instagramAccount?.intervalGetNewCookie ?? 1440,
 
   ANTI_INBOX:   c.antiInbox   ?? false,
   LANGUAGE:     c.language    || 'en',
-  NICK_NAME_BOT: c.nickNameBot || 'GoatBot-IG',
+  NICK_NAME_BOT: c.nickNameBot || 'InstaBOT',
   PREFIX:       process.env.PREFIX || c.prefix || '!',
   NO_PREFIX:    c.noPrefix ?? true,
 
@@ -133,8 +133,17 @@ module.exports = {
 
   AUTO_REMOVE_ERROR: c.autoRemoveError || { enable: true, delay: 10 },
 
+  OPTIONS_ICA: (() => {
+    const o = c.optionsIca || c.optionsFca || {};
+    const clean = {};
+    for (const [k, v] of Object.entries(o)) {
+      if (k !== 'notes') clean[k] = v;
+    }
+    return clean;
+  })(),
+
   OPTIONS_FCA: (() => {
-    const o = c.optionsFca || {};
+    const o = c.optionsIca || c.optionsFca || {};
     const clean = {};
     for (const [k, v] of Object.entries(o)) {
       if (k !== 'notes') clean[k] = v;

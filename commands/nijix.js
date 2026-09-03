@@ -76,12 +76,15 @@ module.exports = {
       let imageURL = null;
       for (let i = 0; i < 30; i++) {
         const res = await axios.get(`https://asahina2k-animagine-xl-3-1.hf.space/queue/data?session_hash=${session_hash}`);
-        const parts = res.data.split("\n\n");
+        const dataStr = typeof res.data === 'string' ? res.data : (typeof res.data === 'object' ? JSON.stringify(res.data) : String(res.data || ''));
+        const parts = dataStr.split("\n\n");
         for (const p of parts) {
             if (p.includes("process_completed")) {
-                const json = JSON.parse(p.replace("data: ", ""));
-                imageURL = json.output?.data?.[0]?.[0]?.image?.url;
-                break;
+                try {
+                  const json = JSON.parse(p.replace("data: ", ""));
+                  imageURL = json.output?.data?.[0]?.[0]?.image?.url;
+                  break;
+                } catch (_) {}
             }
         }
         if (imageURL) break;

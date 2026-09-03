@@ -3,7 +3,7 @@ module.exports = {
     name: "unsend",
     aliases: ["u", "un", "del", "delete", "unsent", "unsendall"],
     version: "2.0",
-    author: "NTKhang & Gtajisan",
+    author: "NTKhang, Gtajisan && frnAlt",
     cooldown: 1,
     role: 0,
     description: "Unsend bot's message or multiple messages in thread",

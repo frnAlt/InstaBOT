@@ -10,7 +10,7 @@ class Banner {
   ██║██║╚██╗██║╚════██║   ██║   ██╔══██║██╔══██╗██║   ██║   ██║
   ██║██║ ╚████║███████║   ██║   ██║  ██║██████╔╝╚██████╔╝   ██║
   ╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═════╝  ╚═════╝    ╚═╝
-                              GoatBot-IG v${config.BOT_VERSION} by Gtajisan
+                              InstaBOT v${config.BOT_VERSION} by Gtajisan && frnAlt
 `);
   }
 

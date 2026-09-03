@@ -33,13 +33,18 @@ module.exports = {
         }
       }
 
-      const threadInfo = await bot.getThreadInfo(event.threadId);
-      const participantIDs = threadInfo.participantIDs;
-      const adminIDs = threadInfo.adminIDs.map(admin => admin.id);
+      const threadInfo = await (api?.getThreadInfo ? api.getThreadInfo(event.threadId) : (bot?.getThreadInfo ? bot.getThreadInfo(event.threadId) : {})).catch(() => ({})) || {};
+      const participantIDs = threadInfo.participantIDs || threadInfo.participants || [];
+      const adminIDs = (threadInfo.adminIDs || []).map(admin => typeof admin === 'object' ? admin.id || admin.userID : admin);
 
       const getAvatarUrl = async (id) => {
-          const info = (await api.getUserInfo(id))[id];
-          return info.profilePicUrlHd || info.hdProfilePicUrlInfo?.url || info.profile_pic_url_hd || info.profilePicUrl;
+        try {
+          const infoMap = await api.getUserInfo(id);
+          const info = infoMap && (infoMap[id] || Object.values(infoMap)[0]);
+          return info?.profilePicUrlHd || info?.hdProfilePicUrlInfo?.url || info?.profile_pic_url_hd || info?.profilePicUrl || 'https://example.com/avatar.jpg';
+        } catch (_) {
+          return 'https://example.com/avatar.jpg';
+        }
       };
 
       const memberAvatars = await Promise.all(participantIDs.map(id => getAvatarUrl(id)));

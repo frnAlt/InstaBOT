@@ -1,16 +1,15 @@
-# GoatBot-IG-Port - Instagram Chat Bot
+# InstaBOT - Instagram Chat Bot
 
-## Developer
-- **Main Developer**: Gtajisan
-- **Email**: ffjisan804@gmail.com
+## Developers
+- **Main Developers**: Gtajisan && frnAlt
+- **GitHub Repository**: https://github.com/frnAlt/InstaBOT
 
 ## Credits
-- **Original GoatBot V2**: NTKhang (https://github.com/ntkhang03)
-- **Instagram Port**: Gtajisan
-- **FCA API**: Various Contributors
+- **Instagram Bot Architecture**: InstaBOT Engine & ICA
+- **Instagram Chat API**: ICA by Tanvir & Contributors
 
 ## Overview
-GoatBot-IG-Port is the official Instagram port of the popular GoatBot V2 Messenger bot. It maintains 100% compatibility with the original GoatBot command structure while running exclusively on Instagram Direct Messages.
+InstaBOT is a high-performance, modular Instagram chatbot built with an integrated native Instagram Chat API (ICA) engine. It supports dual command structures (GoatBot V2 & standard formats) while running exclusively on Instagram Direct Messages.
 
 ## Project Status
 **DEPLOYED AND RUNNING** - Bot is connected to Instagram account `farhanalt01` (ID: 79639057329)

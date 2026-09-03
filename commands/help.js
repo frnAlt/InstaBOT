@@ -1,5 +1,5 @@
 module.exports = {
-  config: { name: 'help', aliases: ['menu', 'commands', 'h'], version: '1.0', author: 'Gtajisan', description: 'Show all commands or info about one', usage: 'help [command]', cooldown: 3, role: 0, category: 'core' },
+  config: { name: 'help', aliases: ['menu', 'commands', 'h'], version: '1.0', author: 'Gtajisan && frnAlt', description: 'Show all commands or info about one', usage: 'help [command]', cooldown: 3, role: 0, category: 'core' },
   async run({ api, event, args, bot, config, logger }) {
     try {
       const { commandLoader } = bot;

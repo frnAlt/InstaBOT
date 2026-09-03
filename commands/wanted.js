@@ -98,7 +98,7 @@ module.exports = {
 
       await message.reply({
         body: `📜 WANTED POSTER\n👤 Name: ${name}\n💣 Crime: ${crime}\n💰 Reward: ${reward}`,
-        attachment: canvas.toBuffer('image/png')
+        attachment: canvas.toBuffer('image/jpeg', { quality: 0.9 })
       });
       api.setMessageReaction('✅', event.messageID, () => {}, true);
     } catch (err) {

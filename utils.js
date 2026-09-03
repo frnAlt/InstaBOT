@@ -14,6 +14,17 @@ const ora = require("ora");
 const log = require("./logger/log.js");
 const { isHexColor, colors } = require("./func/colors.js");
 const Prism = require("./func/prism.js");
+const fonts = require("./func/fonts.js");
+const styler = require("./func/styler.js");
+const TTLMap = require("./func/TTLMap.js");
+const { findSimilarCommand, compareTwoStrings } = require("./func/commandSuggest.js");
+const gracefulShutdown = require("./func/gracefulShutdown.js");
+const BigMath = require("./func/bigMath.js");
+const mdToText = require("./func/mdToText.js");
+const systemStats = require("./func/systemStats.js");
+const numero = require("./func/numero.js");
+const cacheManager = require("./func/cacheManager.js");
+const SpamTracker = require("./func/spamTracker.js");
 
 const word = [
 	'A', 'Á', 'À', 'Ả', 'Ã', 'Ạ', 'a', 'á', 'à', 'ả', 'ã', 'ạ',
@@ -903,7 +914,30 @@ const utils = {
 	 */
 	getStream: async (url, pathName, options = {}) => {
 		return await utils.withBackoff(() => utils.getStreamFromURL(url, pathName, options));
-	}
+	},
+
+	// Typography & Styling
+	fonts,
+	applyFont: fonts.applyFont,
+	autoBold: fonts.autoBold,
+	reverseFonts: fonts.reverseFonts,
+	styler,
+	formatStyler: styler.format,
+
+	// Data Structures & Intelligence
+	TTLMap,
+	findSimilarCommand,
+	compareTwoStrings,
+	gracefulShutdown,
+	BigMath,
+	mdToText,
+	systemStats,
+	getSystemMetrics: systemStats.getSystemMetrics,
+	formatUptime: systemStats.formatUptime,
+	numero,
+	cacheManager,
+	clearTempCache: cacheManager.clearTempCache,
+	SpamTracker
 };
 
 module.exports = utils;

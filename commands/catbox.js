@@ -1,30 +1,50 @@
+/**
+ * Catbox File Uploader Command
+ * Uploads media and files to Catbox.moe
+ */
+
 const axios = require('axios');
 const FormData = require('form-data');
-const fs = require('fs');
 
 module.exports = {
   config: {
     name: 'catbox',
-    version: '1.0.1',
-    author: 'Ajmaul',
+    aliases: ['cb', 'catboxdl'],
+    version: '1.2.0',
+    author: 'Gtajisan && frnAlt',
     role: 0,
-    description: 'Upload media to Catbox',
+    shortDescription: {
+      en: 'Upload media to Catbox'
+    },
+    longDescription: {
+      en: 'Uploads images, videos, audio, and documents to Catbox cloud hosting.'
+    },
     category: 'media',
-    usage: '[reply to image/video/audio]',
-    cooldown: 5
+    usage: '{p}catbox (reply to media/file)'
   },
 
   onStart: async function ({ api, event, message }) {
-    if (event.type !== 'message_reply' || !event.messageReply.attachments || event.messageReply.attachments.length === 0) {
-      return message.reply('❐ Please reply to a photo/video/audio file.');
+    const threadID = event.threadId || event.threadID;
+
+    let attachments = [];
+    if (event.messageReply?.attachments?.length > 0) {
+      attachments = event.messageReply.attachments;
+    } else if (event.attachments?.length > 0) {
+      attachments = event.attachments;
     }
 
-    message.reply('⏳ Uploading to Catbox...');
-    api.setMessageReaction('⏳', event.messageID, () => {}, true);
+    if (attachments.length === 0) {
+      const prompt = '📦 Please reply to a photo, video, or audio file with `/catbox`.';
+      return message ? message.reply(prompt) : api.sendMessage(prompt, threadID);
+    }
+
+    if (message && typeof message.reaction === 'function') {
+      message.reaction('⏳', event.messageID);
+    }
 
     try {
-      let msg = '';
-      for (const attachment of event.messageReply.attachments) {
+      const results = [];
+      for (const attachment of attachments) {
         const stream = await global.utils.getStreamFromURL(attachment.url);
         const form = new FormData();
         form.append('reqtype', 'fileupload');
@@ -32,16 +52,29 @@ module.exports = {
 
         const response = await axios.post('https://catbox.moe/user/api.php', form, {
           headers: form.getHeaders(),
+          timeout: 20000
         });
-        msg += `${response.data.trim()}\n`;
+
+        if (typeof response.data === 'string' && response.data.startsWith('http')) {
+          results.push(response.data.trim());
+        }
       }
 
-      await message.reply(msg.trim());
-      api.setMessageReaction('✅', event.messageID, () => {}, true);
+      if (results.length === 0) {
+        throw new Error('Upload to Catbox failed');
+      }
+
+      if (message && typeof message.reaction === 'function') message.reaction('✅', event.messageID);
+      const replyMsg = `🐱 𝗖𝗮𝘁𝗯𝗼𝘅 𝗟𝗶𝗻𝗸(𝘀):\n\n${results.join('\n')}`;
+      return message ? message.reply(replyMsg) : api.sendMessage(replyMsg, threadID);
     } catch (err) {
-      console.error('Catbox error:', err.message);
-      api.setMessageReaction('❌', event.messageID, () => {}, true);
-      message.reply('❌ Upload failed.');
+      if (message && typeof message.reaction === 'function') message.reaction('❌', event.messageID);
+      const errMsg = `❌ Catbox upload failed: ${err.message}`;
+      return message ? message.reply(errMsg) : api.sendMessage(errMsg, threadID);
     }
+  },
+
+  run: async function (params) {
+    return module.exports.onStart(params);
   }
 };

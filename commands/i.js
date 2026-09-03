@@ -40,8 +40,9 @@ module.exports = {
           const res = await axios.get(`https://www.ai4chat.co/api/image/generate`, {
             params: { prompt, aspect_ratio: ratio }
           });
-          if (res.data?.image_link) {
-            imageUrls.push(res.data.image_link);
+          const link = res.data?.image_link || res.data?.imageUrl || res.data?.url || res.data?.result || res.data?.data?.url;
+          if (link) {
+            imageUrls.push(link);
           }
         } catch (e) {
           console.error(`Image ${i} failed:`, e.message);

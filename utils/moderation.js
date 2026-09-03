@@ -55,6 +55,15 @@ class ModerationManager {
     }
     return { allowed: true };
   }
+
+  getStats() {
+    return {
+      whitelistUserEnabled:   config.WHITELIST_ENABLE,
+      whitelistThreadEnabled: config.WHITELIST_THREAD_ENABLE,
+      spamThreshold:          config.SPAM_COMMAND_THRESHOLD,
+      spamTimeWindow:         config.SPAM_TIME_WINDOW
+    };
+  }
 }
 
 module.exports = new ModerationManager();

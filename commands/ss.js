@@ -5,7 +5,7 @@ module.exports = {
     name: "screenshot",
     aliases: ["ss", "webss"],
     version: "1.0",
-    author: "NeoKEX",
+    author: "NeoKEX && frnAlt",
     cooldown: 10,
     role: 0,
     description: "Captures a screenshot of a given website URL.",

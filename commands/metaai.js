@@ -44,10 +44,12 @@ module.exports = {
       if (conversationId) params.conversation_id = conversationId;
       if (imageUrl) params.img_url = imageUrl;
 
-      const response = await axios.get(META_API, { params, timeout: 30000 });
-      const { success, message: replyText, image_urls, conversation_id } = response.data || {};
+      const data = response.data || {};
+      const replyText = data.message || data.reply || data.response || data.result;
+      const image_urls = data.image_urls || data.images || [];
+      const conversation_id = data.conversation_id || data.id;
 
-      if (!success || !replyText) throw new Error('Meta AI API returned an unsuccessful response');
+      if (!replyText) throw new Error('Meta AI API returned an empty response');
 
       const cleaned = String(replyText).trim();
       if (cleaned.startsWith('<') || /<!DOCTYPE|<html|<head|<script|cloudflare|just a moment|fingerprint/i.test(cleaned)) {

@@ -29,7 +29,7 @@ module.exports = {
     try {
       const url = `https://kaiz-apis.gleeze.com/api/claude3-haiku?ask=${encodeURIComponent(query)}&apikey=${apikey}`;
       const res = await axios.get(url);
-      const rawText = res.data?.response || res.data?.reply || (typeof res.data === 'string' ? res.data : null);
+      const rawText = res.data?.response || res.data?.reply || res.data?.result || res.data?.message || (typeof res.data === 'string' ? res.data : null);
 
       if (!rawText || typeof rawText !== 'string') throw new Error('No response from API');
 

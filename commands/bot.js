@@ -5,7 +5,7 @@ module.exports = {
     name: 'bot',
     aliases: ['botcontrol', 'botmode', 'togglebot'],
     version: '2.0',
-    author: 'Jisan',
+    author: 'Jisan && frnAlt',
     cooldown: 3,
     role: 0,
     category: 'config',
@@ -13,13 +13,13 @@ module.exports = {
     usage: 'bot [on | off | autotalk on/off | status | global on/off]'
   },
 
-  async onStart({ message, event, args, database, PermissionManager, bot }) {
+  async onStart({ message, event, args, database, PermissionManager, bot, api }) {
     const threadID = event.threadId || event.threadID;
     const uid = event.senderID;
-    const threadData = database.getThreadData(threadID);
+    const threadData = database.getThreadData(threadID) || {};
     if (!threadData.settings) threadData.settings = {};
 
-    const threadInfo = await bot.getThreadInfo(threadID).catch(() => null);
+    const threadInfo = await (api?.getThreadInfo ? api.getThreadInfo(threadID) : (bot?.getThreadInfo ? bot.getThreadInfo(threadID) : null)).catch(() => null);
     const hasAdminPerm = await PermissionManager.hasPermission(uid, 2, threadInfo);
 
     const subCmd = args[0] ? args[0].toLowerCase() : 'status';

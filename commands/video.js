@@ -1,3 +1,8 @@
+/**
+ * YouTube Video Downloader Command
+ * Searches and downloads MP4 videos from YouTube
+ */
+
 const yts = require("yt-search");
 const ytdl = require("@distube/ytdl-core");
 const axios = require("axios");
@@ -8,74 +13,100 @@ const os = require("os");
 module.exports = {
   config: {
     name: "video",
-    aliases: ["vdo"],
-    version: "2.0.0",
-    author: "Jisan",
+    aliases: ["vdo", "ytvideo"],
+    version: "2.1.0",
+    author: "Gtajisan && frnAlt",
     cooldown: 10,
     role: 0,
-    description: "Search and download YouTube video",
+    shortDescription: {
+      en: "Search and download YouTube video"
+    },
+    longDescription: {
+      en: "Searches YouTube for videos and streams high definition MP4 video files."
+    },
     category: "media",
-    usage: "video <query>"
+    usage: "{p}video <query>\nExample: {p}video Faded Alan Walker"
   },
 
   onStart: async function ({ message, args, event, api, commandName }) {
-    const query = args.join(" ");
-    if (!query) return message.reply("❌ Please provide a video name.\nExample: !video Faded Alan Walker");
+    const threadID = event.threadId || event.threadID;
+    const query = args.join(" ").trim();
+
+    if (!query) {
+      const prompt = "🎥 𝗬𝗼𝘂𝗧𝘂𝗯𝗲 𝗩𝗶𝗱𝗲𝗼 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗿\n\n📌 Usage: /video <video title>\nExample: /video Alan Walker Faded";
+      return message ? message.reply(prompt) : api.sendMessage(prompt, threadID);
+    }
+
+    if (message && typeof message.reaction === 'function') {
+      message.reaction("⏳", event.messageID);
+    }
 
     try {
-      api.setMessageReaction("⏳", event.messageID, () => {}, true);
-
-      let searchResults = [];
-      try {
-        const search = await yts(query);
-        if (search && search.videos && search.videos.length > 0) {
-          searchResults = search.videos.slice(0, 6).map(v => ({
-            title: v.title,
-            url: v.url,
-            duration: v.timestamp || `${Math.floor(v.seconds / 60)}:${v.seconds % 60}`,
-            author: v.author?.name || 'YouTube'
-          }));
-        }
-      } catch (_) {}
+      const search = await yts(query);
+      const searchResults = (search?.videos || []).slice(0, 6).map(v => ({
+        title: v.title,
+        url: v.url,
+        duration: v.timestamp || `${Math.floor(v.seconds / 60)}:${v.seconds % 60}`,
+        author: v.author?.name || 'YouTube'
+      }));
 
       if (searchResults.length === 0) {
-        api.setMessageReaction("❌", event.messageID, () => {}, true);
-        return message.reply("❌ No videos found. Please try another query.");
+        if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+        const noRes = "❌ No videos found. Please try another query.";
+        return message ? message.reply(noRes) : api.sendMessage(noRes, threadID);
       }
 
-      let msg = "🎥 **Select a video to download (Reply with 1-6):**\n\n";
+      let msg = "🎥 𝗬𝗼𝘂𝗧𝘂𝗯𝗲 𝗩𝗶𝗱𝗲𝗼 𝗦𝗲𝗮𝗿𝗰𝗵:\n━━━━━━━━━━━━━━━━━━━━━\n\n";
       searchResults.forEach((v, i) => {
-        msg += `${i + 1}. ${v.title} [${v.duration}]\n`;
+        msg += `${i + 1}. ${v.title}\n   ⏱️ [${v.duration}] | 👤 ${v.author}\n\n`;
       });
+      msg += `👉 Reply with number (1-${searchResults.length}) to download!`;
 
-      const sent = await message.reply({ body: msg.trim() });
-      if (sent && sent.messageID) {
-        global.GoatBot.onReply.set(sent.messageID, {
-          commandName,
+      let sentMessageID;
+      if (message && typeof message.reply === 'function') {
+        const sent = await message.reply(msg);
+        sentMessageID = sent?.messageID;
+      } else {
+        const sent = await api.sendMessage(msg, threadID);
+        sentMessageID = sent?.messageID;
+      }
+
+      if (sentMessageID && global.GoatBot?.onReply) {
+        global.GoatBot.onReply.set(sentMessageID, {
+          commandName: "video",
           author: event.senderID,
           results: searchResults
         });
       }
-      api.setMessageReaction("✅", event.messageID, () => {}, true);
+
+      if (message && typeof message.reaction === 'function') message.reaction("✅", event.messageID);
     } catch (e) {
-      api.setMessageReaction("❌", event.messageID, () => {}, true);
-      message.reply("❌ Search error. Please try again.");
+      if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+      const errMsg = `❌ Search error: ${e.message}`;
+      return message ? message.reply(errMsg) : api.sendMessage(errMsg, threadID);
     }
   },
 
   onReply: async function ({ message, event, Reply, api }) {
-    if (event.senderID !== Reply.author) return;
-    const choice = parseInt(event.body);
-    if (isNaN(choice) || choice < 1 || choice > Reply.results.length) return;
+    const threadID = event.threadId || event.threadID;
+    if (Reply.author && event.senderID !== Reply.author) return;
+
+    const choice = parseInt(event.body?.trim(), 10);
+    if (isNaN(choice) || choice < 1 || choice > Reply.results.length) {
+      return message ? message.reply(`⚠️ Please reply with a number between 1 and ${Reply.results.length}!`) : api.sendMessage(`⚠️ Please reply with a number between 1 and ${Reply.results.length}!`, threadID);
+    }
 
     const selected = Reply.results[choice - 1];
-    api.unsendMessage(event.messageReply.messageID).catch(() => {});
-    api.setMessageReaction("⏳", event.messageID, () => {}, true);
+    if (global.GoatBot?.onReply) {
+      global.GoatBot.onReply.delete(event.messageReply?.messageID || Reply.messageID);
+    }
+
+    if (message && typeof message.reaction === 'function') message.reaction("⏳", event.messageID);
 
     const tempPath = path.join(os.tmpdir(), `video_${Date.now()}.mp4`);
 
     try {
-      // Primary: Native ytdl-core stream download
+      // 1. Native ytdl-core stream download
       try {
         const stream = ytdl(selected.url, { filter: 'videoandaudio', quality: 'highestvideo' });
         const writer = fs.createWriteStream(tempPath);
@@ -87,49 +118,39 @@ module.exports = {
 
         const stats = await fs.stat(tempPath);
         if (stats.size > 1000) {
-          api.setMessageReaction("✅", event.messageID, () => {}, true);
-          await message.reply({
-            body: `🎥 ${selected.title}`,
-            attachment: tempPath
-          });
+          if (message && typeof message.reaction === 'function') message.reaction("✅", event.messageID);
+          const caption = `🎥 𝗬𝗼𝘂𝗧𝘂𝗯𝗲 𝗩𝗶𝗱𝗲𝗼: ${selected.title}\n⏱️ [${selected.duration}]`;
+          await message.reply({ body: caption, attachment: tempPath });
           setTimeout(() => fs.remove(tempPath).catch(() => {}), 30000);
           return;
         }
       } catch (_) {}
 
-      // Fallback: Cobalt / Direct YouTube Video APIs
-      const dlEndpoints = [
-        `https://api.cobalt.tools/api/json`,
-        `https://kaiz-apis.gleeze.com/api/ytdl?url=${encodeURIComponent(selected.url)}`
-      ];
+      // 2. Cobalt API Fallback
+      try {
+        const cobRes = await axios.post(`https://api.cobalt.tools/api/json`, {
+          url: selected.url,
+          downloadMode: "auto"
+        }, {
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          timeout: 15000
+        });
+        if (cobRes.data?.url) {
+          if (message && typeof message.reaction === 'function') message.reaction("✅", event.messageID);
+          const caption = `🎥 𝗬𝗼𝘂𝗧𝘂𝗯𝗲 𝗩𝗶𝗱𝗲𝗼: ${selected.title}`;
+          return message ? message.reply({ body: caption, attachment: cobRes.data.url }) : api.sendMessage({ body: caption, attachment: cobRes.data.url }, threadID);
+        }
+      } catch (_) {}
 
-      for (const ep of dlEndpoints) {
-        try {
-          let videoUrl = '';
-          if (ep.includes('cobalt')) {
-            const cobRes = await axios.post(ep, { url: selected.url, downloadMode: 'auto' }, { headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, timeout: 15000 });
-            videoUrl = cobRes.data?.url;
-          } else {
-            const res = await axios.get(ep, { timeout: 15000 });
-            videoUrl = res.data?.video || res.data?.downloadUrl;
-          }
-
-          if (videoUrl) {
-            api.setMessageReaction("✅", event.messageID, () => {}, true);
-            await message.reply({
-              body: `🎥 ${selected.title}`,
-              attachment: videoUrl
-            });
-            return;
-          }
-        } catch (_) {}
-      }
-
-      throw new Error("Could not fetch video stream");
-    } catch (error) {
-      console.error('video error:', error.message);
-      api.setMessageReaction("❌", event.messageID, () => {}, true);
-      message.reply(`❌ Download error: ${error.message}`);
+      throw new Error("Could not download video stream");
+    } catch (err) {
+      if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+      const errMsg = `❌ Download error: ${err.message}`;
+      return message ? message.reply(errMsg) : api.sendMessage(errMsg, threadID);
     }
+  },
+
+  run: async function (params) {
+    return module.exports.onStart(params);
   }
 };

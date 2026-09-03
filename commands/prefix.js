@@ -1,5 +1,5 @@
 module.exports = {
-  config: { name: 'prefix', aliases: ['setprefix'], version: '1.0', author: 'Gtajisan', role: 0, cooldown: 5, category: 'config', description: 'Change bot prefix for this chat', usage: 'prefix [new] | prefix reset' },
+  config: { name: 'prefix', aliases: ['setprefix'], version: '1.0', author: 'Gtajisan && frnAlt', role: 0, cooldown: 5, category: 'config', description: 'Change bot prefix for this chat', usage: 'prefix [new] | prefix reset' },
   async run({ api, event, args, config, database, PermissionManager, ConfigManager }) {
     const threadId = event.threadId, userId = event.senderID;
     const currentPrefix = config.PREFIX;

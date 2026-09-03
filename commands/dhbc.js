@@ -11,17 +11,18 @@ module.exports = {
     category: "game"
   },
 
-  async onStart({ message, event, commandName, database }) {
+  async onStart({ message, event, api, commandName, database }) {
     try {
-      const response = await axios.get("https://goatbotserver.onrender.com/api/duoihinhbatchu");
+      const response = await axios.get("https://goatbotserver.onrender.com/api/duoihinhbatchu", { timeout: 8000 });
+      if (!response.data?.data) throw new Error("Invalid API response");
       const { wordcomplete, casi, image1, image2 } = response.data.data;
 
-      const body = `Please reply this message with the answer\n${wordcomplete.replace(/\S/g, "█ ")}` + (casi ? `\nThis is a song by ${casi}` : '');
+      const body = `Please reply to this message with the answer:\n${wordcomplete.replace(/\S/g, "█ ")}` + (casi ? `\nThis is a song by ${casi}` : '');
 
       await message.reply(body);
-      // Instagram API might need separate calls for images or supporting multi-photo
-      await api.sendPhotoFromUrl(event.threadId, image1);
-      const res2 = await api.sendPhotoFromUrl(event.threadId, image2);
+      if (image1 && api?.sendPhotoFromUrl) await api.sendPhotoFromUrl(event.threadId, image1).catch(() => {});
+      let res2 = null;
+      if (image2 && api?.sendPhotoFromUrl) res2 = await api.sendPhotoFromUrl(event.threadId, image2).catch(() => null);
 
       if (res2 && res2.messageID) {
         database.setReplyData(res2.messageID, {
@@ -32,8 +33,7 @@ module.exports = {
         });
       }
     } catch (e) {
-      console.error(e);
-      message.reply("Failed to start game.");
+      return message.reply("❌ Game service is currently unavailable. Please try again later!");
     }
   },
 

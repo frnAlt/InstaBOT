@@ -23,7 +23,7 @@ module.exports = {
     try {
       const apiUrl = `https://betadash-api-swordslush-production.up.railway.app/fluxv2?prompt=${encodeURIComponent(prompt)}`;
       const res = await axios.get(apiUrl);
-      const imageUrl = res.data.imageUrl;
+      const imageUrl = res.data.imageUrl || res.data.url || res.data.image || res.data.result || (res.data.data && (res.data.data.url || res.data.data.imageUrl));
 
       if (!imageUrl) throw new Error('No image URL found');
 

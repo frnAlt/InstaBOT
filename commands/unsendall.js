@@ -5,7 +5,7 @@ module.exports = {
     name: "unsendall",
     aliases: ["unsentall", "delall", "deleteall"],
     version: "2.0",
-    author: "NTKhang & Gtajisan",
+    author: "NTKhang, Gtajisan && frnAlt",
     cooldown: 1,
     role: 0,
     description: "Unsend all recent bot messages in thread",

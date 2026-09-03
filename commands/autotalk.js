@@ -5,7 +5,7 @@ module.exports = {
     name: 'autotalk',
     aliases: ['atalk', 'chatbot', 'simtalk', 'talk', 'botchat'],
     version: '1.0',
-    author: 'Jisan',
+    author: 'Jisan && frnAlt',
     cooldown: 3,
     role: 0,
     category: 'ai',

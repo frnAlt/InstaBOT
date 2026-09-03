@@ -5,7 +5,7 @@ module.exports = {
     name: 'nano',
     aliases: ['aiedit', 'editphoto', 'nanoedit'],
     version: '1.0',
-    author: 'Jisan',
+    author: 'Jisan && frnAlt',
     cooldown: 8,
     role: 0,
     category: 'ai-image',

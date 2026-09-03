@@ -6,7 +6,7 @@ module.exports = {
     name: 'pair',
     aliases: ['pairlove', 'randompair', 'soulmate'],
     version: '1.0',
-    author: 'Jisan',
+    author: 'Jisan && frnAlt',
     cooldown: 5,
     role: 0,
     category: 'Fun',
@@ -132,7 +132,7 @@ module.exports = {
       ctx.fillStyle = '#FCE7F3';
       ctx.fillText(`${name1} 💕 ${name2}`, 400, 350);
 
-      const buffer = canvas.toBuffer('image/png');
+      const buffer = canvas.toBuffer('image/jpeg', { quality: 0.9 });
       api.setMessageReaction('💘', event.messageID, () => {}, true);
 
       return message.reply({

@@ -1,10 +1,10 @@
 {
-  "name": "goatbot-ig",
+  "name": "instabot",
   "version": "1.0.0",
-  "description": "GoatBot Instagram Bot - InstaBOT architecture",
+  "description": "InstaBOT - Advanced Instagram Automation & Chatbot Architecture",
   "main": "index.js",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.18.1"
   },
   "scripts": {
     "start": "node index.js",
@@ -13,29 +13,43 @@
   "dependencies": {
     "@distube/ytdl-core": "^4.16.12",
     "@google/generative-ai": "^0.24.1",
-    "@neoaz07/nkxica": "^1.0.3",
     "axios": "^1.7.7",
+    "axios-cookiejar-support": "^5.0.5",
     "canvas": "^3.2.3",
     "cheerio": "^1.2.0",
     "dotenv": "^16.4.5",
+    "duplexify": "^4.1.3",
     "form-data": "^4.0.6",
     "fs-extra": "^11.2.0",
     "googleapis": "^173.0.0",
+    "https-proxy-agent": "^7.0.6",
     "jimp": "^1.6.1",
     "lodash": "^4.18.1",
     "mal-scraper": "^2.13.2",
     "mime-db": "^1.54.0",
     "moment-timezone": "^0.6.2",
     "mongodb": "^6.3.0",
+    "mqtt": "^5.15.2",
     "node-cron": "^3.0.3",
     "ora": "^9.4.1",
     "sql.js": "^1.10.2",
     "tinyurl": "^1.1.7",
+    "totp-generator": "^2.0.1",
     "tough-cookie": "^4.1.4",
     "winston": "^3.14.2",
     "winston-daily-rotate-file": "^5.0.0",
     "yt-search": "^2.13.1"
   },
-  "author": "Gtajisan",
-  "license": "MIT"
+  "author": "Gtajisan && frnAlt",
+  "license": "MIT",
+  "overrides": {
+    "undici": "^7.28.1",
+    "brace-expansion": "^2.1.4",
+    "minimatch": "^9.0.5",
+    "uuid": "^11.1.1",
+    "ip-address": "^10.3.1"
+  },
+  "allowScripts": {
+    "canvas@3.2.3": true
+  }
 }

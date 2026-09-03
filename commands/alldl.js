@@ -1,88 +1,127 @@
+/**
+ * Universal Multi-Platform Downloader Command
+ * Downloads video and audio from Instagram, TikTok, Facebook, YouTube, Twitter/X
+ */
+
 const axios = require("axios");
-const fs = require("fs-extra");
-const path = require("path");
 
 module.exports = {
   config: {
     name: "alldl",
-    aliases: ["fbdl", "igdl", "ttdl", "ytdl", "dl"],
-    version: "2.6",
-    author: "Neoaz 🐦",
+    aliases: ["fbdl", "igdl", "ttdl", "ytdl", "dl", "download"],
+    version: "2.8.0",
+    author: "Gtajisan && frnAlt",
     cooldown: 5,
     role: 0,
-    description: "Multi-platform video/audio downloader (FB, IG, TikTok, YT)",
+    shortDescription: {
+      en: "Multi-platform video & audio downloader"
+    },
+    longDescription: {
+      en: "Universal media downloader for TikTok, Instagram, Facebook, YouTube, Twitter, and Pinterest."
+    },
     category: "media",
-    usage: "alldl <url> [--a] or reply to a link"
+    usage: "{p}alldl <url> [--audio] or reply to a message containing a media link"
   },
 
   onStart: async function ({ message, args, event, api }) {
-    if (args[0] === "auto") {
-      if (!global.alldl_auto) global.alldl_auto = {};
-      const threadID = event.threadID;
-      global.alldl_auto[threadID] = !global.alldl_auto[threadID];
-      return message.reply(`Auto-download is now ${global.alldl_auto[threadID] ? "ON" : "OFF"}.`);
-    }
+    const threadID = event.threadId || event.threadID;
 
     let url = args[0];
-    let isAudio = args.includes("--a");
+    let isAudio = args.includes("--audio") || args.includes("--a");
 
-    if (event.type === "message_reply") {
+    if (event.type === "message_reply" && event.messageReply?.body) {
       const urlMatch = event.messageReply.body.match(/https?:\/\/[^\s]+/);
       if (urlMatch) {
         url = urlMatch[0];
-        if (args.includes("--a") || args[0] === "--a") isAudio = true;
+        if (args.includes("--audio") || args.includes("--a")) isAudio = true;
       }
     }
 
-    if (!url || !url.startsWith("http")) return message.reply("Please provide a valid link.");
-    return this.handleDownload({ message, event, api, url, isAudio });
-  },
-
-  onChat: async function ({ message, event, api }) {
-    const threadID = event.threadID;
-    if (!global.alldl_auto?.[threadID] || !event.body) return;
-    if (event.body.startsWith(global.GoatBot.config.prefix)) return;
-
-    const urlMatch = event.body.match(/https?:\/\/[^\s]+/);
-    if (urlMatch) {
-      // Basic filter to avoid downloading common non-media links if desired,
-      // but source repo doesn't seem to have one.
-      return this.handleDownload({ message, event, api, url: urlMatch[0], isAudio: false });
+    if (!url || !url.startsWith("http")) {
+      const prompt = "📥 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗮𝗹 𝗠𝗲𝗱𝗶𝗮 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗿\n\n📌 Usage:\n• /alldl <url>\n• /alldl <url> --audio\n• Reply to any message containing a video link with /alldl";
+      return message ? message.reply(prompt) : api.sendMessage(prompt, threadID);
     }
-  },
 
-  handleDownload: async function ({ message, event, api, url, isAudio }) {
-    api.setMessageReaction("⏳", event.messageID, () => {}, true);
-    const tempDir = path.join(process.cwd(), 'temp');
-    await fs.ensureDir(tempDir);
-    const fileName = `alldl_${Date.now()}.${isAudio ? "mp3" : "mp4"}`;
-    const filePath = path.join(tempDir, fileName);
+    if (message && typeof message.reaction === 'function') {
+      message.reaction("⏳", event.messageID);
+    }
 
     try {
-      const res = await axios.get(`https://neoaz.is-a.dev/api/download?url=${encodeURIComponent(url)}`);
-      const data = res.data.data;
-      if (!data || !data.formats || data.formats.length === 0) throw new Error("No download formats found");
+      let downloadUrl = null;
+      let title = "Media Download";
 
-      let downloadUrl = "";
-      if (isAudio) {
-        const audioFormat = data.formats.find(f => f.quality === "audio_only" || f.ext === "mp3" || f.ext === "m4a" || f.ext === "weba");
-        downloadUrl = audioFormat?.url || data.formats[data.formats.length - 1].url;
-      } else {
-        const videoFormat = data.formats.find(f => f.quality === "hd_no_watermark" || f.quality === "no_watermark" || f.quality === "HD" || f.quality === "Full HD" || f.quality === "720p");
-        downloadUrl = videoFormat?.url || data.formats[0].url;
+      // 1. TikTok Fast Path
+      if (/tiktok\.com/i.test(url)) {
+        try {
+          const ttRes = await axios.get(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`, { timeout: 10000 });
+          const ttData = ttRes.data?.data;
+          if (ttData) {
+            downloadUrl = isAudio ? (ttData.music || ttData.play) : (ttData.play || ttData.wmplay);
+            title = ttData.title || "TikTok Video";
+          }
+        } catch (_) {}
       }
 
-      if (!downloadUrl) throw new Error("Could not find a valid download URL");
+      // 2. Siputzx Universal API
+      if (!downloadUrl) {
+        try {
+          const sipRes = await axios.get(`https://api.siputzx.my.id/api/d/all?url=${encodeURIComponent(url)}`, { timeout: 15000 });
+          const data = sipRes.data?.data || sipRes.data?.result;
+          if (data) {
+            downloadUrl = isAudio ? (data.audio || data.url || data.video) : (data.video || data.url || data.hd || data.sd);
+            title = data.title || title;
+          }
+        } catch (_) {}
+      }
 
-      await message.reply({
-        body: `✅ | ${data.title || 'Downloaded'}`,
-        attachment: downloadUrl
-      });
+      // 3. Cobalt API
+      if (!downloadUrl) {
+        try {
+          const cobRes = await axios.post(`https://api.cobalt.tools/api/json`, {
+            url,
+            downloadMode: isAudio ? "audio" : "auto"
+          }, {
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            timeout: 15000
+          });
+          if (cobRes.data?.url) {
+            downloadUrl = cobRes.data.url;
+          }
+        } catch (_) {}
+      }
 
-      api.setMessageReaction("✅", event.messageID, () => {}, true);
-    } catch (error) {
-      console.error('alldl error:', error.message);
-      api.setMessageReaction("❌", event.messageID, () => {}, true);
+      // 4. Neoaz fallback API
+      if (!downloadUrl) {
+        try {
+          const neoRes = await axios.get(`https://neoaz.is-a.dev/api/download?url=${encodeURIComponent(url)}`, { timeout: 15000 });
+          const data = neoRes.data?.data;
+          if (data?.formats && data.formats.length > 0) {
+            downloadUrl = isAudio
+              ? (data.formats.find(f => f.quality === 'audio_only')?.url || data.formats[0].url)
+              : (data.formats.find(f => f.quality === 'hd_no_watermark' || f.quality === 'HD' || f.quality === '720p')?.url || data.formats[0].url);
+            title = data.title || title;
+          }
+        } catch (_) {}
+      }
+
+      if (!downloadUrl) {
+        throw new Error("Unable to extract downloadable stream from this URL");
+      }
+
+      const caption = `✅ 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 [${isAudio ? 'AUDIO' : 'VIDEO'}]\n📝 ${title}`;
+      if (message && typeof message.reaction === 'function') message.reaction("✅", event.messageID);
+
+      return message 
+        ? message.reply({ body: caption, attachment: downloadUrl })
+        : api.sendMessage({ body: caption, attachment: downloadUrl }, threadID);
+    } catch (err) {
+      if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+      const errMsg = `❌ Download failed: ${err.message}. Please check if the link is public and valid.`;
+      return message ? message.reply(errMsg) : api.sendMessage(errMsg, threadID);
     }
+  },
+
+  run: async function (params) {
+    return module.exports.onStart(params);
   }
 };

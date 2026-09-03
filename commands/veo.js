@@ -24,8 +24,9 @@ module.exports = {
       const response = await axios.get(apiUrl);
       const data = response.data || {};
 
-      if (!data.status || !data.video) {
-        throw new Error('Invalid API response');
+      const videoUrl = data.video || data.url || data.videoUrl || data.result || data.data?.video;
+      if (!videoUrl) {
+        throw new Error('No video returned from API');
       }
 
       await message.reply({

@@ -8,7 +8,7 @@ module.exports = {
     usage: 'userinfo [username | UID | @tag | reply]',
     cooldown: 10,
     role: 0,
-    author: 'Gtajisan',
+    author: 'Gtajisan && frnAlt',
     category: 'utility'
   },
 

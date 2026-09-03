@@ -1,6 +1,6 @@
 'use strict';
 
-const { login } = require('../lib/ica');
+const { login } = require('../ica');
 
 const fs = require('fs-extra');
 const path = require('path');
@@ -15,16 +15,18 @@ const Banner        = require('../utils/banner');
 
 class InstagramBot {
   constructor() {
+    const TTLMap           = require('../func/TTLMap');
     global.utils           = require('../utils.js');
     global.GoatBot         = global.GoatBot || {};
     global.GoatBot.config  = config;
-    global.GoatBot.onReply = global.GoatBot.onReply || new Map();
-    global.GoatBot.onReaction = global.GoatBot.onReaction || new Map();
+    global.GoatBot.onReply = global.GoatBot.onReply || new TTLMap({ ttl: 30 * 60 * 1000, maxSize: 500 });
+    global.GoatBot.onReaction = global.GoatBot.onReaction || new TTLMap({ ttl: 30 * 60 * 1000, maxSize: 500 });
     global.GoatBot.onEvent = global.GoatBot.onEvent || new Map();
     global.GoatBot.onChat  = global.GoatBot.onChat || new Map();
     global.GoatBot.instance = this;
     global.client          = global.client || {};
 
+    this.config            = config;
     this.ig                = null;
     this.api               = null;
     this.userID            = null;
@@ -362,7 +364,9 @@ class InstagramBot {
       await this.eventLoader.loadEvents();
       this.eventLoader.registerEvents();
 
-      login.setOptions(config.OPTIONS_FCA);
+      if (login && typeof login.setOptions === 'function') {
+        login.setOptions(config.OPTIONS_ICA || config.OPTIONS_FCA);
+      }
 
       await this.loadAndLogin();
 
@@ -384,18 +388,75 @@ class InstagramBot {
   }
 
   async loadAndLogin() {
-    const hasCookieFile   = fs.existsSync(config.ACCOUNT_FILE);
-    const hasCredentials  = !!(config.ACCOUNT_EMAIL && config.ACCOUNT_PASSWORD);
-    const cookieContent   = hasCookieFile ? fs.readFileSync(config.ACCOUNT_FILE, 'utf-8') : '';
-    const hasValidCookies = hasCookieFile && this._hasValidCookies(cookieContent);
+    let cookieData = null;
+    const cookieFilePath = config.ACCOUNT_FILE || './account.txt';
 
-    if (hasValidCookies) {
-      logger.info('Loading cookies from account.txt...');
-      let loginData = cookieContent; try { const parsed = JSON.parse(cookieContent); if (parsed.cookies && Array.isArray(parsed.cookies.cookies)) loginData = parsed.cookies.cookies; else if (parsed.cookies && Array.isArray(parsed.cookies)) loginData = parsed.cookies; else if (Array.isArray(parsed)) loginData = parsed; } catch (e) {} this.ig = await login(loginData);
+    try {
+      if (fs.existsSync(cookieFilePath)) {
+        cookieData = fs.readFileSync(cookieFilePath, 'utf8').trim();
+      }
+    } catch (e) {
+      logger.warn('Could not read account.txt file');
+    }
+
+    if (!cookieData && config.ACCOUNT_COOKIE) {
+      cookieData = config.ACCOUNT_COOKIE;
+    }
+
+    const hasCredentials = !!(config.ACCOUNT_EMAIL && config.ACCOUNT_PASSWORD);
+
+    if (cookieData) {
+      logger.info('Loading cookies and logging in to Instagram...');
+      try {
+        let appState;
+        if (cookieData.startsWith('[') || cookieData.startsWith('{')) {
+          const parsed = JSON.parse(cookieData);
+          if (parsed.cookies && Array.isArray(parsed.cookies.cookies)) appState = parsed.cookies.cookies;
+          else if (parsed.cookies && Array.isArray(parsed.cookies)) appState = parsed.cookies;
+          else if (Array.isArray(parsed)) appState = parsed;
+          else appState = parsed;
+        } else if (cookieData.includes('=')) {
+          appState = cookieData.split(';').map(cookie => {
+            const parts = cookie.trim().split('=');
+            const name = parts[0];
+            const value = parts.slice(1).join('=');
+            if (!name || !value) return null;
+            return {
+              key: name.trim(),
+              value: value.trim(),
+              domain: '.instagram.com',
+              path: '/'
+            };
+          }).filter(Boolean);
+
+          if (appState.length === 0) {
+            appState = [{ name: 'sessionid', value: cookieData.replace('sessionid=', '').trim(), domain: '.instagram.com', path: '/' }];
+          }
+        } else {
+          appState = [{ name: 'sessionid', value: cookieData.trim(), domain: '.instagram.com', path: '/' }];
+        }
+
+        this.ig = await login({ appState });
+      } catch (firstErr) {
+        try {
+          let cleanCookie = cookieData.replace('sessionid=', '').trim();
+          this.ig = await login(`sessionid=${cleanCookie}`);
+        } catch (secondErr) {
+          if (hasCredentials) {
+            logger.info('Cookie login failed — attempting fallback email/password login...');
+            this.ig = await login({
+              email: config.ACCOUNT_EMAIL,
+              password: config.ACCOUNT_PASSWORD
+            });
+          } else {
+            throw new Error('Cookie login failed. Please check if your cookies are valid or expired: ' + secondErr.message);
+          }
+        }
+      }
     } else if (hasCredentials) {
-      logger.info('No valid cookies found — logging in with email/password...');
+      logger.info('No cookies found — logging in with email/password...');
       this.ig = await login({
-        email:    config.ACCOUNT_EMAIL,
+        email: config.ACCOUNT_EMAIL,
         password: config.ACCOUNT_PASSWORD
       });
     } else {
@@ -403,6 +464,10 @@ class InstagramBot {
         'No valid cookies in account.txt and no email/password configured. ' +
         'Please add Instagram cookies to account.txt or set ACCOUNT_EMAIL/ACCOUNT_PASSWORD.'
       );
+    }
+
+    if (!this.ig) {
+      throw new Error('Login returned empty or invalid instance.');
     }
 
     this._afterLogin();
@@ -426,11 +491,16 @@ class InstagramBot {
 
   saveSession() {
     try {
-      if (!this.ig || typeof this.ig.getSession !== 'function') return;
-      const session = this.ig.getSession();
-      if (session) {
-        fs.writeFileSync(config.ACCOUNT_FILE, JSON.stringify(session, null, 2), 'utf-8');
-        logger.info('Session state saved', { file: config.ACCOUNT_FILE });
+      if (!this.ig) return;
+      let sessionData;
+      if (typeof this.ig.exportSession === 'function') {
+        sessionData = this.ig.exportSession('json');
+      } else if (typeof this.ig.getSession === 'function') {
+        sessionData = JSON.stringify(this.ig.getSession(), null, 2);
+      }
+      if (sessionData) {
+        fs.writeFileSync(config.ACCOUNT_FILE, sessionData, 'utf-8');
+        logger.info('Session state saved cleanly', { file: config.ACCOUNT_FILE });
       }
     } catch (e) {
       logger.error('Failed to save session', { error: e.message });
@@ -449,6 +519,7 @@ class InstagramBot {
 
     this.username          = this.userID !== 'unknown' ? this.userID : 'unknown';
     this.api               = this.createAPIWrapper();
+    global.GoatBot.icaApi  = this.api;
     global.GoatBot.fcaApi  = this.api;
     global.GoatBot.instance = this;
 
@@ -808,7 +879,7 @@ class InstagramBot {
   }
 
   createAPIWrapper() {
-    const ig = this.ig;
+    const ig = new Proxy({}, { get: (_, prop) => this.ig?.[prop] });
     const utils = require('../utils.js');
 
     return {
@@ -821,20 +892,27 @@ class InstagramBot {
           if (!threadID) threadID = form.threadID || form.threadId;
 
           let text = typeof form === 'object' ? (form.body !== undefined ? form.body : '') : String(form);
-          let attachment = typeof form === 'object' ? form.attachment : null;
+          let attachment = typeof form === 'object' ? (form.attachment || form.photo || form.image || form.video || form.audio || form.voice || form.media || null) : null;
 
-          if (config.TYPING_INDICATOR && threadID) {
+          if (config.TYPING_INDICATOR && threadID && ig?.sendTypingIndicator) {
             ig.sendTypingIndicator(threadID).catch(() => {});
+            const typingJitter = Math.min(Math.max((text?.length || 0) * 3, 40), 200);
+            await new Promise(resolve => setTimeout(resolve, typingJitter));
           }
 
           let result;
           if (attachment) {
-              const attachments = Array.isArray(attachment) ? attachment : [attachment];
+              const rawList = Array.isArray(attachment) ? attachment : [attachment];
               const tempFiles = [];
-              for (const item of attachments) {
-                  let mediaPath = item.path || (typeof item === 'string' ? item : null);
 
-                  // Handle URL strings as attachments
+              for (const rawItem of rawList) {
+                  let item = (rawItem && typeof rawItem === 'object' && !rawItem.readable && !rawItem.pipe && !Buffer.isBuffer(rawItem))
+                      ? (rawItem.url || rawItem.path || rawItem.photo || rawItem.video || rawItem.audio || rawItem.voice || rawItem.image || rawItem)
+                      : rawItem;
+
+                  let mediaPath = null;
+
+                  // 1. Handle URL strings
                   if (typeof item === 'string' && item.startsWith('http')) {
                       try {
                           const stream = await utils.getStreamFromURL(item);
@@ -845,7 +923,7 @@ class InstagramBot {
                               else if (headerType.startsWith('audio/')) ext = 'mp3';
                               else if (item.toLowerCase().includes('.mp4')) ext = 'mp4';
                               else if (item.toLowerCase().includes('.mp3')) ext = 'mp3';
-                              else ext = 'png';
+                              else ext = 'jpg';
                           }
                           const tempPath = path.join(process.cwd(), 'temp', `media_${Date.now()}_${Math.random().toString(36).substring(7)}.${ext}`);
                           await fs.ensureDir(path.dirname(tempPath));
@@ -861,13 +939,13 @@ class InstagramBot {
                           logger.error('Failed to download attachment from URL', { url: item, error: e.message });
                       }
                   }
-                  // Handle Streams and Buffers
+                  // 2. Handle Streams and Buffers
                   else if (item && (item.readable || item.pipe || Buffer.isBuffer(item))) {
                       let rawExt = item.filename ? path.extname(item.filename) : (item.name ? path.extname(item.name) : (item.path ? path.extname(item.path) : (item._path ? path.extname(item._path) : '')));
                       if (!rawExt && item.mimeType) {
                           rawExt = utils.getExtFromMimeType(item.mimeType);
                       }
-                      if (!rawExt || rawExt === '.') rawExt = '.png';
+                      if (!rawExt || rawExt === '.' || rawExt === '') rawExt = '.jpg';
                       const ext = rawExt.startsWith('.') ? rawExt : `.${rawExt}`;
                       const tempPath = path.join(process.cwd(), 'temp', `media_${Date.now()}_${Math.random().toString(36).substring(7)}${ext}`);
                       await fs.ensureDir(path.dirname(tempPath));
@@ -885,18 +963,29 @@ class InstagramBot {
                       mediaPath = tempPath;
                       tempFiles.push(tempPath);
                   }
+                  // 3. Handle local existing file paths
+                  else if (typeof item === 'string' && fs.existsSync(item)) {
+                      mediaPath = item;
+                  }
 
                   if (mediaPath) {
                       const lowerPath = mediaPath.toLowerCase();
                       const opts = { caption: text };
                       if (replyToMessageID) opts.replyToMessageID = replyToMessageID;
 
-                      if (lowerPath.endsWith('.mp4') || lowerPath.endsWith('.mov') || lowerPath.endsWith('.mkv') || lowerPath.endsWith('.webm')) {
-                          result = await ig.sendVideo(threadID, mediaPath, opts);
-                      } else if (lowerPath.endsWith('.mp3') || lowerPath.endsWith('.wav') || lowerPath.endsWith('.m4a') || lowerPath.endsWith('.ogg')) {
-                          result = await ig.sendVoice(threadID, mediaPath);
-                      } else {
-                          result = await ig.sendPhoto(threadID, mediaPath, opts);
+                      try {
+                          if (lowerPath.endsWith('.mp4') || lowerPath.endsWith('.mov') || lowerPath.endsWith('.mkv') || lowerPath.endsWith('.webm') || lowerPath.endsWith('.avi') || lowerPath.endsWith('.m4v')) {
+                              result = await ig.sendVideo(threadID, mediaPath, opts);
+                          } else if (lowerPath.endsWith('.mp3') || lowerPath.endsWith('.wav') || lowerPath.endsWith('.m4a') || lowerPath.endsWith('.ogg') || lowerPath.endsWith('.aac') || lowerPath.endsWith('.opus') || lowerPath.endsWith('.flac')) {
+                              result = await ig.sendVoice(threadID, mediaPath);
+                          } else {
+                              result = await ig.sendPhoto(threadID, mediaPath, opts);
+                          }
+                      } catch (mediaErr) {
+                          logger.error('Error dispatching media to Instagram API', { error: mediaErr.message, mediaPath });
+                          if (text) {
+                              result = await ig.sendMessage(text, threadID).catch(() => {});
+                          }
                       }
                   }
               }
@@ -1058,6 +1147,24 @@ class InstagramBot {
             this.isRunning = false;
             this.scheduleReconnect();
           }
+          throw error;
+        }
+      },
+
+      sendVoice: async (arg1, arg2, opts = {}) => {
+        try {
+          let threadID = arg1;
+          let audioPath = arg2;
+          if (typeof arg1 === 'string' && (arg1.includes('/') || arg1.includes('\\') || arg1.startsWith('http')) && !/^\d+$/.test(arg1)) {
+            audioPath = arg1;
+            threadID = arg2;
+          }
+          if (config.TYPING_INDICATOR && threadID) {
+            ig.sendTypingIndicator(threadID).catch(() => {});
+          }
+          return await ig.sendVoice(threadID, audioPath, opts);
+        } catch (error) {
+          logger.error('Failed to send voice', { error: error.message });
           throw error;
         }
       },
@@ -1331,10 +1438,16 @@ class InstagramBot {
           return await ig.unsendMessage(messageID);
       },
 
-      addUserToGroup: async (userID, threadID) => {
+      addUserToGroup: async (arg1, arg2) => {
           try {
-              if (typeof ig.addUserToGroup === 'function') return await ig.addUserToGroup(userID, threadID);
-              if (typeof ig.addParticipant === 'function') return await ig.addParticipant(threadID, userID);
+              let userIDs = arg1;
+              let threadID = arg2;
+              if (Array.isArray(arg2) || (typeof arg2 === 'string' && /^\d+$/.test(arg2) && typeof arg1 === 'string' && arg1.length > 15)) {
+                  userIDs = arg2;
+                  threadID = arg1;
+              }
+              if (typeof ig.addUserToGroup === 'function') return await ig.addUserToGroup(userIDs, threadID);
+              if (ig.threadManagement && typeof ig.threadManagement.addUsers === 'function') return await ig.threadManagement.addUsers(threadID, userIDs);
               logger.warn('addUserToGroup not supported by API');
           } catch (e) {
               logger.error('addUserToGroup error', { error: e.message });
@@ -1353,9 +1466,17 @@ class InstagramBot {
           }
       },
 
-      setTitle: async (title, threadID) => {
+      setTitle: async (arg1, arg2) => {
           try {
+              let title = arg1;
+              let threadID = arg2;
+              if (typeof arg1 === 'string' && /^\d+$/.test(arg1) && typeof arg2 === 'string') {
+                  threadID = arg1;
+                  title = arg2;
+              }
+              if (typeof ig.setTitle === 'function') return await ig.setTitle(title, threadID);
               if (typeof ig.setThreadTitle === 'function') return await ig.setThreadTitle(threadID, title);
+              if (typeof ig.changeThreadTitle === 'function') return await ig.changeThreadTitle(threadID, title);
               logger.warn('setTitle not supported by API');
           } catch (e) {
               logger.error('setTitle error', { error: e.message });

@@ -1,80 +1,153 @@
+/**
+ * TikTok Video & Audio Downloader Command
+ * Search videos by keywords or download directly from TikTok links
+ */
+
 const axios = require('axios');
-const fs = require('fs-extra');
-const path = require('path');
 
 module.exports = {
   config: {
     name: "tiktok",
-    aliases: ["tt"],
-    version: "1.0.1",
-    author: "Neoaz ゐ",
+    aliases: ["tt", "tik", "tiktokdl"],
+    version: "2.1.0",
+    author: "Gtajisan && frnAlt",
     cooldown: 5,
     role: 0,
-    description: "Search and download TikTok video",
+    shortDescription: {
+      en: "Search & download TikTok videos without watermark"
+    },
+    longDescription: {
+      en: "Downloads HD TikTok videos or extracts audio from links or keyword search queries."
+    },
     category: "media",
-    usage: "tiktok <search query>"
+    usage: "{p}tiktok <search query or video url>"
   },
 
   onStart: async function ({ api, args, event, message, commandName }) {
-    const query = args.join(" ");
-    if (!query) return message.reply("❌ Provide a search query.");
+    const threadID = event.threadId || event.threadID;
+    let query = args.join(" ").trim();
 
-    try {
-        api.setMessageReaction("⏳", event.messageID, () => {}, true);
-        const searchResponse = await axios.get(`https://lyric-search-neon.vercel.app/kshitiz?keyword=${encodeURIComponent(query)}`, { timeout: 20000 });
-        const results = searchResponse.data.slice(0, 6);
+    if (!query && event.messageReply?.body) {
+      const match = event.messageReply.body.match(/https?:\/\/(?:vt\.|vm\.|www\.)?tiktok\.com\/[^\s]+/i);
+      if (match) query = match[0];
+    }
 
-        if (!results || results.length === 0) {
-            api.setMessageReaction("❌", event.messageID, () => {}, true);
-            return message.reply("❌ No TikTok videos found for the query.");
+    if (!query) {
+      const prompt = "📱 𝗧𝗶𝗸𝗧𝗼𝗸 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗿\n\n📌 Usage:\n• /tiktok <search query> (e.g. /tiktok anime edit)\n• /tiktok <video link>";
+      return message ? message.reply(prompt) : api.sendMessage(prompt, threadID);
+    }
+
+    if (message && typeof message.reaction === 'function') {
+      message.reaction("⏳", event.messageID);
+    }
+
+    // Direct Link Mode
+    if (query.startsWith("http://") || query.startsWith("https://")) {
+      try {
+        const res = await axios.get(`https://www.tikwm.com/api/?url=${encodeURIComponent(query)}`, { timeout: 15000 });
+        const data = res.data?.data;
+        if (!data || (!data.play && !data.wmplay)) {
+          throw new Error("Video not found or is private");
         }
 
-        let messageBody = "Found " + results.length + " videos.\n\n";
-        results.forEach((video, index) => {
-            messageBody += `${index + 1}. ${video.title.substring(0, 70)}...\n`;
-            messageBody += `   • Creator: @${video.author.unique_id}\n`;
-            messageBody += `   • Duration: ${video.duration}s\n\n`;
-        });
-        messageBody += "Reply with the number (1-" + results.length + ") to download.";
+        const videoUrl = data.play || data.wmplay;
+        const caption = `✅ 𝗧𝗶𝗸𝗧𝗼𝗸 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱\n\n👤 Author: @${data.author?.unique_id || 'creator'}\n📝 Title: ${data.title || 'TikTok Video'}\n👍 Likes: ${(data.digg_count || 0).toLocaleString()} | 💬 Comments: ${(data.comment_count || 0).toLocaleString()}`;
 
-        await message.reply(messageBody, (err, info) => {
-            if (err) return;
-            global.GoatBot.onReply.set(info.messageID, {
-                commandName: commandName,
-                author: event.senderID,
-                results: results
-            });
+        if (message && typeof message.reaction === 'function') message.reaction("✅", event.messageID);
+        return message 
+          ? message.reply({ body: caption, attachment: videoUrl })
+          : api.sendMessage({ body: caption, attachment: videoUrl }, threadID);
+      } catch (err) {
+        if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+        const errMsg = `❌ Failed to download TikTok video: ${err.message}`;
+        return message ? message.reply(errMsg) : api.sendMessage(errMsg, threadID);
+      }
+    }
+
+    // Search Query Mode
+    try {
+      const searchRes = await axios.post(`https://www.tikwm.com/api/feed/search`, {
+        keywords: query,
+        count: 6,
+        cursor: 0,
+        web: 1
+      }, {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        timeout: 15000
+      }).catch(() => null);
+
+      const results = searchRes?.data?.data?.videos || searchRes?.data?.data || [];
+      if (!results || results.length === 0) {
+        if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+        const noRes = `❌ No TikTok videos found for "${query}".`;
+        return message ? message.reply(noRes) : api.sendMessage(noRes, threadID);
+      }
+
+      let menu = `📱 𝗧𝗶𝗸𝗧𝗼𝗸 𝗦𝗲𝗮𝗿𝗰𝗵: "${query}"\n━━━━━━━━━━━━━━━━━━━━━\n\n`;
+      results.slice(0, 6).forEach((v, i) => {
+        const title = (v.title || 'TikTok Video').substring(0, 60);
+        const author = v.author?.unique_id || v.author?.nickname || 'creator';
+        menu += `${i + 1}. ${title}\n   • @${author} | ⏱️ ${v.duration || 0}s\n\n`;
+      });
+      menu += `👉 Reply with number (1-${Math.min(results.length, 6)}) to download!`;
+
+      let sentMessageID;
+      if (message && typeof message.reply === 'function') {
+        const sent = await message.reply(menu);
+        sentMessageID = sent?.messageID;
+      } else {
+        const sent = await api.sendMessage(menu, threadID);
+        sentMessageID = sent?.messageID;
+      }
+
+      if (sentMessageID && global.GoatBot?.onReply) {
+        global.GoatBot.onReply.set(sentMessageID, {
+          commandName: "tiktok",
+          author: event.senderID,
+          results: results.slice(0, 6)
         });
-    } catch (error) {
-        console.error("TikTok Search Error:", error);
-        api.setMessageReaction("❌", event.messageID, () => {}, true);
-        message.reply("❌ Failed to search TikTok.");
+      }
+
+      if (message && typeof message.reaction === 'function') message.reaction("✅", event.messageID);
+    } catch (err) {
+      if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+      const errMsg = `❌ Error searching TikTok: ${err.message}`;
+      return message ? message.reply(errMsg) : api.sendMessage(errMsg, threadID);
     }
   },
 
   onReply: async function ({ event, api, Reply, message }) {
-    if (event.senderID !== Reply.author) return;
-    const selection = parseInt(event.body);
-    const results = Reply.results;
+    const threadID = event.threadId || event.threadID;
+    if (Reply.author && event.senderID !== Reply.author) return;
 
-    if (isNaN(selection) || selection < 1 || selection > results.length) {
-      return message.reply("❌ Invalid selection. Choose 1-" + results.length);
+    const selection = parseInt(event.body?.trim(), 10);
+    if (isNaN(selection) || selection < 1 || selection > Reply.results.length) {
+      return message ? message.reply(`⚠️ Please reply with a number between 1 and ${Reply.results.length}!`) : api.sendMessage(`⚠️ Please reply with a number between 1 and ${Reply.results.length}!`, threadID);
     }
 
-    const video = results[selection - 1];
-    api.unsendMessage(event.messageReply.messageID);
-    api.setMessageReaction("⏳", event.messageID, () => {}, true);
+    const video = Reply.results[selection - 1];
+    if (global.GoatBot?.onReply) {
+      global.GoatBot.onReply.delete(event.messageReply?.messageID || Reply.messageID);
+    }
+
+    if (message && typeof message.reaction === 'function') message.reaction("⏳", event.messageID);
 
     try {
-        await message.reply({
-            body: `✅ Downloaded: ${video.title}\nCreator: @${video.author.unique_id}`,
-            attachment: video.videoUrl
-        });
-        api.setMessageReaction("✅", event.messageID, () => {}, true);
-    } catch (error) {
-        console.error("TikTok Download Error:", error);
-        api.setMessageReaction("❌", event.messageID, () => {}, true);
-        message.reply("❌ Failed to download the video.");
+      const videoUrl = video.play || video.wmplay || `https://www.tikwm.com${video.play}`;
+      const caption = `✅ 𝗧𝗶𝗸𝗧𝗼𝗸: ${video.title || 'Video'}\n👤 Creator: @${video.author?.unique_id || 'creator'}`;
+
+      if (message && typeof message.reaction === 'function') message.reaction("✅", event.messageID);
+      return message 
+        ? message.reply({ body: caption, attachment: videoUrl })
+        : api.sendMessage({ body: caption, attachment: videoUrl }, threadID);
+    } catch (err) {
+      if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+      const errMsg = `❌ Failed to download selected video: ${err.message}`;
+      return message ? message.reply(errMsg) : api.sendMessage(errMsg, threadID);
     }
+  },
+
+  run: async function (params) {
+    return module.exports.onStart(params);
   }
 };

@@ -1,3 +1,8 @@
+/**
+ * YouTube Music & Song Downloader Command
+ * Searches YouTube tracks and downloads audio
+ */
+
 const yts = require("yt-search");
 const ytdl = require("@distube/ytdl-core");
 const axios = require("axios");
@@ -8,74 +13,100 @@ const os = require("os");
 module.exports = {
   config: {
     name: "sing",
-    aliases: ["song", "music"],
-    version: "2.0.0",
-    author: "Jisan",
+    aliases: ["song", "music", "play"],
+    version: "2.1.0",
+    author: "Gtajisan && frnAlt",
     cooldown: 5,
     role: 0,
-    description: "Search and download YouTube audio",
+    shortDescription: {
+      en: "Search and download YouTube audio"
+    },
+    longDescription: {
+      en: "Searches YouTube for songs and streams high quality MP3 audio directly."
+    },
     category: "media",
-    usage: "sing <song name>"
+    usage: "{p}sing <song name>"
   },
 
   onStart: async function ({ message, args, event, api, commandName }) {
-    const query = args.join(" ");
-    if (!query) return message.reply("❌ Please provide a song name.\nExample: !sing Faded Alan Walker");
+    const threadID = event.threadId || event.threadID;
+    const query = args.join(" ").trim();
+
+    if (!query) {
+      const prompt = "🎵 𝗬𝗼𝘂𝗧𝘂𝗯𝗲 𝗠𝘂𝘀𝗶𝗰 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗿\n\n📌 Usage: /sing <song name>\nExample: /sing Faded Alan Walker";
+      return message ? message.reply(prompt) : api.sendMessage(prompt, threadID);
+    }
+
+    if (message && typeof message.reaction === 'function') {
+      message.reaction("⏳", event.messageID);
+    }
 
     try {
-      api.setMessageReaction("⏳", event.messageID, () => {}, true);
-
-      let searchResults = [];
-      try {
-        const search = await yts(query);
-        if (search && search.videos && search.videos.length > 0) {
-          searchResults = search.videos.slice(0, 6).map(v => ({
-            title: v.title,
-            url: v.url,
-            duration: v.timestamp || `${Math.floor(v.seconds / 60)}:${v.seconds % 60}`,
-            author: v.author?.name || 'YouTube'
-          }));
-        }
-      } catch (_) {}
+      const search = await yts(query);
+      const searchResults = (search?.videos || []).slice(0, 6).map(v => ({
+        title: v.title,
+        url: v.url,
+        duration: v.timestamp || `${Math.floor(v.seconds / 60)}:${v.seconds % 60}`,
+        author: v.author?.name || 'YouTube'
+      }));
 
       if (searchResults.length === 0) {
-        api.setMessageReaction("❌", event.messageID, () => {}, true);
-        return message.reply("❌ No songs found. Please try another query.");
+        if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+        const noRes = "❌ No songs found. Please try another query.";
+        return message ? message.reply(noRes) : api.sendMessage(noRes, threadID);
       }
 
-      let msg = "🎵 **Select a song to download (Reply with 1-6):**\n\n";
+      let msg = "🎵 𝗬𝗼𝘂𝗧𝘂𝗯𝗲 𝗠𝘂𝘀𝗶𝗰 𝗦𝗲𝗮𝗿𝗰𝗵:\n━━━━━━━━━━━━━━━━━━━━━\n\n";
       searchResults.forEach((v, i) => {
-        msg += `${i + 1}. ${v.title} [${v.duration}]\n`;
+        msg += `${i + 1}. ${v.title}\n   ⏱️ [${v.duration}] | 👤 ${v.author}\n\n`;
       });
+      msg += `👉 Reply with number (1-${searchResults.length}) to download!`;
 
-      const sent = await message.reply({ body: msg.trim() });
-      if (sent && sent.messageID) {
-        global.GoatBot.onReply.set(sent.messageID, {
-          commandName,
+      let sentMessageID;
+      if (message && typeof message.reply === 'function') {
+        const sent = await message.reply(msg);
+        sentMessageID = sent?.messageID;
+      } else {
+        const sent = await api.sendMessage(msg, threadID);
+        sentMessageID = sent?.messageID;
+      }
+
+      if (sentMessageID && global.GoatBot?.onReply) {
+        global.GoatBot.onReply.set(sentMessageID, {
+          commandName: "sing",
           author: event.senderID,
           results: searchResults
         });
       }
-      api.setMessageReaction("✅", event.messageID, () => {}, true);
+
+      if (message && typeof message.reaction === 'function') message.reaction("✅", event.messageID);
     } catch (e) {
-      api.setMessageReaction("❌", event.messageID, () => {}, true);
-      message.reply("❌ Search error. Please try again.");
+      if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+      const errMsg = `❌ Search error: ${e.message}`;
+      return message ? message.reply(errMsg) : api.sendMessage(errMsg, threadID);
     }
   },
 
   onReply: async function ({ message, event, Reply, api }) {
-    if (event.senderID !== Reply.author) return;
-    const choice = parseInt(event.body);
-    if (isNaN(choice) || choice < 1 || choice > Reply.results.length) return;
+    const threadID = event.threadId || event.threadID;
+    if (Reply.author && event.senderID !== Reply.author) return;
+
+    const choice = parseInt(event.body?.trim(), 10);
+    if (isNaN(choice) || choice < 1 || choice > Reply.results.length) {
+      return message ? message.reply(`⚠️ Please reply with a number between 1 and ${Reply.results.length}!`) : api.sendMessage(`⚠️ Please reply with a number between 1 and ${Reply.results.length}!`, threadID);
+    }
 
     const selected = Reply.results[choice - 1];
-    api.unsendMessage(event.messageReply.messageID).catch(() => {});
-    api.setMessageReaction("⏳", event.messageID, () => {}, true);
+    if (global.GoatBot?.onReply) {
+      global.GoatBot.onReply.delete(event.messageReply?.messageID || Reply.messageID);
+    }
+
+    if (message && typeof message.reaction === 'function') message.reaction("⏳", event.messageID);
 
     const tempPath = path.join(os.tmpdir(), `sing_${Date.now()}.mp3`);
 
     try {
-      // Primary: Native ytdl-core stream download
+      // 1. Native ytdl-core stream download
       try {
         const stream = ytdl(selected.url, { filter: 'audioonly', quality: 'highestaudio' });
         const writer = fs.createWriteStream(tempPath);
@@ -87,17 +118,15 @@ module.exports = {
 
         const stats = await fs.stat(tempPath);
         if (stats.size > 1000) {
-          api.setMessageReaction("✅", event.messageID, () => {}, true);
-          await message.reply({
-            body: `🎵 ${selected.title}`,
-            attachment: tempPath
-          });
+          if (message && typeof message.reaction === 'function') message.reaction("✅", event.messageID);
+          const caption = `🎵 𝗡𝗼𝘄 𝗣𝗹𝗮𝘆𝗶𝗻𝗴: ${selected.title}\n⏱️ [${selected.duration}]`;
+          await message.reply({ body: caption, attachment: tempPath });
           setTimeout(() => fs.remove(tempPath).catch(() => {}), 30000);
           return;
         }
       } catch (_) {}
 
-      // Fallback: Cobalt / Direct YouTube MP3 APIs
+      // 2. Cobalt / API Fallbacks
       const dlEndpoints = [
         `https://api.cobalt.tools/api/json`,
         `https://kaiz-apis.gleeze.com/api/ytdl?url=${encodeURIComponent(selected.url)}`
@@ -115,21 +144,22 @@ module.exports = {
           }
 
           if (audioUrl) {
-            api.setMessageReaction("✅", event.messageID, () => {}, true);
-            await message.reply({
-              body: `🎵 ${selected.title}`,
-              attachment: audioUrl
-            });
-            return;
+            if (message && typeof message.reaction === 'function') message.reaction("✅", event.messageID);
+            const caption = `🎵 𝗡𝗼𝘄 𝗣𝗹𝗮𝘆𝗶𝗻𝗴: ${selected.title}`;
+            return message ? message.reply({ body: caption, attachment: audioUrl }) : api.sendMessage({ body: caption, attachment: audioUrl }, threadID);
           }
         } catch (_) {}
       }
 
       throw new Error("Could not fetch audio stream");
     } catch (error) {
-      console.error('sing error:', error.message);
-      api.setMessageReaction("❌", event.messageID, () => {}, true);
-      message.reply(`❌ Download error: ${error.message}`);
+      if (message && typeof message.reaction === 'function') message.reaction("❌", event.messageID);
+      const errMsg = `❌ Download error: ${error.message}`;
+      return message ? message.reply(errMsg) : api.sendMessage(errMsg, threadID);
     }
+  },
+
+  run: async function (params) {
+    return module.exports.onStart(params);
   }
 };

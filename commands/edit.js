@@ -8,7 +8,7 @@ module.exports = {
     name: "edit",
     aliases: ["imgedit", "photoedit", "filterimg"],
     version: "2.0.0",
-    author: "Jisan",
+    author: "Jisan && frnAlt",
     cooldown: 5,
     role: 0,
     description: "Edit photos with AI prompts or apply filters (grayscale, invert, sepia, blur, flip, rotate)",

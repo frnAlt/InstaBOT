@@ -5,7 +5,7 @@ module.exports = {
   config: {
     name: 'gay',
     version: '2.0',
-    author: 'Jisan',
+    author: 'Jisan && frnAlt',
     cooldown: 2,
     role: 0,
     description: 'Generate a dual PFP rainbow canvas image.',
@@ -136,7 +136,7 @@ module.exports = {
       ctx.font = 'bold 26px sans-serif';
       ctx.fillText(`🌈 ${name1} × ${name2} 🌈`, 400, 365);
 
-      const buffer = canvas.toBuffer('image/png');
+      const buffer = canvas.toBuffer('image/jpeg', { quality: 0.9 });
       api.setMessageReaction('✅', event.messageID, () => {}, true);
 
       return message.reply({

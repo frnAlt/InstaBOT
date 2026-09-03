@@ -120,7 +120,7 @@ module.exports = {
       await message.reply({
         body: `@${name} WANTED! 🔒 Locked Up! (Clear view)`,
         mentions: [{ tag: name, id: uid }],
-        attachment: canvas.toBuffer('image/png')
+        attachment: canvas.toBuffer('image/jpeg', { quality: 0.9 })
       });
       api.setMessageReaction('✅', event.messageID, () => {}, true);
     } catch (error) {

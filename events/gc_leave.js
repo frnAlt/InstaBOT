@@ -3,12 +3,12 @@ const config = require('../config');
 
 module.exports = {
   config: { name: 'gc_leave', description: 'Farewell when member leaves' },
-  async run(bot, data) {
+  async run(bot, data = {}) {
     try {
-      if (config.LOG_EVENTS.disableAll || !config.LOG_EVENTS.event) return;
-      const { api } = bot;
-      const { threadID, leftUserId } = data;
-      if (!leftUserId || String(leftUserId) === String(bot.userID)) return;
+      if (config.LOG_EVENTS?.disableAll || !config.LOG_EVENTS?.event) return;
+      const { api } = bot || {};
+      const { threadID, leftUserId } = data || {};
+      if (!threadID || !api || !leftUserId || (bot?.userID && String(leftUserId) === String(bot.userID))) return;
       logger.info(`Member left thread ${threadID}: ${leftUserId}`);
       let name = `User ${leftUserId}`;
       try {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-<title>GoatBot Dashboard</title>
+<title>InstaBOT Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -698,8 +698,8 @@
   <!-- Left Sidebar / Mobile Bottom Nav Bar -->
   <aside>
     <div class="sidebar-logo" id="logo-btn-home">
-      <div class="logo-icon">🐐</div>
-      <div class="logo-text">GoatBot</div>
+      <div class="logo-icon">⚡</div>
+      <div class="logo-text">InstaBOT</div>
     </div>
 
     <div class="nav-menu">
@@ -721,7 +721,7 @@
     <!-- Top Bar Header -->
     <header>
       <div class="header-title">
-        GOATBOT <span>DASHBOARD</span>
+        INSTABOT <span>DASHBOARD</span>
       </div>
 
       <div class="header-right">
@@ -732,11 +732,11 @@
 
         <div class="user-profile" id="btn-user-profile">
           <div class="user-avatar" id="avatar-user-letter">
-            G
+            I
             <div class="status-dot-online" id="dot-user-online"></div>
           </div>
           <div class="user-info">
-            <div class="user-name" id="label-user-name">GoatBot Admin</div>
+            <div class="user-name" id="label-user-name">InstaBOT Admin</div>
             <div class="user-status" id="label-user-status">● Online</div>
           </div>
         </div>
@@ -1006,7 +1006,7 @@
         const data = await res.json();
         state.status = data;
 
-        document.getElementById('label-user-name').innerText = `@${data.username || data.userID || 'GoatBot'}`;
+        document.getElementById('label-user-name').innerText = `@${data.username || data.userID || 'InstaBOT'}`;
         document.getElementById('val-total-users').innerText = data.totalUsers || 0;
         document.getElementById('val-cmd-count').innerText = data.commandCount || 92;
         document.getElementById('val-events-count').innerText = `${data.eventCount || 7} Events`;

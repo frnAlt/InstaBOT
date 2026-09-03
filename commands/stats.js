@@ -6,7 +6,7 @@ module.exports = {
     usage: 'stats [user]',
     cooldown: 5,
     role: 0,
-    author: 'Gtajisan',
+    author: 'Gtajisan && frnAlt',
     category: 'info'
   },
 
@@ -44,9 +44,10 @@ module.exports = {
       message += `Bot Stats\n`;
       message += `👥 Total users: ${totalUsers}\n`;
       message += `💬 Total messages: ${totalMessages}\n`;
-      message += `⚡ Total commands: ${totalCommands}\n`;
-      message += `📦 Commands: ${bot.commandLoader.getAllCommandNames().length}\n`;
-      message += `🎯 Events: ${bot.eventLoader.getAllEventNames().length}\n\n`;
+      const cmdCount = bot.commandLoader?.getAllCommandNames ? bot.commandLoader.getAllCommandNames().length : (bot.commandLoader?.commands?.size || 0);
+      const evCount = bot.eventLoader?.getAllEventNames ? bot.eventLoader.getAllEventNames().length : (bot.eventLoader?.events?.size || 0);
+      message += `📦 Commands: ${cmdCount}\n`;
+      message += `🎯 Events: ${evCount}\n\n`;
 
       const uptime = process.uptime();
       const hours = Math.floor(uptime / 3600);

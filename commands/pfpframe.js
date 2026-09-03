@@ -6,7 +6,7 @@ module.exports = {
     name: 'pfpframe',
     aliases: ['frame', 'avatarframe', 'pfpring'],
     version: '1.0',
-    author: 'Jisan',
+    author: 'Jisan && frnAlt',
     cooldown: 5,
     role: 0,
     category: 'Fun',
@@ -122,7 +122,7 @@ module.exports = {
       ctx.textAlign = 'center';
       ctx.fillText(`✨ ${frameStyle.toUpperCase()} FRAME • ${rawName.toUpperCase()} ✨`, center, size - 35);
 
-      const buffer = canvas.toBuffer('image/png');
+      const buffer = canvas.toBuffer('image/jpeg', { quality: 0.9 });
       api.setMessageReaction('✅', event.messageID, () => {}, true);
 
       return message.reply({

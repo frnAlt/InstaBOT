@@ -15,9 +15,9 @@ module.exports = {
       const event = data;
 
       const currentBotID = bot.userID || (api && typeof api.getCurrentUserID === 'function' ? api.getCurrentUserID() : null);
-      const botIDStr = typeof currentBotID === 'object' ? (currentBotID.userID || currentBotID.userId) : String(currentBotID || '');
+      const botIDStr = (currentBotID && typeof currentBotID === 'object') ? (currentBotID.userID || currentBotID.userId || '') : String(currentBotID || '');
 
-      if (event.isSelf || (event.senderID && botIDStr && String(event.senderID) === String(botIDStr))) return;
+      if (!event || event.isSelf || (event.senderID && botIDStr && String(event.senderID) === String(botIDStr))) return;
       if (config.ANTI_INBOX && !event.isGroup) return;
 
       const replyApi = new Proxy(api, {
@@ -62,19 +62,22 @@ module.exports = {
       user.messageCount = (user.messageCount || 0) + 1;
 
       if (!user.name || !user.username) {
-        // Asynchronously fetch info and save to DB
-        api.getUserInfo(event.senderID).then(infoMap => {
-          const info = infoMap[event.senderID];
-          if (info) {
-            user.name = info.fullName || info.full_name || info.name || '';
-            user.username = info.username || '';
-            user.avatarUrl = info.profilePicUrlHd || info.profile_pic_url_hd || info.profilePicUrl || '';
+        if (typeof api?.getUserInfo === 'function') {
+          api.getUserInfo(event.senderID).then(infoMap => {
+            const info = infoMap && (infoMap[event.senderID] || Object.values(infoMap)[0]);
+            if (info) {
+              user.name = info.fullName || info.full_name || info.name || '';
+              user.username = info.username || '';
+              user.avatarUrl = info.profilePicUrlHd || info.profile_pic_url_hd || info.profilePicUrl || '';
+              database.updateUser(event.senderID, user);
+              database.save();
+            }
+          }).catch(() => {
             database.updateUser(event.senderID, user);
-            database.save();
-          }
-        }).catch(() => {
+          });
+        } else {
           database.updateUser(event.senderID, user);
-        });
+        }
       } else {
         database.updateUser(event.senderID, user);
       }
@@ -228,7 +231,7 @@ module.exports = {
       }
 
 
-      const command = commandLoader.getCommand(commandName);
+      const command = (commandLoader?.getCommand ? commandLoader.getCommand(commandName) : commandLoader?.commands?.get(commandName)) || null;
 
       if (!command) {
           // Check for aliases
@@ -251,10 +254,11 @@ module.exports = {
             }
           }
 
-          const allNames = commandLoader.getAllCommandNames();
-          const closest  = this.findClosestCommand(commandName, allNames);
+          const similar = global.utils?.findSimilarCommand 
+            ? global.utils.findSimilarCommand(commandName, commandLoader?.commands || new Map())
+            : this.findClosestCommand(commandName, commandLoader?.getAllCommandNames ? commandLoader.getAllCommandNames() : [])?.command;
           let msg = `❌ Unknown command: "${commandName}"\n\n`;
-          if (closest && closest.distance <= 3) msg += `💡 Did you mean: ${prefix}${closest.command}?\n\n`;
+          if (similar) msg += `💡 Did you mean: ${prefix}${similar}?\n\n`;
           msg += `Type ${prefix}help to see all available commands.`;
           const sent = await api.sendMessage(msg, event.threadId);
           if (config.AUTO_REMOVE_ERROR?.enable && sent?.messageID) {

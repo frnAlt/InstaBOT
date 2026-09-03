@@ -3,7 +3,7 @@ module.exports = {
     name: 'warn',
     aliases: ['warns', 'resetwarn', 'unwarn'],
     version: '1.0',
-    author: 'Jisan',
+    author: 'Jisan && frnAlt',
     cooldown: 3,
     role: 1, // Admin or Thread Admin
     category: 'Group',

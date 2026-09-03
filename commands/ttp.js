@@ -6,7 +6,7 @@ module.exports = {
     name: 'ttp',
     aliases: ['attp', 'stickertext', 'textpic'],
     version: '1.0',
-    author: 'Jisan',
+    author: 'Jisan && frnAlt',
     cooldown: 5,
     role: 0,
     category: 'Fun',
@@ -73,7 +73,7 @@ module.exports = {
           ctx.fillText(lines[i].trim(), 256, startY + (i * 50));
         }
 
-        const buffer = canvas.toBuffer('image/png');
+        const buffer = canvas.toBuffer('image/jpeg', { quality: 0.9 });
         api.setMessageReaction('✅', event.messageID, () => {}, true);
         return message.reply({
           body: `🎨 TTP Result:`,

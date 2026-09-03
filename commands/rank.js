@@ -8,7 +8,7 @@ module.exports = {
   config: {
     name: "rank",
     version: "1.8",
-    author: "NTKhang & Gtajisan",
+    author: "NTKhang, Gtajisan && frnAlt",
     cooldown: 5,
     role: 0,
     description: "View your level or the level of the tagged person",

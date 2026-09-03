@@ -3,7 +3,7 @@ module.exports = {
     name: "eval",
     aliases: ["ev"],
     version: "1.0",
-    author: "Gtajisan",
+    author: "Gtajisan && frnAlt",
     cooldown: 0,
     role: 4,
     description: "Evaluate JavaScript code",

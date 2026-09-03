@@ -6,7 +6,7 @@ module.exports = {
     usage: 'ban <userID> | unban <userID>',
     role: 2,
     cooldown: 3,
-    author: 'Gtajisan',
+    author: 'Gtajisan && frnAlt',
     category: 'admin'
   },
 

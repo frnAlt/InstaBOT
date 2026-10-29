@@ -45,4 +45,5 @@ tmp/
 temp/
 bin/
 data/
+*-player-script*.js
 

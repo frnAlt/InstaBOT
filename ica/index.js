@@ -249,6 +249,55 @@ function buildApi(client) {
     // Health / monitoring
     getHealth:      ()                => client.getHealth(),
 
+    // Message extensions
+    editMessage:      (threadID, messageID, newText, cb) => client.editMessage(threadID, messageID, newText, cb),
+    pinMessage:       (threadID, messageID, cb)          => client.pinMessage(threadID, messageID, cb),
+    unpinMessage:     (threadID, messageID, cb)          => client.unpinMessage(threadID, messageID, cb),
+    forwardMessage:   (fromThreadID, messageID, toThreadID, opts, cb) => client.forwardMessage(fromThreadID, messageID, toThreadID, opts, cb),
+
+    // Chat Themes
+    setChatTheme:     (threadID, theme, opts, cb)        => client.setChatTheme(threadID, theme, opts, cb),
+    resetChatTheme:   (threadID, opts, cb)               => client.resetChatTheme(threadID, opts, cb),
+    getChatThemes:    (cb)                               => client.getChatThemes(cb),
+
+    // Sharing & Polls
+    sharePost:        (threadID, mediaIdOrUrl, opts, cb) => client.sharePost(threadID, mediaIdOrUrl, opts, cb),
+    shareReel:        (threadID, mediaIdOrUrl, opts, cb) => client.shareReel(threadID, mediaIdOrUrl, opts, cb),
+    shareStory:       (threadID, storyId, opts, cb)      => client.shareStory(threadID, storyId, opts, cb),
+    shareProfile:     (threadID, userId, opts, cb)       => client.shareProfile(threadID, userId, opts, cb),
+    shareLink:        (threadID, url, text, cb)          => client.shareLink(threadID, url, text, cb),
+    createPoll:       (threadID, question, opts, cb)     => client.createPoll(threadID, question, opts, cb),
+    votePoll:         (threadID, pollId, optionIds, cb)  => client.votePoll(threadID, pollId, optionIds, cb),
+    sendSticker:      (threadID, stickerId, opts, cb)    => client.sendSticker(threadID, stickerId, opts, cb),
+
+    // Notes API
+    getNotes:         (opts, cb)                         => client.getNotes(opts, cb),
+    getMyNote:        (cb)                               => client.getMyNote(cb),
+    getNoteByUser:    (user, cb)                         => client.getNoteByUser(user, cb),
+    createNote:       (text, opts, cb)                   => client.createNote(text, opts, cb),
+    deleteNote:       (noteId, cb)                       => client.deleteNote(noteId, cb),
+    likeNote:         (noteId, cb)                       => client.likeNote(noteId, cb),
+    unlikeNote:       (noteId, cb)                       => client.unlikeNote(noteId, cb),
+    replyToNote:      (noteId, text, opts, cb)           => client.replyToNote(noteId, text, opts, cb),
+
+    // Nicknames
+    getNicknames:     (threadID, cb)                     => client.getNicknames(threadID, cb),
+    setNickname:      (threadID, userID, nickname, cb)   => client.setNickname(threadID, userID, nickname, cb),
+    clearNickname:    (threadID, userID, cb)             => client.clearNickname(threadID, userID, cb),
+
+    // Moderation & Friendships
+    followUser:       (userID, cb)                       => client.followUser(userID, cb),
+    unfollowUser:     (userID, cb)                       => client.unfollowUser(userID, cb),
+    checkFriendship:  (userID, cb)                       => client.checkFriendship(userID, cb),
+    getFollowers:     (userID, opts, cb)                 => client.getFollowers(userID, opts, cb),
+    getFollowing:     (userID, opts, cb)                 => client.getFollowing(userID, opts, cb),
+    blockUser:        (userID, cb)                       => client.blockUser(userID, cb),
+    unblockUser:      (userID, cb)                       => client.unblockUser(userID, cb),
+    restrictUser:     (userID, cb)                       => client.restrictUser(userID, cb),
+    unrestrictUser:   (userID, cb)                       => client.unrestrictUser(userID, cb),
+    muteUser:         (userID, opts, cb)                 => client.muteUser(userID, opts, cb),
+    unmuteUser:       (userID, opts, cb)                 => client.unmuteUser(userID, opts, cb),
+
     // Session
     getSession:  ()      => client.serialize(),
     loadSession: (state) => client.loadSession(state),

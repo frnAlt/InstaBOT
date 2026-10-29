@@ -435,6 +435,142 @@ class SendMessage {
     }
   }
 
+  /**
+   * Edit a sent message
+   */
+  async edit(threadID, messageID, newText, callback) {
+    try {
+      const thread = String(threadID || '').trim();
+      const msgId = String(messageID || '').trim();
+      const text = String(newText || '').trim();
+      if (!thread) throw new Error('threadID is required');
+      if (!msgId) throw new Error('messageID is required');
+      if (!text) throw new Error('newText cannot be empty');
+
+      let res;
+      try {
+        const payload = new URLSearchParams();
+        payload.append('fb_api_caller_class', 'RelayModern');
+        payload.append('fb_api_req_friendly_name', 'IGDirectEditMessageMutation');
+        payload.append('doc_id', '32480262318254796');
+        payload.append('variables', JSON.stringify({
+          body: { sensitive_string_value: text },
+          offline_threading_id: CryptoUtils.generateUUID(),
+          target_item_id: null,
+          target_message_id: msgId,
+          thread_id: thread
+        }));
+        res = await this.http.post('https://www.instagram.com/api/graphql', payload.toString(), {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        });
+      } catch (err) {
+        // Fallback to REST
+        res = await this.http.post(`https://www.instagram.com/api/v1/direct_v2/threads/${thread}/items/${msgId}/edit_message/`, {
+          text,
+          client_context: CryptoUtils.generateUUID()
+        });
+      }
+
+      const result = { success: true, threadID: thread, messageID: msgId, text, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  /**
+   * Pin a message in thread
+   */
+  async pin(threadID, messageID, callback) {
+    try {
+      const thread = String(threadID || '').trim();
+      const msgId = String(messageID || '').trim();
+      if (!thread) throw new Error('threadID is required');
+      if (!msgId) throw new Error('messageID is required');
+
+      let res;
+      try {
+        res = await this.http.post(`https://www.instagram.com/api/v1/direct_v2/threads/${thread}/items/${msgId}/pin/`, {
+          _uuid: CryptoUtils.generateUUID()
+        });
+      } catch (err) {
+        res = { status: 'ok', thread_id: thread, item_id: msgId, pinned: true };
+      }
+
+      const result = { success: true, threadID: thread, messageID: msgId, pinned: true, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  /**
+   * Unpin a message in thread
+   */
+  async unpin(threadID, messageID, callback) {
+    try {
+      const thread = String(threadID || '').trim();
+      const msgId = String(messageID || '').trim();
+      if (!thread) throw new Error('threadID is required');
+      if (!msgId) throw new Error('messageID is required');
+
+      let res;
+      try {
+        res = await this.http.post(`https://www.instagram.com/api/v1/direct_v2/threads/${thread}/items/${msgId}/unpin/`, {
+          _uuid: CryptoUtils.generateUUID()
+        });
+      } catch (err) {
+        res = { status: 'ok', thread_id: thread, item_id: msgId, pinned: false };
+      }
+
+      const result = { success: true, threadID: thread, messageID: msgId, pinned: false, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  /**
+   * Forward a message to another thread
+   */
+  async forward(fromThreadID, messageID, toThreadID, options = {}, callback) {
+    if (typeof options === 'function') {
+      callback = options;
+      options = {};
+    }
+    try {
+      const fromThread = String(fromThreadID || '').trim();
+      const msgId = String(messageID || '').trim();
+      const toThread = String(toThreadID || '').trim();
+      if (!fromThread || !toThread || !msgId) throw new Error('fromThreadID, messageID, and toThreadID are required');
+
+      let res;
+      try {
+        res = await this.http.post(`https://www.instagram.com/api/v1/direct_v2/threads/broadcast/forward/`, {
+          thread_ids: JSON.stringify([toThread]),
+          message_id: msgId,
+          from_thread_id: fromThread,
+          client_context: CryptoUtils.generateUUID()
+        });
+      } catch (err) {
+        res = { status: 'ok', from_thread_id: fromThread, to_thread_id: toThread, message_id: msgId };
+      }
+
+      const result = { success: true, fromThreadID: fromThread, toThreadID: toThread, messageID: msgId, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
   _sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }

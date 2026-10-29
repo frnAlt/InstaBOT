@@ -32,6 +32,10 @@ const UserMethods = require('./methods/user');
 const Stories = require('./methods/stories');
 const Live = require('./methods/live');
 const Search = require('./methods/search');
+const Notes = require('./methods/notes');
+const Themes = require('./methods/themes');
+const Sharing = require('./methods/sharing');
+const Nicknames = require('./methods/nicknames');
 
 // Import MQTT Client
 const InstagramMQTTClient = require('./mqtt/instagramRealtime');
@@ -119,6 +123,10 @@ class InstagramChatAPI extends EventEmitter {
     this.stories = new Stories(this.http, { uuid: this.uuid, deviceId: this.deviceId });
     this.live = new Live(this.http, { uuid: this.uuid, deviceId: this.deviceId });
     this.search = new Search(this.http);
+    this.notes = new Notes(this.http, { uuid: this.uuid, deviceId: this.deviceId });
+    this.themes = new Themes(this.http, { uuid: this.uuid });
+    this.sharing = new Sharing(this.http, { uuid: this.uuid, deviceId: this.deviceId });
+    this.nicknames = new Nicknames(this.http, { uuid: this.uuid, deviceId: this.deviceId });
     
     // MQTT client for real-time messaging
     this.mqtt = null;
@@ -473,6 +481,22 @@ class InstagramChatAPI extends EventEmitter {
     return this.sendMessage.reply(threadID, message, replyToMessageID, callback);
   }
 
+  editMessage(threadID, messageID, newText, callback) {
+    return this.sendMessage.edit(threadID, messageID, newText, callback);
+  }
+
+  pinMessage(threadID, messageID, callback) {
+    return this.sendMessage.pin(threadID, messageID, callback);
+  }
+
+  unpinMessage(threadID, messageID, callback) {
+    return this.sendMessage.unpin(threadID, messageID, callback);
+  }
+
+  forwardMessage(fromThreadID, messageID, toThreadID, options, callback) {
+    return this.sendMessage.forward(fromThreadID, messageID, toThreadID, options, callback);
+  }
+
   unsendMessage(messageID, threadIDOrCallback, callback) {
     let threadID = null;
     let cb = null;
@@ -806,6 +830,148 @@ class InstagramChatAPI extends EventEmitter {
     await this.loadSession(state);
     this.logger.info(`Session loaded from ${sessionFile}`);
     return state;
+  }
+
+  // ==================== CHAT THEMES ====================
+
+  setChatTheme(threadID, themeInput, options, callback) {
+    return this.themes.setChatTheme(threadID, themeInput, options, callback);
+  }
+
+  resetChatTheme(threadID, options, callback) {
+    return this.themes.resetChatTheme(threadID, options, callback);
+  }
+
+  getChatThemes(callback) {
+    return this.themes.getThemes(callback);
+  }
+
+  // ==================== SHARING & POLLS ====================
+
+  sharePost(threadID, mediaIdOrUrl, options, callback) {
+    return this.sharing.sharePost(threadID, mediaIdOrUrl, options, callback);
+  }
+
+  shareReel(threadID, mediaIdOrUrl, options, callback) {
+    return this.sharing.shareReel(threadID, mediaIdOrUrl, options, callback);
+  }
+
+  shareStory(threadID, storyMediaId, options, callback) {
+    return this.sharing.shareStory(threadID, storyMediaId, options, callback);
+  }
+
+  shareProfile(threadID, userID, options, callback) {
+    return this.sharing.shareProfile(threadID, userID, options, callback);
+  }
+
+  shareLink(threadID, url, text, callback) {
+    return this.sharing.shareLink(threadID, url, text, callback);
+  }
+
+  createPoll(threadID, question, options, callback) {
+    return this.sharing.createPoll(threadID, question, options, callback);
+  }
+
+  votePoll(threadID, pollId, optionIds, callback) {
+    return this.sharing.votePoll(threadID, pollId, optionIds, callback);
+  }
+
+  sendSticker(threadID, stickerId, options, callback) {
+    return this.sharing.sendSticker(threadID, stickerId, options, callback);
+  }
+
+  // ==================== NOTES API ====================
+
+  getNotes(options, callback) {
+    return this.notes.getNotes(options, callback);
+  }
+
+  getMyNote(callback) {
+    return this.notes.getMyNote(callback);
+  }
+
+  getNoteByUser(usernameOrId, callback) {
+    return this.notes.getNoteByUser(usernameOrId, callback);
+  }
+
+  createNote(text, options, callback) {
+    return this.notes.createNote(text, options, callback);
+  }
+
+  deleteNote(noteId, callback) {
+    return this.notes.deleteNote(noteId, callback);
+  }
+
+  likeNote(noteId, callback) {
+    return this.notes.likeNote(noteId, callback);
+  }
+
+  unlikeNote(noteId, callback) {
+    return this.notes.unlikeNote(noteId, callback);
+  }
+
+  replyToNote(noteId, text, options, callback) {
+    return this.notes.replyToNote(noteId, text, options, callback);
+  }
+
+  // ==================== NICKNAMES ====================
+
+  getNicknames(threadID, callback) {
+    return this.nicknames.getNicknames(threadID, callback);
+  }
+
+  setNickname(threadID, userID, nickname, callback) {
+    return this.nicknames.setNickname(threadID, userID, nickname, callback);
+  }
+
+  clearNickname(threadID, userID, callback) {
+    return this.nicknames.clearNickname(threadID, userID, callback);
+  }
+
+  // ==================== USER MODERATION & FRIENDSHIPS ====================
+
+  followUser(userID, callback) {
+    return this.userMethods.follow(userID, callback);
+  }
+
+  unfollowUser(userID, callback) {
+    return this.userMethods.unfollow(userID, callback);
+  }
+
+  checkFriendship(userID, callback) {
+    return this.userMethods.checkFriendship(userID, callback);
+  }
+
+  getFollowers(userID, options, callback) {
+    return this.userMethods.getFollowers(userID, options, callback);
+  }
+
+  getFollowing(userID, options, callback) {
+    return this.userMethods.getFollowing(userID, options, callback);
+  }
+
+  blockUser(userID, callback) {
+    return this.userMethods.block(userID, callback);
+  }
+
+  unblockUser(userID, callback) {
+    return this.userMethods.unblock(userID, callback);
+  }
+
+  restrictUser(userID, callback) {
+    return this.userMethods.restrict(userID, callback);
+  }
+
+  unrestrictUser(userID, callback) {
+    return this.userMethods.unrestrict(userID, callback);
+  }
+
+  muteUser(userID, options, callback) {
+    return this.userMethods.mute(userID, options, callback);
+  }
+
+  unmuteUser(userID, options, callback) {
+    return this.userMethods.unmute(userID, options, callback);
   }
 
   // ==================== EVENT EMITTER ====================

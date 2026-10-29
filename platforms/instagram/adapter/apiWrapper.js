@@ -725,15 +725,83 @@ function createAPIWrapper(rawClient, config = {}) {
 
 		setTitle: (title, threadID, callback) => wrapper.changeThreadTitle(threadID, title, callback),
 
-		// ── Graceful Fallbacks for Facebook-Specific Methods ──
+		// ── Chat Themes & Nicknames Integration ──
 		changeThreadColor: async (color, threadID, callback) => {
-			const result = { success: false, unsupported: true, message: "Thread themes/colors are not supported on Instagram Direct." };
-			return wrapCallback(Promise.resolve(result), callback);
+			const promise = (async () => {
+				if (ig && typeof ig.setChatTheme === "function") {
+					return await ig.setChatTheme(threadID, color);
+				}
+				return { success: false, unsupported: true, message: "Chat themes not available on current ICA client" };
+			})();
+			return wrapCallback(promise, callback);
+		},
+
+		setChatTheme: (threadID, theme, opts, callback) => {
+			if (typeof opts === "function") { callback = opts; opts = {}; }
+			const promise = (async () => {
+				if (ig && typeof ig.setChatTheme === "function") {
+					return await ig.setChatTheme(threadID, theme, opts);
+				}
+				return { success: false, unsupported: true };
+			})();
+			return wrapCallback(promise, callback);
 		},
 
 		changeNickname: async (nickname, threadID, userID, callback) => {
-			const result = { success: false, unsupported: true, message: "Thread nicknames are not supported on Instagram Direct." };
-			return wrapCallback(Promise.resolve(result), callback);
+			const promise = (async () => {
+				if (ig && typeof ig.setNickname === "function") {
+					return await ig.setNickname(threadID, userID, nickname);
+				}
+				if (ig && typeof ig.changeNickname === "function") {
+					return await ig.changeNickname(userID, threadID, nickname);
+				}
+				return { success: false, unsupported: true, message: "Nicknames not available on current ICA client" };
+			})();
+			return wrapCallback(promise, callback);
+		},
+
+		setNickname: (threadID, userID, nickname, callback) => wrapper.changeNickname(nickname, threadID, userID, callback),
+
+		// ── Message Actions ──
+		editMessage: async (threadID, messageID, text, callback) => {
+			const promise = (async () => {
+				if (ig && typeof ig.editMessage === "function") {
+					return await ig.editMessage(threadID, messageID, text);
+				}
+				return { success: false, unsupported: true };
+			})();
+			return wrapCallback(promise, callback);
+		},
+
+		pinMessage: async (threadID, messageID, callback) => {
+			const promise = (async () => {
+				if (ig && typeof ig.pinMessage === "function") {
+					return await ig.pinMessage(threadID, messageID);
+				}
+				return { success: false, unsupported: true };
+			})();
+			return wrapCallback(promise, callback);
+		},
+
+		unpinMessage: async (threadID, messageID, callback) => {
+			const promise = (async () => {
+				if (ig && typeof ig.unpinMessage === "function") {
+					return await ig.unpinMessage(threadID, messageID);
+				}
+				return { success: false, unsupported: true };
+			})();
+			return wrapCallback(promise, callback);
+		},
+
+		forwardMessage: async (fromThreadID, messageID, toThreadID, opts, callback) => {
+			if (typeof opts === "function") { callback = opts; opts = {}; }
+			const promise = (async () => {
+				if (ig && typeof ig.forwardMessage === "function") {
+					return await ig.forwardMessage(fromThreadID, messageID, toThreadID, opts);
+				}
+				return { success: false, unsupported: true };
+			})();
+			return wrapCallback(promise, callback);
 		},
 
 		addFriend: async (userID, callback) => {

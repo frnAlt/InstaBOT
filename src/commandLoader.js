@@ -22,6 +22,14 @@ const REQUIRED = ["name", "category"];
 function validate(script, file, type) {
 	if (!script || typeof script !== "object")
 		throw new Error(`${file}: ${type} must export an object`);
+	if (!script.config && script.meta) {
+		script.config = script.meta;
+	}
+	if (!script.config && script.default && typeof script.default === "object") {
+		script.config = script.default.config || script.default.meta;
+		if (!script.onStart && script.default.onStart) script.onStart = script.default.onStart;
+		if (!script.onStart && script.default.run) script.onStart = script.default.run;
+	}
 	if (typeof script.config !== "object" || !script.config)
 		throw new Error(`${file}: missing "config" object`);
 

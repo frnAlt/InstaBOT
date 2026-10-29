@@ -65,6 +65,216 @@ class UserMethods {
     }
   }
 
+  // Check friendship status
+  async checkFriendship(userID, callback) {
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      if (!uid) throw new Error('userID is required');
+
+      const res = await this.http.get(`https://www.instagram.com/api/v1/friendships/show/${uid}/`);
+      const status = {
+        userId: uid,
+        following: Boolean(res?.following),
+        followedBy: Boolean(res?.followed_by),
+        blocking: Boolean(res?.blocking),
+        muting: Boolean(res?.muting),
+        isPrivate: Boolean(res?.is_private),
+        incomingRequest: Boolean(res?.incoming_request),
+        outgoingRequest: Boolean(res?.outgoing_request),
+        isBestie: Boolean(res?.is_bestie),
+        isRestricted: Boolean(res?.is_restricted),
+        raw: res
+      };
+      if (callback) return callback(null, status);
+      return status;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  // Follow user
+  async follow(userID, callback) {
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      if (!uid) throw new Error('userID is required');
+
+      const res = await this.http.post(`https://www.instagram.com/api/v1/friendships/create/${uid}/`, {});
+      const result = { success: Boolean(res?.status === 'ok' || res?.friendship_status?.following), userId: uid, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  // Unfollow user
+  async unfollow(userID, callback) {
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      if (!uid) throw new Error('userID is required');
+
+      const res = await this.http.post(`https://www.instagram.com/api/v1/friendships/destroy/${uid}/`, {});
+      const result = { success: Boolean(res?.status === 'ok' || !res?.friendship_status?.following), userId: uid, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  // Get followers list
+  async getFollowers(userID, options = {}, callback) {
+    if (typeof options === 'function') {
+      callback = options;
+      options = {};
+    }
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      const maxId = options.maxId ? `&max_id=${options.maxId}` : '';
+      const res = await this.http.get(`https://www.instagram.com/api/v1/friendships/${uid}/followers/?count=${options.count || 50}${maxId}`);
+      const users = (res?.users || []).map(u => FormatUtils.formatUser(u));
+      const result = { users, nextMaxId: res?.next_max_id || null, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  // Get following list
+  async getFollowing(userID, options = {}, callback) {
+    if (typeof options === 'function') {
+      callback = options;
+      options = {};
+    }
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      const maxId = options.maxId ? `&max_id=${options.maxId}` : '';
+      const res = await this.http.get(`https://www.instagram.com/api/v1/friendships/${uid}/following/?count=${options.count || 50}${maxId}`);
+      const users = (res?.users || []).map(u => FormatUtils.formatUser(u));
+      const result = { users, nextMaxId: res?.next_max_id || null, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  // Block user
+  async block(userID, callback) {
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      if (!uid) throw new Error('userID is required');
+
+      const res = await this.http.post(`https://www.instagram.com/api/v1/friendships/block/${uid}/`, {});
+      const result = { success: Boolean(res?.status === 'ok' || res?.friendship_status?.blocking), userId: uid, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  // Unblock user
+  async unblock(userID, callback) {
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      if (!uid) throw new Error('userID is required');
+
+      const res = await this.http.post(`https://www.instagram.com/api/v1/friendships/unblock/${uid}/`, {});
+      const result = { success: Boolean(res?.status === 'ok' || !res?.friendship_status?.blocking), userId: uid, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  // Restrict user
+  async restrict(userID, callback) {
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      if (!uid) throw new Error('userID is required');
+
+      const res = await this.http.post('https://www.instagram.com/api/v1/restrict_action/restrict/', { target_user_id: uid });
+      const result = { success: Boolean(res?.status === 'ok'), userId: uid, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  // Unrestrict user
+  async unrestrict(userID, callback) {
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      if (!uid) throw new Error('userID is required');
+
+      const res = await this.http.post('https://www.instagram.com/api/v1/restrict_action/unrestrict/', { target_user_id: uid });
+      const result = { success: Boolean(res?.status === 'ok'), userId: uid, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  // Mute user media/stories
+  async mute(userID, options = {}, callback) {
+    if (typeof options === 'function') {
+      callback = options;
+      options = {};
+    }
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      const payload = {
+        target_posts_author_id: uid,
+        target_reel_author_id: uid,
+        ...options
+      };
+      const res = await this.http.post('https://www.instagram.com/api/v1/friendships/mute_posts_or_story_from_follow/', payload);
+      const result = { success: Boolean(res?.status === 'ok'), userId: uid, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
+  // Unmute user media/stories
+  async unmute(userID, options = {}, callback) {
+    if (typeof options === 'function') {
+      callback = options;
+      options = {};
+    }
+    try {
+      const uid = String(userID || '').trim().replace(/^@/, '');
+      const payload = {
+        target_posts_author_id: uid,
+        target_reel_author_id: uid,
+        ...options
+      };
+      const res = await this.http.post('https://www.instagram.com/api/v1/friendships/unmute_posts_or_story_from_follow/', payload);
+      const result = { success: Boolean(res?.status === 'ok'), userId: uid, raw: res };
+      if (callback) return callback(null, result);
+      return result;
+    } catch (error) {
+      if (callback) return callback(error);
+      throw error;
+    }
+  }
+
   // Search users
   async search(query, options = {}, callback) {
     if (typeof options === 'function') {

@@ -3975,6 +3975,155 @@ async function main() {
 		}
 	});
 
+	await test("ica: Notes API handles getNotes, createNote, likeNote, deleteNote", async () => {
+		const Notes = require("../ica/src/methods/notes");
+		const calls = [];
+		const fakeHttp = {
+			userId: "12345",
+			get: async (url) => {
+				calls.push({ method: "GET", url });
+				return { items: [{ id: "n1", text: "hello note", user: { pk: "12345", username: "tester" }, created_at: 1700000000 }] };
+			},
+			post: async (url, data) => {
+				calls.push({ method: "POST", url, data });
+				return { status: "ok", id: "note_123" };
+			}
+		};
+		const notes = new Notes(fakeHttp);
+		const list = await notes.getNotes();
+		assert.strictEqual(list.length, 1);
+		assert.strictEqual(list[0].text, "hello note");
+
+		const myNote = await notes.getMyNote();
+		assert.strictEqual(myNote.id, "n1");
+
+		const created = await notes.createNote("test note");
+		assert.strictEqual(created.success, true);
+
+		const liked = await notes.likeNote("n1");
+		assert.strictEqual(liked.success, true);
+
+		const deleted = await notes.deleteNote("n1");
+		assert.strictEqual(deleted.success, true);
+	});
+
+	await test("ica: Themes API resolves verified themes and executes setChatTheme", async () => {
+		const Themes = require("../ica/src/methods/themes");
+		const calls = [];
+		const fakeHttp = {
+			post: async (url, data) => {
+				calls.push({ url, data });
+				return { status: "ok" };
+			}
+		};
+		const themes = new Themes(fakeHttp);
+		const ocean = themes.resolveTheme("ocean");
+		assert.ok(ocean, "must resolve ocean theme");
+		assert.strictEqual(ocean.themeId, "527564631955494");
+
+		const searchRes = themes.searchThemes("love");
+		assert.ok(searchRes.length > 0);
+
+		const setRes = await themes.setChatTheme("thread_100", "ocean");
+		assert.strictEqual(setRes.success, true);
+		assert.strictEqual(setRes.themeId, "527564631955494");
+
+		const resetRes = await themes.resetChatTheme("thread_100");
+		assert.strictEqual(resetRes.success, true);
+		assert.strictEqual(resetRes.themeId, "3259963564026002");
+	});
+
+	await test("ica: Sharing API resolves shortcodes and creates DM polls", async () => {
+		const Sharing = require("../ica/src/methods/sharing");
+		const mediaId = Sharing.resolveMediaId("https://www.instagram.com/reel/C5xyzAb123_/?igsh=123");
+		assert.ok(mediaId, "must decode reel URL to numeric media ID");
+
+		const calls = [];
+		const fakeHttp = {
+			post: async (url, data) => {
+				calls.push({ url, data });
+				return { status: "ok", poll: { poll_id: "poll_999" } };
+			}
+		};
+		const sharing = new Sharing(fakeHttp);
+		const pollRes = await sharing.createPoll("thread_100", "Best food?", ["Pizza", "Burger"]);
+		assert.strictEqual(pollRes.success, true);
+		assert.strictEqual(pollRes.pollId, "poll_999");
+		assert.strictEqual(pollRes.options.length, 2);
+
+		const postShare = await sharing.sharePost("thread_100", mediaId, { text: "check this" });
+		assert.strictEqual(postShare.success, true);
+	});
+
+	await test("ica: Nicknames API gets and sets chat nicknames", async () => {
+		const Nicknames = require("../ica/src/methods/nicknames");
+		const calls = [];
+		const fakeHttp = {
+			post: async (url, data) => {
+				calls.push({ url, data });
+				return { status: "ok" };
+			}
+		};
+		const nicknames = new Nicknames(fakeHttp);
+		const setRes = await nicknames.setNickname("thread_100", "user_55", "Captain");
+		assert.strictEqual(setRes.success, true);
+		assert.strictEqual(setRes.nickname, "Captain");
+
+		const clearRes = await nicknames.clearNickname("thread_100", "user_55");
+		assert.strictEqual(clearRes.success, true);
+		assert.strictEqual(clearRes.nickname, "");
+	});
+
+	await test("ica: Message actions edit, pin, unpin, forward", async () => {
+		const SendMessage = require("../ica/src/methods/sendMessage");
+		const calls = [];
+		const fakeHttp = {
+			post: async (url, data) => {
+				calls.push({ url, data });
+				return { status: "ok" };
+			}
+		};
+		const sm = new SendMessage(fakeHttp);
+		const editRes = await sm.edit("thread_100", "msg_1", "edited text");
+		assert.strictEqual(editRes.success, true);
+		assert.strictEqual(editRes.text, "edited text");
+
+		const pinRes = await sm.pin("thread_100", "msg_1");
+		assert.strictEqual(pinRes.success, true);
+		assert.strictEqual(pinRes.pinned, true);
+
+		const unpinRes = await sm.unpin("thread_100", "msg_1");
+		assert.strictEqual(unpinRes.success, true);
+		assert.strictEqual(unpinRes.pinned, false);
+
+		const forwardRes = await sm.forward("thread_100", "msg_1", "thread_200");
+		assert.strictEqual(forwardRes.success, true);
+	});
+
+	await test("ica: User friendships follow, unfollow, and checkFriendship", async () => {
+		const UserMethods = require("../ica/src/methods/user");
+		const calls = [];
+		const fakeHttp = {
+			get: async (url) => {
+				calls.push({ method: "GET", url });
+				return { following: true, followed_by: false };
+			},
+			post: async (url, data) => {
+				calls.push({ method: "POST", url, data });
+				return { status: "ok" };
+			}
+		};
+		const user = new UserMethods(fakeHttp);
+		const status = await user.checkFriendship("user_88");
+		assert.strictEqual(status.following, true);
+
+		const followRes = await user.follow("user_88");
+		assert.strictEqual(followRes.success, true);
+
+		const unfollowRes = await user.unfollow("user_88");
+		assert.strictEqual(unfollowRes.success, true);
+	});
+
 	/* ── summary ── */
 	const failed = results.filter(r => !r.ok);
 	for (const r of results)

@@ -4340,6 +4340,76 @@ async function main() {
 		assert.ok(calls.some(c => c.method === "pinMessage" && c.mid === "m99"));
 	});
 
+	await test("ica: modular InstaChatClient, Session, and services", async () => {
+		const ica = require("../ica");
+		const { getICA } = require("../platforms/instagram/ica");
+
+		assert.strictEqual(typeof ica.InstaChatClient, "function");
+		assert.strictEqual(typeof ica.Session, "function");
+		assert.strictEqual(typeof ica.ConversationsService, "function");
+		assert.strictEqual(typeof ica.MessagesService, "function");
+		assert.strictEqual(typeof ica.NotesService, "function");
+		assert.strictEqual(typeof ica.ThemesService, "function");
+		assert.strictEqual(typeof ica.SharingService, "function");
+		assert.strictEqual(ica.NOTE_AUDIENCES.CLOSE_FRIENDS, 1);
+
+		const modular = getICA({ mode: "modular" });
+		assert.strictEqual(modular.mode, "modular");
+		assert.strictEqual(typeof modular.InstaChatClient, "function");
+
+		const client = new ica.InstaChatClient({ userId: "55555", cookieString: "sessionid=xyz; csrftoken=123;" });
+		assert.ok(client.notes && client.themes && client.messages && client.sharing && client.users);
+	});
+
+	await test("commands: farm, chop, dig, flipcoin, and roll gathering and gambling engines", async () => {
+		const farmCmd = require("../commands/farm");
+		const chopCmd = require("../commands/chop");
+		const digCmd = require("../commands/dig");
+		const flipcoinCmd = require("../commands/flipcoin");
+		const rollCmd = require("../commands/roll");
+
+		let moneyStore = 10000;
+		const fakeUsersData = {
+			getMoney: async () => moneyStore,
+			addMoney: async (uid, amt) => { moneyStore += amt; return moneyStore; },
+			subtractMoney: async (uid, amt) => { moneyStore -= amt; return moneyStore; },
+			get: async () => ({ data: { inventory: ["axe_titanium", "shovel_steel"] } })
+		};
+
+		const replies = [];
+		const msg = { reply: (txt) => { replies.push(txt); return { messageID: "m1" }; } };
+
+		// Farm
+		await farmCmd.run({ event: { senderID: "u1", threadID: "t1" }, message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("HARVEST") || replies[replies.length - 1].includes("Yield:"));
+
+		// Chop
+		await chopCmd.run({ event: { senderID: "u1", threadID: "t1" }, message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("LUMBERJACK") || replies[replies.length - 1].includes("Harvested:"));
+
+		// Dig
+		await digCmd.run({ event: { senderID: "u1", threadID: "t1" }, message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("ARCHEOLOGICAL") || replies[replies.length - 1].includes("Unearthed:"));
+
+		// Flipcoin
+		await flipcoinCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: ["heads", "100"], message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("FLIP COIN") || replies[replies.length - 1].includes("Result:"));
+
+		// Roll
+		await rollCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: ["100"], message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("DICE ROLL") || replies[replies.length - 1].includes("Roll:"));
+	});
+
+	await test("commands: quote and wisdom utilities", async () => {
+		const quoteCmd = require("../commands/quote");
+
+		const replies = [];
+		const msg = { reply: (txt) => { replies.push(txt); return { messageID: "m1" }; } };
+
+		await quoteCmd.run({ event: { threadID: "t1" }, message: msg });
+		assert.ok(replies[replies.length - 1].includes("WISDOM") || replies[replies.length - 1].includes("—"));
+	});
+
 	/* ── summary ── */
 	const failed = results.filter(r => !r.ok);
 	for (const r of results)

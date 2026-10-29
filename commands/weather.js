@@ -1,109 +1,69 @@
-const axios = require("axios");
-const moment = require("moment-timezone");
-const Canvas = require("../func/canvasHelper");
-const fs = require("fs-extra");
-const path = require("path");
+'use strict';
 
-try {
-	Canvas.registerFont(
-		path.join(__dirname, "assets/font/BeVietnamPro-SemiBold.ttf"), {
-		family: "BeVietnamPro-SemiBold"
-	});
-	Canvas.registerFont(
-		path.join(__dirname, "assets/font/BeVietnamPro-Regular.ttf"), {
-		family: "BeVietnamPro-Regular"
-	});
-} catch (_) {}
+/**
+ * Weather Command - Real-time worldwide weather forecasts
+ */
 
-function convertFtoC(F) {
-	return Math.floor((F - 32) / 1.8);
-}
-function formatHours(hours, timezone = "UTC") {
-	return moment(hours).tz(timezone).format("HH[h]mm[p]");
-}
+const axios = require('axios');
 
 module.exports = {
-	config: {
-		name: "weather",
-		version: "1.2",
-		author: "NTKhang",
-		cooldown: 5,
-		role: 0,
-		description: "view the current and next 5 days weather forecast",
-		category: "other",
-		usage: "{pn} <location>"
-	},
+  config: {
+    name: 'weather',
+    aliases: ['forecast', 'climate', 'temp'],
+    version: '1.0.0',
+    author: 'frnAlt',
+    cooldown: 3,
+    role: 0,
+    category: 'utilities',
+    description: 'Check live weather and temperature forecasts for any city',
+    usage: 'weather <city name>'
+  },
 
-	async onStart({ args, message, config }) {
-		const apikey = "d7e795ae6a0d44aaa8abb1a0a7ac19e4";
-        const timezone = config.TIMEZONE || "UTC";
+  async run({ api, event, args, message }) {
+    const tid = event.threadID || event.threadId;
+    const query = args.join(' ').trim();
 
-		const area = args.join(" ");
-		if (!area)
-			return message.reply("Please enter a location");
-		let areaKey, dataWeather, areaName;
+    if (!query) {
+      const err = '❌ Please enter a city or location: *weather Tokyo (or *weather New York, London, Paris)';
+      return message?.reply ? message.reply(err) : api?.sendMessage(err, tid, undefined, event.messageID);
+    }
 
-		try {
-			const response = (await axios.get(`https://api.accuweather.com/locations/v1/cities/search.json?q=${encodeURIComponent(area)}&apikey=${apikey}&language=en-us`)).data;
-			if (response.length == 0)
-				return message.reply(`Location not found: ${area}`);
-			const data = response[0];
-			areaKey = data.Key;
-			areaName = data.LocalizedName;
-		}
-		catch (err) {
-			return message.reply(`Error: ${err.response?.data?.Message || err.message}`);
-		}
+    try {
+      const url = `https://wttr.in/${encodeURIComponent(query)}?format=j1`;
+      const res = await axios.get(url, { timeout: 8000 });
+      const current = res.data?.current_condition?.[0];
+      const area = res.data?.nearest_area?.[0];
 
-		try {
-			dataWeather = (await axios.get(`http://api.accuweather.com/forecasts/v1/daily/10day/${areaKey}?apikey=${apikey}&details=true&language=en`)).data;
-		}
-		catch (err) {
-			return message.reply(`❌ Error: ${err.response?.data?.Message || err.message}`);
-		}
+      if (!current || !area) {
+        throw new Error('Location not found or no weather data available.');
+      }
 
-		const dataWeatherDaily = dataWeather.DailyForecasts;
-		const dataWeatherToday = dataWeatherDaily[0];
-		const msg = `Today's weather in ${areaName}: ${dataWeather.Headline.Text}\n🌡 Low - high temperature ${convertFtoC(dataWeatherToday.Temperature.Minimum.Value)}°C - ${convertFtoC(dataWeatherToday.Temperature.Maximum.Value)}°C\n🌡 Feels like ${convertFtoC(dataWeatherToday.RealFeelTemperature.Minimum.Value)}°C - ${convertFtoC(dataWeatherToday.RealFeelTemperature.Maximum.Value)}°C\n🌅 Sunrise ${formatHours(dataWeatherToday.Sun.Rise, timezone)}\n🌄 Sunset ${formatHours(dataWeatherToday.Sun.Set, timezone)}\n🌞 Day: ${dataWeatherToday.Day.LongPhrase}\n🌙 Night: ${dataWeatherToday.Night.LongPhrase}`;
+      const cityName = area.areaName?.[0]?.value || query;
+      const country = area.country?.[0]?.value || '';
+      const condition = current.weatherDesc?.[0]?.value || 'Clear';
+      const tempC = current.temp_C;
+      const tempF = current.temp_F;
+      const feelsLike = current.FeelsLikeC;
+      const humidity = current.humidity;
+      const windKmph = current.windspeedKmph;
+      const uv = current.uvIndex;
 
-		const bgPath = path.join(__dirname, "assets/image/bgWeather.jpg");
-        if (!fs.existsSync(bgPath)) return message.reply(msg);
+      const text =
+        `🌤️ 𝐖𝐄𝐀𝐓𝐇𝐄𝐑 𝐑𝐄𝐏𝐎𝐑𝐓: ${cityName.toUpperCase()}, ${country.toUpperCase()}\n` +
+        `─`.repeat(28) + `\n` +
+        `🌡️ Temperature:   ${tempC}°C / ${tempF}°F\n` +
+        `🤔 Feels Like:     ${feelsLike}°C\n` +
+        `☁️ Condition:      ${condition}\n` +
+        `💧 Humidity:       ${humidity}%\n` +
+        `💨 Wind Speed:     ${windKmph} km/h\n` +
+        `☀️ UV Index:       ${uv}\n` +
+        `─`.repeat(28) + `\n` +
+        `🕒 Observed at:    ${current.observation_time || 'Recent'}`;
 
-		const bg = await Canvas.loadImage(bgPath);
-		const { width, height } = bg;
-		const canvas = Canvas.createCanvas(width, height);
-		const ctx = canvas.getContext("2d");
-		ctx.drawImage(bg, 0, 0, width, height);
-		let X = 100;
-		ctx.fillStyle = "#ffffff";
-		const data = dataWeather.DailyForecasts.slice(0, 7);
-		for (const item of data) {
-			// SVG might not be supported directly by node-canvas without extra libs, skipping icon for simplicity in port
-			ctx.font = "30px BeVietnamPro-SemiBold";
-			const maxC = `${convertFtoC(item.Temperature.Maximum.Value)}°C `;
-			ctx.fillText(maxC, X, 366);
-
-			ctx.font = "30px BeVietnamPro-Regular";
-			const minC = String(`${convertFtoC(item.Temperature.Minimum.Value)}°C`);
-			const day = moment(item.Date).format("DD");
-			ctx.fillText(minC, X, 445);
-			ctx.fillText(day, X + 20, 140);
-
-			X += 135;
-		}
-
-		const tempDir = path.join(process.cwd(), "temp");
-		await fs.ensureDir(tempDir);
-		const pathSaveImg = path.join(tempDir, `weather_${areaKey}_${Date.now()}.jpg`);
-		await fs.writeFile(pathSaveImg, canvas.toBuffer("image/jpeg", { quality: 0.9 }));
-
-		const sent = await message.reply({
-			body: msg,
-			attachment: pathSaveImg,
-			textFirst: true
-		});
-		setTimeout(() => fs.unlink(pathSaveImg).catch(() => {}), 20000);
-		return sent;
-
-	}
+      return message?.reply ? message.reply(text) : api.sendMessage(text, tid, undefined, event.messageID);
+    } catch (err) {
+      const errText = `❌ Could not fetch weather for "${query}": ${err.message}`;
+      return message?.reply ? message.reply(errText) : api.sendMessage(errText, tid, undefined, event.messageID);
+    }
+  }
 };

@@ -19,6 +19,30 @@ const InstagramChatAPI = require('./src/instagramChat');
 const CookieUtils = require('./src/utils/cookies');
 const { setOptions } = require('./src/utils/setOptions');
 
+// Modular instagram-chat-api exports
+const InstaChatClient = require('./src/client');
+const Session = require('./src/auth/session');
+const { createSessionFromCookieString, createSessionFromCookies } = require('./src/auth/credentials');
+const Events = require('./src/constants/events');
+const Endpoints = require('./src/constants/endpoints');
+const errors = require('./src/utils/errors');
+const User = require('./src/models/user');
+const Message = require('./src/models/message');
+const Conversation = require('./src/models/conversation');
+const Note = require('./src/models/note');
+const ConversationsService = require('./src/services/conversations');
+const ThreadsService = require('./src/services/threads');
+const MessagesService = require('./src/services/messages');
+const MediaService = require('./src/services/media');
+const SharingService = require('./src/services/sharing');
+const ReactionsService = require('./src/services/reactions');
+const ReadReceiptsService = require('./src/services/read-receipts');
+const ThemesService = require('./src/services/themes');
+const NicknamesService = require('./src/services/nicknames');
+const UsersService = require('./src/services/users');
+const NotesService = require('./src/services/notes');
+const { NOTE_AUDIENCES } = require('./src/utils/validators');
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Build the api object from an authenticated client
 // ─────────────────────────────────────────────────────────────────────────────
@@ -406,6 +430,32 @@ login.setOptions       = setOptions;
 login.createClient     = (opts) => new InstagramChatAPI(opts);
 login.buildApi         = buildApi;
 login.resolveMediaArgs = resolveMediaArgs;
+
+// Modular instagram-chat-api exports
+login.InstaChatClient = InstaChatClient;
+login.Session = Session;
+login.createSessionFromCookieString = createSessionFromCookieString;
+login.createSessionFromCookies = createSessionFromCookies;
+login.Events = Events;
+login.Endpoints = Endpoints;
+login.errors = errors;
+login.User = User;
+login.Message = Message;
+login.Conversation = Conversation;
+login.Note = Note;
+login.ConversationsService = ConversationsService;
+login.ThreadsService = ThreadsService;
+login.MessagesService = MessagesService;
+login.MediaService = MediaService;
+login.SharingService = SharingService;
+login.ReactionsService = ReactionsService;
+login.ReadReceiptsService = ReadReceiptsService;
+login.ThemesService = ThemesService;
+login.NicknamesService = NicknamesService;
+login.UsersService = UsersService;
+login.NotesService = NotesService;
+login.NOTE_AUDIENCES = NOTE_AUDIENCES;
+login.NoteAudience = NOTE_AUDIENCES;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Exports

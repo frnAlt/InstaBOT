@@ -1,141 +1,57 @@
-"use strict";
+'use strict';
 
-const { createCanvas } = require("../func/canvasHelper");
-const fs = require("fs-extra");
-const path = require("path");
-const { resolveProfile } = require("../src/utils");
+/**
+ * Quote Command - Philosophical, inspirational, and wisdom quotes
+ */
 
-const DEFAULT_QUOTES = [
-  { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
-  { quote: "It always seems impossible until it's done.", author: "Nelson Mandela" },
-  { quote: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
-  { quote: "Act as if what you do makes a difference. It does.", author: "William James" },
-  { quote: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
-  { quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" }
+const QUOTES = [
+  { text: 'We suffer more often in imagination than in reality.', author: 'Seneca' },
+  { text: 'The happiness of your life depends upon the quality of your thoughts.', author: 'Marcus Aurelius' },
+  { text: 'He who has a why to live can bear almost any how.', author: 'Friedrich Nietzsche' },
+  { text: 'In the midst of chaos, there is also opportunity.', author: 'Sun Tzu' },
+  { text: 'Life is not a problem to be solved, but a reality to be experienced.', author: 'Søren Kierkegaard' },
+  { text: 'It does not matter how slowly you go as long as you do not stop.', author: 'Confucius' },
+  { text: 'Knowing yourself is the beginning of all wisdom.', author: 'Aristotle' },
+  { text: 'I think, therefore I am.', author: 'René Descartes' },
+  { text: 'The only true wisdom is in knowing you know nothing.', author: 'Socrates' },
+  { text: 'Imagination is more important than knowledge.', author: 'Albert Einstein' },
+  { text: 'The only way to do great work is to love what you do.', author: 'Steve Jobs' },
+  { text: 'Waste no more time arguing what a good man should be. Be one.', author: 'Marcus Aurelius' },
+  { text: 'Difficulties strengthen the mind, as labor does the body.', author: 'Seneca' },
+  { text: 'Act as if what you do makes a difference. It does.', author: 'William James' },
+  { text: 'Success is not final, failure is not fatal: it is the courage to continue that counts.', author: 'Winston Churchill' },
+  { text: 'Do what you can, with what you have, where you are.', author: 'Theodore Roosevelt' },
+  { text: 'Happiness is not something ready made. It comes from your own actions.', author: 'Dalai Lama' },
+  { text: 'The unexamined life is not worth living.', author: 'Socrates' },
+  { text: 'Turn your wounds into wisdom.', author: 'Oprah Winfrey' },
+  { text: 'Simplicity is the ultimate sophistication.', author: 'Leonardo da Vinci' }
 ];
 
 module.exports = {
   config: {
-    name: "quote",
-    aliases: ["quotes", "inspire", "quotecard"],
-    version: "2.0.0",
-    author: "frnAlt & Floppa Team",
-    cooldown: 5,
+    name: 'quote',
+    aliases: ['motivate', 'wisdom', 'inspiration'],
+    version: '1.0.0',
+    author: 'frnAlt',
+    cooldown: 2,
     role: 0,
-    description: { en: "Generate a beautifully styled Canvas quote card" },
-    category: "fun",
-    usage: { en: "{p}quote [custom text | author] or just {p}quote" }
+    category: 'fun',
+    description: 'Get an inspiring philosophical quote or word of wisdom',
+    usage: 'quote'
   },
 
-  onStart: async function ({ api, event, args, message }) {
-    let text = args.join(" ").trim();
-    let quote = "";
-    let author = "";
+  async run({ api, event, message }) {
+    const tid = event.threadID || event.threadId;
 
-    const reply = event.messageReply || event.repliedMessage;
-    const replyText = reply && (reply.body || reply.text);
+    const random = QUOTES[Math.floor(Math.random() * QUOTES.length)];
 
-    if (text) {
-      if (text.includes("|")) {
-        const parts = text.split("|").map(s => s.trim());
-        quote = parts[0];
-        author = parts[1] || "Anonymous";
-      } else {
-        quote = text;
-        const prof = event.senderID ? await resolveProfile([event.senderID], event, api).catch(() => null) : null;
-        author = (prof && (prof.name || (prof.username ? `@${prof.username}` : null))) || "Anonymous";
-      }
-    } else if (replyText) {
-      quote = replyText;
-      const targetUID = reply.senderID;
-      const prof = targetUID ? await resolveProfile([targetUID], event, api).catch(() => null) : null;
-      author = (prof && (prof.name || (prof.username ? `@${prof.username}` : null))) || "Anonymous";
-    } else {
-      const q = DEFAULT_QUOTES[Math.floor(Math.random() * DEFAULT_QUOTES.length)];
-      quote = q.quote;
-      author = q.author;
-    }
+    const text =
+      `📜 𝐖𝐎𝐑𝐃𝐒 𝐎𝐅 𝐖𝐈𝐒𝐃𝐎𝐌\n` +
+      `─`.repeat(26) + `\n` +
+      `💬 "${random.text}"\n` +
+      `─`.repeat(26) + `\n` +
+      `✍️ — **${random.author}**`;
 
-    if (!author || /^@?\d+$/.test(author.trim())) {
-      author = "Anonymous";
-    }
-
-    if (message && typeof message.react === "function") {
-      message.react("📜");
-    } else if (api && typeof api.setMessageReaction === "function") {
-      api.setMessageReaction("📜", event.messageID, event.threadID, () => {}, true);
-    }
-
-    const width = 800;
-    const height = 450;
-    const canvas = createCanvas(width, height);
-    const ctx = canvas.getContext("2d");
-
-    // Elegant dark gradient
-    const grad = ctx.createLinearGradient(0, 0, width, height);
-    grad.addColorStop(0, "#0f2027");
-    grad.addColorStop(0.5, "#203a43");
-    grad.addColorStop(1, "#2c5364");
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, width, height);
-
-    // Decorative frame
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(30, 30, width - 60, height - 60);
-
-    // Quotation mark
-    ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
-    ctx.font = 'bold 160px "Georgia", serif';
-    ctx.fillText("“", 60, 160);
-
-    // Quote text
-    ctx.fillStyle = "#ffffff";
-    ctx.font = 'italic 28px "Georgia", serif';
-    ctx.textAlign = "center";
-
-    // Word wrap
-    const words = quote.split(" ");
-    let line = "";
-    const lines = [];
-    const maxLineWidth = 640;
-
-    for (let i = 0; i < words.length; i++) {
-      const testLine = line + words[i] + " ";
-      const metrics = ctx.measureText(testLine);
-      if (metrics.width > maxLineWidth && i > 0) {
-        lines.push(line);
-        line = words[i] + " ";
-      } else {
-        line = testLine;
-      }
-    }
-    lines.push(line);
-
-    const startY = height / 2 - (lines.length * 20) + 10;
-    for (let i = 0; i < lines.length; i++) {
-      ctx.fillText(lines[i].trim(), width / 2, startY + (i * 38));
-    }
-
-    // Author
-    ctx.font = 'bold 22px "Georgia", serif';
-    ctx.fillStyle = "#f39c12";
-    ctx.fillText(`— ${author}`, width / 2, startY + (lines.length * 38) + 30);
-
-    const tempDir = path.join(process.cwd(), "temp");
-    await fs.ensureDir(tempDir);
-    const tempPath = path.join(tempDir, `quote_${Date.now()}_${Math.random().toString(36).substring(7)}.jpg`);
-    await fs.writeFile(tempPath, canvas.toBuffer("image/jpeg", { quality: 0.9 }));
-
-    const sent = await message.reply({
-      body: `✨ "${quote}" — ${author}`,
-      attachment: tempPath,
-      textFirst: true
-    });
-
-    setTimeout(() => {
-      fs.unlink(tempPath).catch(() => {});
-    }, 20000);
-    return sent;
+    return message?.reply ? message.reply(text) : api.sendMessage(text, tid, undefined, event.messageID);
   }
 };

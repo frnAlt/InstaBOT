@@ -34,6 +34,18 @@ function getICA(config = {}) {
 		};
 	}
 
+	if (config.mode === "modular" || config.useModular) {
+		const localIca = require("../../../ica");
+		return {
+			mode: "modular",
+			InstaChatClient: localIca.InstaChatClient,
+			Session: localIca.Session,
+			login: localIca.login || localIca,
+			CookieUtils: localIca.CookieUtils,
+			raw: localIca
+		};
+	}
+
 	// Default to direct local ICA engine
 	const localIca = require("../../../ica");
 	return {

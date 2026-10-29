@@ -179,5 +179,11 @@ class Themes {
 }
 
 Themes.VERIFIED_THEMES = VERIFIED_THEMES;
+Themes.resolveTheme = function(input) { return new Themes(null).resolveTheme(input); };
+Themes.searchThemes = function(query) { return new Themes(null).searchThemes(query); };
 
 module.exports = Themes;
+module.exports.Themes = Themes;
+module.exports.VERIFIED_THEMES = VERIFIED_THEMES;
+module.exports.resolveTheme = Themes.resolveTheme;
+module.exports.searchThemes = Themes.searchThemes;

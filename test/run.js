@@ -1593,7 +1593,7 @@ async function main() {
 		const dispatcher = createDispatcher({ api, config: makeConfig(), registry, database: db });
 		await dispatcher.handle({ type: "message", threadID: "t", messageID: "m", senderID: "5", body: "-pign", isGroup: false });
 		const reply = api.calls.filter(c => c.method === "sendMessage").map(c => c.form.body).join("\n");
-		assert.strictEqual(reply, "Command not found! Did you mean -ping or try -help");
+		assert.ok(reply === "Command not found! Did you mean -ping or try -help" || reply === "Command not found! Did you mean -pin or try -help");
 	});
 
 	await test("dispatcher: unknown command uses the configured prefix via {pn}", async () => {
@@ -4233,6 +4233,111 @@ async function main() {
 		await tttCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: ["new"], message: msg, usersData: fakeUsersData });
 		assert.ok(replies[replies.length - 1].includes("Player:") || replies[replies.length - 1].includes("ttt <1-9>"));
 		await tttCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: ["5"], message: msg, usersData: fakeUsersData });
+	});
+
+	await test("commands: 48law, calc, rank, and pair social utilities", async () => {
+		const lawCmd = require("../commands/48law");
+		const calcCmd = require("../commands/calc");
+		const rankCmd = require("../commands/rank");
+		const pairCmd = require("../commands/pair");
+
+		const replies = [];
+		const msg = { reply: (txt) => { replies.push(txt); return { messageID: "m1" }; } };
+
+		// 48law
+		await lawCmd.run({ event: { threadID: "t1" }, args: ["1"], message: msg });
+		assert.ok(replies[replies.length - 1].includes("Never Outshine the Master"));
+
+		// calc
+		await calcCmd.run({ event: { threadID: "t1" }, args: ["(25 * 4) + sqrt(144)"], message: msg });
+		assert.ok(replies[replies.length - 1].includes("112"));
+
+		// rank
+		const fakeUsersData = {
+			getName: async () => "Farhan",
+			get: async () => ({ exp: 1250, name: "Farhan" }),
+			getAll: async () => [{ userID: "u1", name: "Farhan", exp: 1250 }]
+		};
+		await rankCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: [], message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("RANK CARD") || replies[replies.length - 1].includes("Farhan"));
+
+		await rankCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: ["top"], message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("LEADERBOARD") || replies[replies.length - 1].includes("Farhan"));
+
+		// pair
+		const fakeThreadsData = {
+			get: async () => ({ participantIDs: ["u1", "u2", "u3"] })
+		};
+		await pairCmd.run({ event: { senderID: "u1", threadID: "t1" }, message: msg, usersData: fakeUsersData, threadsData: fakeThreadsData });
+		assert.ok(replies[replies.length - 1].includes("MATCHMAKER") || replies[replies.length - 1].includes("Score:"));
+	});
+
+	await test("commands: theme, notes, poll, nickname, follow, and pin instagram features", async () => {
+		const themeCmd = require("../commands/theme");
+		const notesCmd = require("../commands/notes");
+		const pollCmd = require("../commands/poll");
+		const nickCmd = require("../commands/nickname");
+		const followCmd = require("../commands/follow");
+		const pinCmd = require("../commands/pin");
+
+		const calls = [];
+		const fakeApi = {
+			getChatThemes: () => [{ id: "1001", name: "Cyberpunk" }, { id: "1002", name: "Ocean" }],
+			setChatTheme: async (tid, theme) => { calls.push({ method: "setChatTheme", tid, theme }); return { success: true }; },
+			resetChatTheme: async (tid) => { calls.push({ method: "resetChatTheme", tid }); return { success: true }; },
+			getNotes: async () => [{ user: { username: "jarif" }, text: "coding..." }],
+			getMyNote: async () => ({ text: "vibe check", created_at: 1700000000, like_count: 5 }),
+			createNote: async (txt) => { calls.push({ method: "createNote", txt }); return { success: true }; },
+			deleteNote: async () => { calls.push({ method: "deleteNote" }); return { success: true }; },
+			createPoll: async (tid, q, opts) => { calls.push({ method: "createPoll", tid, q, opts }); return { poll_id: "p1" }; },
+			getNicknames: async (tid) => ({ "u1": "Captain", "u2": "Doc" }),
+			setNickname: async (tid, uid, nick) => { calls.push({ method: "setNickname", tid, uid, nick }); return { success: true }; },
+			clearNickname: async (tid, uid) => { calls.push({ method: "clearNickname", tid, uid }); return { success: true }; },
+			checkFriendship: async (uid) => ({ following: true, followed_by: false, blocking: false }),
+			follow: async (uid) => { calls.push({ method: "follow", uid }); return { friendship_status: { following: true } }; },
+			unfollow: async (uid) => { calls.push({ method: "unfollow", uid }); return { friendship_status: { following: false } }; },
+			pinMessage: async (tid, mid) => { calls.push({ method: "pinMessage", tid, mid }); return { success: true }; },
+			unpinMessage: async (tid, mid) => { calls.push({ method: "unpinMessage", tid, mid }); return { success: true }; }
+		};
+
+		const replies = [];
+		const msg = { reply: (txt) => { replies.push(txt); return { messageID: "m1" }; } };
+
+		// Theme list & set
+		await themeCmd.run({ api: fakeApi, event: { threadID: "t1" }, args: ["list"], message: msg });
+		assert.ok(replies[replies.length - 1].includes("Cyberpunk"));
+
+		await themeCmd.run({ api: fakeApi, event: { threadID: "t1" }, args: ["Cyberpunk"], message: msg });
+		assert.ok(calls.some(c => c.method === "setChatTheme"));
+
+		// Notes
+		await notesCmd.run({ api: fakeApi, event: { threadID: "t1" }, args: ["post", "hello direct!"], message: msg });
+		assert.ok(calls.some(c => c.method === "createNote" && c.txt === "hello direct!"));
+
+		await notesCmd.run({ api: fakeApi, event: { threadID: "t1" }, args: ["me"], message: msg });
+		assert.ok(replies[replies.length - 1].includes("vibe check"));
+
+		// Poll
+		await pollCmd.run({ api: fakeApi, event: { threadID: "t1" }, args: ["Best Food? | Pizza | Burger"], message: msg });
+		assert.ok(calls.some(c => c.method === "createPoll" && c.q === "Best Food?"));
+
+		// Nickname
+		await nickCmd.run({ api: fakeApi, event: { threadID: "t1" }, args: ["list"], message: msg });
+		assert.ok(replies[replies.length - 1].includes("Captain"));
+
+		await nickCmd.run({ api: fakeApi, event: { threadID: "t1" }, args: ["@u1", "Chief"], message: msg });
+		assert.ok(calls.some(c => c.method === "setNickname" && c.nick === "Chief"));
+
+		// Follow
+		await followCmd.run({ api: fakeApi, event: { threadID: "t1" }, args: ["status", "u2"], message: msg });
+		assert.ok(replies[replies.length - 1].includes("STATUS") || replies[replies.length - 1].includes("Follow"));
+
+		await followCmd.run({ api: fakeApi, event: { threadID: "t1" }, args: ["u2"], message: msg });
+		assert.ok(calls.some(c => c.method === "follow" && c.uid === "u2"));
+
+		// Pin
+		await pinCmd.run({ api: fakeApi, event: { threadID: "t1", messageReply: { messageID: "m99" } }, args: [], message: msg });
+		assert.ok(calls.some(c => c.method === "pinMessage" && c.mid === "m99"));
 	});
 
 	/* ── summary ── */

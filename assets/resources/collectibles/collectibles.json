@@ -1,0 +1,37 @@
+{
+  "gems": {
+    "key": "gems",
+    "name": "Daily Gems",
+    "flavorText": "Gems, what do you even expect?",
+    "icon": "💎",
+    "type": "currency"
+  },
+  "feudTickets": {
+    "name": "Feud Tickets",
+    "icon": "🎫",
+    "flavorText": "Wtf is this.",
+    "key": "feudTickets",
+    "type": "hardWork"
+  },
+  "honey": {
+    "name": "Honey",
+    "icon": "🍯",
+    "flavorText": "A special currency from Bizzy Bees event of Grow a Garden!",
+    "key": "honey",
+    "type": "garden"
+  },
+  "repoints": {
+    "name": "Repoints",
+    "icon": "🕓",
+    "flavorText": "Earned during late-night relapses—each one a moment you stayed in control.",
+    "key": "repoints",
+    "type": "garden"
+  },
+  "relapseEnergy": {
+    "name": "Relapse Energy",
+    "icon": "⚡",
+    "flavorText": "Surging from emotional overloads—raw, charged, and restless. You didn't break… you just sparked.",
+    "key": "relapseEnergy",
+    "type": "garden"
+  }
+}

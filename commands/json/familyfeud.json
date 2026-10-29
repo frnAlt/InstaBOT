@@ -1,0 +1,329 @@
+[
+  {
+    "question": "Name something you bring to a picnic.",
+    "answers": [
+      { "answer": "Food", "points": 80 },
+      { "answer": "Blanket", "points": 60 },
+      { "answer": "Drinks", "points": 40 },
+      { "answer": "Games", "points": 20 },
+      { "answer": "Picnic basket", "points": 15 },
+      { "answer": "Utensils", "points": 10 },
+      { "answer": "Sunscreen", "points": 5 },
+      { "answer": "Music", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a place where you need to be quiet.",
+    "answers": [
+      { "answer": "Library", "points": 90 },
+      { "answer": "Church", "points": 60 },
+      { "answer": "Cinema", "points": 30 },
+      { "answer": "Hospital", "points": 10 },
+      { "answer": "Museum", "points": 5 },
+      { "answer": "Exam hall", "points": 5 },
+      { "answer": "Courtroom", "points": 5 },
+      { "answer": "Funeral", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a famous painting.",
+    "answers": [
+      { "answer": "Mona Lisa", "points": 100 },
+      { "answer": "Starry Night", "points": 80 },
+      { "answer": "The Scream", "points": 60 },
+      { "answer": "Guernica", "points": 40 },
+      { "answer": "The Last Supper", "points": 20 },
+      { "answer": "Girl with a Pearl Earring", "points": 10 },
+      { "answer": "Water Lilies", "points": 5 },
+      { "answer": "The Birth of Venus", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a popular pizza topping.",
+    "answers": [
+      { "answer": "Pepperoni", "points": 80 },
+      { "answer": "Cheese", "points": 70 },
+      { "answer": "Mushrooms", "points": 50 },
+      { "answer": "Sausage", "points": 30 },
+      { "answer": "Onions", "points": 20 },
+      { "answer": "Peppers", "points": 10 },
+      { "answer": "Ham", "points": 5 },
+      { "answer": "Pineapple", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a country known for its spicy food.",
+    "answers": [
+      { "answer": "India", "points": 90 },
+      { "answer": "Mexico", "points": 70 },
+      { "answer": "Thailand", "points": 50 },
+      { "answer": "China", "points": 30 },
+      { "answer": "South Korea", "points": 20 },
+      { "answer": "Jamaica", "points": 10 },
+      { "answer": "Ethiopia", "points": 5 },
+      { "answer": "Italy", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a common fear.",
+    "answers": [
+      { "answer": "Spider", "points": 80 },
+      { "answer": "Heights", "points": 70 },
+      { "answer": "Snake", "points": 50 },
+      { "answer": "Public speaking", "points": 30 },
+      { "answer": "Darkness", "points": 20 },
+      { "answer": "Death", "points": 10 },
+      { "answer": "Clown", "points": 5 },
+      { "answer": "Flying", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a popular movie genre.",
+    "answers": [
+      { "answer": "Action", "points": 80 },
+      { "answer": "Comedy", "points": 70 },
+      { "answer": "Drama", "points": 50 },
+      { "answer": "Horror", "points": 30 },
+      { "answer": "Science fiction", "points": 20 },
+      { "answer": "Romance", "points": 10 },
+      { "answer": "Thriller", "points": 5 },
+      { "answer": "Adventure", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a sport that uses a ball.",
+    "answers": [
+      { "answer": "Soccer", "points": 90 },
+      { "answer": "Basketball", "points": 70 },
+      { "answer": "Football (American)", "points": 50 },
+      { "answer": "Tennis", "points": 30 },
+      { "answer": "Baseball", "points": 20 },
+      { "answer": "Golf", "points": 10 },
+      { "answer": "Cricket", "points": 5 },
+      { "answer": "Volleyball", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a type of fruit.",
+    "answers": [
+      { "answer": "Apple", "points": 80 },
+      { "answer": "Banana", "points": 70 },
+      { "answer": "Strawberry", "points": 50 },
+      { "answer": "Orange", "points": 30 },
+      { "answer": "Grapes", "points": 20 },
+      { "answer": "Watermelon", "points": 10 },
+      { "answer": "Pineapple", "points": 5 },
+      { "answer": "Cherry", "points": 5 }
+    ]
+  },
+
+  {
+    "question": "Name a popular birthday party game.",
+    "answers": [
+      { "answer": "Pin the Tail on the Donkey", "points": 80 },
+      { "answer": "Musical Chairs", "points": 70 },
+      { "answer": "Pass the Parcel", "points": 50 },
+      { "answer": "Piñata", "points": 30 },
+      { "answer": "Treasure Hunt", "points": 20 },
+      { "answer": "Balloon Pop", "points": 10 },
+      { "answer": "Egg and Spoon Race", "points": 5 },
+      { "answer": "Three-legged Race", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name something you find at every birthday party.",
+    "answers": [
+      { "answer": "Cake", "points": 90 },
+      { "answer": "Balloons", "points": 70 },
+      { "answer": "Party hats", "points": 50 },
+      { "answer": "Presents", "points": 30 },
+      { "answer": "Streamers", "points": 20 },
+      { "answer": "Candles", "points": 10 },
+      { "answer": "Party favors", "points": 5 },
+      { "answer": "Games", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a typical birthday party activity for kids.",
+    "answers": [
+      { "answer": "Face painting", "points": 80 },
+      { "answer": "Clown performance", "points": 70 },
+      { "answer": "Magic show", "points": 50 },
+      { "answer": "Craft station", "points": 30 },
+      { "answer": "Bouncy castle", "points": 20 },
+      { "answer": "Dress-up corner", "points": 10 },
+      { "answer": "Storytelling", "points": 5 },
+      { "answer": "Puppet show", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name something parents do at children's birthday parties.",
+    "answers": [
+      { "answer": "Take photos", "points": 80 },
+      { "answer": "Organize games", "points": 70 },
+      { "answer": "Serve food", "points": 50 },
+      { "answer": "Supervise", "points": 30 },
+      { "answer": "Sing Happy Birthday", "points": 20 },
+      { "answer": "Clean up", "points": 10 },
+      { "answer": "Help with activities", "points": 5 },
+      { "answer": "Socialize with other parents", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name something you'd find in a birthday party goody bag.",
+    "answers": [
+      { "answer": "Candy", "points": 80 },
+      { "answer": "Stickers", "points": 70 },
+      { "answer": "Mini toys", "points": 50 },
+      { "answer": "Bubbles", "points": 30 },
+      { "answer": "Pencils", "points": 20 },
+      { "answer": "Temporary tattoos", "points": 10 },
+      { "answer": "Chocolates", "points": 5 },
+      { "answer": "Small books", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a birthday party tradition.",
+    "answers": [
+      { "answer": "Blowing out candles", "points": 90 },
+      { "answer": "Singing Happy Birthday", "points": 70 },
+      { "answer": "Opening presents", "points": 50 },
+      { "answer": "Making a wish", "points": 30 },
+      { "answer": "Cutting the cake", "points": 20 },
+      { "answer": "Playing games", "points": 10 },
+      { "answer": "Taking photos", "points": 5 },
+      { "answer": "Giving thanks", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a funny excuse for forgetting someone's birthday.",
+    "answers": [
+      { "answer": "I thought it was next week", "points": 80 },
+      { "answer": "My calendar didn't remind me", "points": 70 },
+      { "answer": "I was out of town", "points": 50 },
+      { "answer": "I lost my phone", "points": 30 },
+      { "answer": "I thought we agreed not to celebrate", "points": 20 },
+      { "answer": "I was waiting for you to remind me", "points": 10 },
+      { "answer": "I had a blackout", "points": 5 },
+      { "answer": "I thought it was your other friend's birthday", "points": 5 }
+    ]
+  },
+
+  {
+    "question": "Name something you can't live without.",
+    "answers": [
+      { "answer": "Phone", "points": 80 },
+      { "answer": "Internet", "points": 60 },
+      { "answer": "Coffee", "points": 40 },
+      { "answer": "Friends", "points": 20 },
+      { "answer": "Music", "points": 15 },
+      { "answer": "Pets", "points": 10 },
+      { "answer": "Books", "points": 5 },
+      { "answer": "Chocolate", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a famous cartoon character.",
+    "answers": [
+      { "answer": "Mickey Mouse", "points": 100 },
+      { "answer": "SpongeBob SquarePants", "points": 80 },
+      { "answer": "Bugs Bunny", "points": 60 },
+      { "answer": "Homer Simpson", "points": 40 },
+      { "answer": "Dora the Explorer", "points": 20 },
+      { "answer": "Scooby-Doo", "points": 10 },
+      { "answer": "Hello Kitty", "points": 5 },
+      { "answer": "Pikachu", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a common excuse for being late.",
+    "answers": [
+      { "answer": "Traffic", "points": 90 },
+      { "answer": "Overslept", "points": 70 },
+      { "answer": "Alarm didn't go off", "points": 50 },
+      { "answer": "Forgot something", "points": 30 },
+      { "answer": "Bad weather", "points": 20 },
+      { "answer": "Car broke down", "points": 10 },
+      { "answer": "Couldn't find parking", "points": 5 },
+      { "answer": "Got lost", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a popular social media platform.",
+    "answers": [
+      { "answer": "Facebook", "points": 80 },
+      { "answer": "Instagram", "points": 70 },
+      { "answer": "Twitter", "points": 50 },
+      { "answer": "Snapchat", "points": 30 },
+      { "answer": "TikTok", "points": 20 },
+      { "answer": "LinkedIn", "points": 10 },
+      { "answer": "Pinterest", "points": 5 },
+      { "answer": "Reddit", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name something people do at a party.",
+    "answers": [
+      { "answer": "Dance", "points": 80 },
+      { "answer": "Eat", "points": 70 },
+      { "answer": "Drink", "points": 50 },
+      { "answer": "Socialize", "points": 30 },
+      { "answer": "Play games", "points": 20 },
+      { "answer": "Take photos", "points": 10 },
+      { "answer": "Sing karaoke", "points": 5 },
+      { "answer": "Watch movies", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a common superstition.",
+    "answers": [
+      { "answer": "Breaking a mirror brings bad luck", "points": 80 },
+      { "answer": "Walking under a ladder", "points": 70 },
+      { "answer": "Friday the 13th", "points": 50 },
+      { "answer": "Black cat crossing your path", "points": 30 },
+      { "answer": "Knocking on wood", "points": 20 },
+      { "answer": "Finding a four-leaf clover", "points": 10 },
+      { "answer": "Opening an umbrella indoors", "points": 5 },
+      { "answer": "Spilling salt", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a household chore nobody likes doing.",
+    "answers": [
+      { "answer": "Cleaning the bathroom", "points": 90 },
+      { "answer": "Washing dishes", "points": 70 },
+      { "answer": "Taking out the trash", "points": 50 },
+      { "answer": "Mopping floors", "points": 30 },
+      { "answer": "Doing laundry", "points": 20 },
+      { "answer": "Vacuuming", "points": 10 },
+      { "answer": "Dusting", "points": 5 },
+      { "answer": "Ironing clothes", "points": 5 }
+    ]
+  },
+  {
+    "question": "Name a popular snack food.",
+    "answers": [
+      { "answer": "Popcorn", "points": 80 },
+      { "answer": "Potato chips", "points": 70 },
+      { "answer": "Chocolate", "points": 50 },
+      { "answer": "Pretzels", "points": 30 },
+      { "answer": "Cookies", "points": 20 },
+      { "answer": "Granola bars", "points": 10 },
+      { "answer": "Nuts", "points": 5 },
+      { "answer": "Candy", "points": 5 }
+    ]
+  },
+  {
+    "question": "If you could take home one food item from a party, what would it be?",
+    "answers": [
+      { "answer": "Spaghetti", "points": 80 },
+      { "answer": "Spring Rolls", "points": 70 },
+      { "answer": "Cake", "points": 50 },
+      { "answer": "Pizza", "points": 30 },
+      { "answer": "Fried Chicken", "points": 20 },
+      { "answer": "Pasta Salad", "points": 10 },
+      { "answer": "Cookies", "points": 5 },
+      { "answer": "Cupcakes", "points": 5 }
+    ]
+  }
+]

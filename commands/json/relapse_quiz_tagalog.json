@@ -1,0 +1,1002 @@
+[
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Pagkainip", "Ligaya", "Galak", "Pighati"],
+    "answer": 3
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagmamalaki", "Pagkagulat", "Pagsisisi", "Saya"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-asa", "Tadhana", "Gunita", "Pag-ibig"],
+    "answer": 2
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagbitaw", "Pagkamuhi", "Pag-iisa", "Pagpupunyagi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pag-alis", "Paglisan", "Paglimot", "Pagbabalik"],
+    "answer": 1
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Paglimot", "Pag-amin", "Pagdadamdam", "Pagngiti"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Pagbangon", "Relapse", "Paglimot", "Pag-unlad"],
+    "answer": 1
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagtanggap", "Pagsisisi", "Pagbabalik-tanaw", "Pagpapatawad"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Pinaasa", "Tinulungan", "Minahal", "Tinanggap"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Pagkain", "Trabaho", "Tagumpay", "Pag-ibig at Sakit"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Pighati", "Pagkainip", "Galak", "Ligaya"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagkagulat", "Saya", "Pagmamalaki", "Pagsisisi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-ibig", "Tadhana", "Gunita", "Pag-asa"],
+    "answer": 2
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagbitaw", "Pagpupunyagi", "Pagkamuhi", "Pag-iisa"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Paglimot", "Paglisan", "Pag-alis", "Pagbabalik"],
+    "answer": 1
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pagngiti", "Paglimot", "Pag-amin", "Pagdadamdam"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Relapse", "Pag-unlad", "Paglimot", "Pagbangon"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagpapatawad", "Pagtanggap", "Pagsisisi", "Pagbabalik-tanaw"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Minahal", "Pinaasa", "Tinanggap", "Tinulungan"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Trabaho", "Tagumpay", "Pagkain", "Pag-ibig at Sakit"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Galak", "Ligaya", "Pagkainip", "Pighati"],
+    "answer": 3
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Saya", "Pagsisisi", "Pagkagulat", "Pagmamalaki"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-ibig", "Tadhana", "Gunita", "Pag-asa"],
+    "answer": 2
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagpupunyagi", "Pagbitaw", "Pag-iisa", "Pagkamuhi"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pagbabalik", "Pag-alis", "Paglisan", "Paglimot"],
+    "answer": 2
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pag-amin", "Paglimot", "Pagdadamdam", "Pagngiti"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Paglimot", "Relapse", "Pag-unlad", "Pagbangon"],
+    "answer": 1
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagsisisi", "Pagpapatawad", "Pagtanggap", "Pagbabalik-tanaw"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Tinanggap", "Minahal", "Pinaasa", "Tinulungan"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Pag-ibig at Sakit", "Tagumpay", "Trabaho", "Pagkain"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Galak", "Ligaya", "Pagkainip", "Pighati"],
+    "answer": 3
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagkagulat", "Saya", "Pagsisisi", "Pagmamalaki"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-ibig", "Gunita", "Pag-asa", "Tadhana"],
+    "answer": 1
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pag-iisa", "Pagbitaw", "Pagkamuhi", "Pagpupunyagi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pag-alis", "Pagbabalik", "Paglisan", "Paglimot"],
+    "answer": 2
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pag-amin", "Pagngiti", "Pagdadamdam", "Paglimot"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Relapse", "Pag-unlad", "Pagbangon", "Paglimot"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagpapatawad", "Pagsisisi", "Pagbabalik-tanaw", "Pagtanggap"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Pinaasa", "Minahal", "Tinulungan", "Tinanggap"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Trabaho", "Pag-ibig at Sakit", "Pagkain", "Tagumpay"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Pighati", "Galak", "Ligaya", "Pagkainip"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagmamalaki", "Pagsisisi", "Saya", "Pagkagulat"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Gunita", "Pag-asa", "Pag-ibig", "Tadhana"],
+    "answer": 0
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagpupunyagi", "Pag-iisa", "Pagkamuhi", "Pagbitaw"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Paglimot", "Pag-alis", "Paglisan", "Pagbabalik"],
+    "answer": 2
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pagdadamdam", "Pag-amin", "Pagngiti", "Paglimot"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Pag-unlad", "Paglimot", "Relapse", "Pagbangon"],
+    "answer": 2
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagpapatawad", "Pagsisisi", "Pagbabalik-tanaw", "Pagtanggap"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Tinanggap", "Pinaasa", "Minahal", "Tinulungan"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Trabaho", "Pagkain", "Pag-ibig at Sakit", "Tagumpay"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Pighati", "Galak", "Ligaya", "Pagkainip"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagsisisi", "Saya", "Pagkagulat", "Pagmamalaki"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-asa", "Pag-ibig", "Tadhana", "Gunita"],
+    "answer": 3
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagbitaw", "Pagpupunyagi", "Pagkamuhi", "Pag-iisa"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Paglimot", "Pag-alis", "Paglisan", "Pagbabalik"],
+    "answer": 2
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Paglimot", "Pagngiti", "Pagdadamdam", "Pag-amin"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Paglimot", "Relapse", "Pagbangon", "Pag-unlad"],
+    "answer": 1
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagbabalik-tanaw", "Pagsisisi", "Pagtanggap", "Pagpapatawad"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Tinanggap", "Pinaasa", "Minahal", "Tinulungan"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Tagumpay", "Pagkain", "Trabaho", "Pag-ibig at Sakit"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Galak", "Ligaya", "Pighati", "Pagkainip"],
+    "answer": 2
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagmamalaki", "Saya", "Pagkagulat", "Pagsisisi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-ibig", "Tadhana", "Gunita", "Pag-asa"],
+    "answer": 2
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pag-iisa", "Pagkamuhi", "Pagpupunyagi", "Pagbitaw"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pag-alis", "Paglisan", "Pagbabalik", "Paglimot"],
+    "answer": 1
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Paglimot", "Pag-amin", "Pagdadamdam", "Pagngiti"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Paglimot", "Relapse", "Pagbangon", "Pag-unlad"],
+    "answer": 1
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagsisisi", "Pagtanggap", "Pagpapatawad", "Pagbabalik-tanaw"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Tinanggap", "Minahal", "Tinulungan", "Pinaasa"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Pag-ibig at Sakit", "Trabaho", "Pagkain", "Tagumpay"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Pagkainip", "Galak", "Pighati", "Ligaya"],
+    "answer": 2
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Saya", "Pagsisisi", "Pagkagulat", "Pagmamalaki"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Gunita", "Pag-asa", "Pag-ibig", "Tadhana"],
+    "answer": 0
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pag-iisa", "Pagbitaw", "Pagpupunyagi", "Pagkamuhi"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pag-alis", "Paglimot", "Pagbabalik", "Paglisan"],
+    "answer": 3
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pag-amin", "Paglimot", "Pagdadamdam", "Pagngiti"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Relapse", "Pagbangon", "Paglimot", "Pag-unlad"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagbabalik-tanaw", "Pagpapatawad", "Pagsisisi", "Pagtanggap"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Minahal", "Pinaasa", "Tinulungan", "Tinanggap"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Tagumpay", "Pagkain", "Trabaho", "Pag-ibig at Sakit"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Pighati", "Ligaya", "Galak", "Pagkainip"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Saya", "Pagmamalaki", "Pagkagulat", "Pagsisisi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-ibig", "Gunita", "Tadhana", "Pag-asa"],
+    "answer": 1
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pag-iisa", "Pagkamuhi", "Pagbitaw", "Pagpupunyagi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pag-alis", "Paglisan", "Paglimot", "Pagbabalik"],
+    "answer": 1
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pag-amin", "Paglimot", "Pagdadamdam", "Pagngiti"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Paglimot", "Pag-unlad", "Pagbangon", "Relapse"],
+    "answer": 3
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagsisisi", "Pagtanggap", "Pagpapatawad", "Pagbabalik-tanaw"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Minahal", "Tinanggap", "Pinaasa", "Tinulungan"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Trabaho", "Pag-ibig at Sakit", "Tagumpay", "Pagkain"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Pagkainip", "Pighati", "Galak", "Ligaya"],
+    "answer": 1
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagmamalaki", "Saya", "Pagkagulat", "Pagsisisi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Tadhana", "Gunita", "Pag-asa", "Pag-ibig"],
+    "answer": 1
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagbitaw", "Pagkamuhi", "Pag-iisa", "Pagpupunyagi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Paglimot", "Paglisan", "Pag-alis", "Pagbabalik"],
+    "answer": 1
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pag-amin", "Pagngiti", "Pagdadamdam", "Paglimot"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Relapse", "Paglimot", "Pag-unlad", "Pagbangon"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagpapatawad", "Pagsisisi", "Pagbabalik-tanaw", "Pagtanggap"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Tinanggap", "Pinaasa", "Tinulungan", "Minahal"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Pagkain", "Trabaho", "Pag-ibig at Sakit", "Tagumpay"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Pagkainip", "Galak", "Pighati", "Ligaya"],
+    "answer": 2
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagmamalaki", "Pagsisisi", "Saya", "Pagkagulat"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-asa", "Tadhana", "Gunita", "Pag-ibig"],
+    "answer": 2
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagpupunyagi", "Pag-iisa", "Pagbitaw", "Pagkamuhi"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pagbabalik", "Pag-alis", "Paglimot", "Paglisan"],
+    "answer": 3
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pagdadamdam", "Pagngiti", "Paglimot", "Pag-amin"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Pag-unlad", "Relapse", "Paglimot", "Pagbangon"],
+    "answer": 1
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagtanggap", "Pagbabalik-tanaw", "Pagsisisi", "Pagpapatawad"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Pinaasa", "Tinulungan", "Minahal", "Tinanggap"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Pag-ibig at Sakit", "Pagkain", "Trabaho", "Tagumpay"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Galak", "Ligaya", "Pighati", "Pagkainip"],
+    "answer": 2
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagkagulat", "Saya", "Pagsisisi", "Pagmamalaki"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-asa", "Tadhana", "Pag-ibig", "Gunita"],
+    "answer": 3
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagkamuhi", "Pag-iisa", "Pagpupunyagi", "Pagbitaw"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pagbabalik", "Paglimot", "Paglisan", "Pag-alis"],
+    "answer": 2
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pagdadamdam", "Paglimot", "Pag-amin", "Pagngiti"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Pagbangon", "Relapse", "Paglimot", "Pag-unlad"],
+    "answer": 1
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagbabalik-tanaw", "Pagsisisi", "Pagtanggap", "Pagpapatawad"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Minahal", "Tinanggap", "Tinulungan", "Pinaasa"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Pagkain", "Trabaho", "Pag-ibig at Sakit", "Tagumpay"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Pighati", "Ligaya", "Pagkainip", "Galak"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagmamalaki", "Pagsisisi", "Saya", "Pagkagulat"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Gunita", "Tadhana", "Pag-asa", "Pag-ibig"],
+    "answer": 0
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagpupunyagi", "Pagbitaw", "Pagkamuhi", "Pag-iisa"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pag-alis", "Paglimot", "Pagbabalik", "Paglisan"],
+    "answer": 3
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pagdadamdam", "Pag-amin", "Pagngiti", "Paglimot"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Pagbangon", "Paglimot", "Relapse", "Pag-unlad"],
+    "answer": 2
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagtanggap", "Pagpapatawad", "Pagbabalik-tanaw", "Pagsisisi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Minahal", "Pinaasa", "Tinulungan", "Tinanggap"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Trabaho", "Pagkain", "Tagumpay", "Pag-ibig at Sakit"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Ligaya", "Galak", "Pagkainip", "Pighati"],
+    "answer": 3
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Saya", "Pagsisisi", "Pagmamalaki", "Pagkagulat"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-ibig", "Tadhana", "Gunita", "Pag-asa"],
+    "answer": 2
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pag-iisa", "Pagbitaw", "Pagkamuhi", "Pagpupunyagi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Paglisan", "Pag-alis", "Paglimot", "Pagbabalik"],
+    "answer": 0
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pagngiti", "Pag-amin", "Pagdadamdam", "Paglimot"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Relapse", "Pag-unlad", "Paglimot", "Pagbangon"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagsisisi", "Pagbabalik-tanaw", "Pagtanggap", "Pagpapatawad"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Minahal", "Tinanggap", "Pinaasa", "Tinulungan"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Pagkain", "Pag-ibig at Sakit", "Tagumpay", "Trabaho"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Galak", "Pighati", "Pagkainip", "Ligaya"],
+    "answer": 1
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagmamalaki", "Saya", "Pagsisisi", "Pagkagulat"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Gunita", "Pag-ibig", "Tadhana", "Pag-asa"],
+    "answer": 0
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagbitaw", "Pagpupunyagi", "Pag-iisa", "Pagkamuhi"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pagbabalik", "Paglisan", "Pag-alis", "Paglimot"],
+    "answer": 1
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pagngiti", "Pag-amin", "Paglimot", "Pagdadamdam"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Pagbangon", "Pag-unlad", "Paglimot", "Relapse"],
+    "answer": 3
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagsisisi", "Pagpapatawad", "Pagtanggap", "Pagbabalik-tanaw"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Minahal", "Pinaasa", "Tinulungan", "Tinanggap"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Tagumpay", "Trabaho", "Pag-ibig at Sakit", "Pagkain"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Galak", "Pagkainip", "Pighati", "Ligaya"],
+    "answer": 2
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagsisisi", "Saya", "Pagmamalaki", "Pagkagulat"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-asa", "Tadhana", "Pag-ibig", "Gunita"],
+    "answer": 3
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pag-iisa", "Pagpupunyagi", "Pagbitaw", "Pagkamuhi"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Paglisan", "Pagbabalik", "Paglimot", "Pag-alis"],
+    "answer": 0
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pag-amin", "Paglimot", "Pagdadamdam", "Pagngiti"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Relapse", "Paglimot", "Pagbangon", "Pag-unlad"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagsisisi", "Pagtanggap", "Pagpapatawad", "Pagbabalik-tanaw"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Minahal", "Tinulungan", "Pinaasa", "Tinanggap"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Pagkain", "Tagumpay", "Trabaho", "Pag-ibig at Sakit"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Ligaya", "Pagkainip", "Pighati", "Galak"],
+    "answer": 2
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagsisisi", "Pagmamalaki", "Saya", "Pagkagulat"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-ibig", "Pag-asa", "Tadhana", "Gunita"],
+    "answer": 3
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagpupunyagi", "Pag-iisa", "Pagbitaw", "Pagkamuhi"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Paglimot", "Paglisan", "Pagbabalik", "Pag-alis"],
+    "answer": 1
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pagngiti", "Paglimot", "Pagdadamdam", "Pag-amin"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Pagbangon", "Relapse", "Paglimot", "Pag-unlad"],
+    "answer": 1
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagsisisi", "Pagbabalik-tanaw", "Pagpapatawad", "Pagtanggap"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Minahal", "Tinulungan", "Pinaasa", "Tinanggap"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Trabaho", "Pagkain", "Tagumpay", "Pag-ibig at Sakit"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Ligaya", "Pagkainip", "Pighati", "Galak"],
+    "answer": 2
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagsisisi", "Pagmamalaki", "Pagkagulat", "Saya"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Gunita", "Tadhana", "Pag-asa", "Pag-ibig"],
+    "answer": 0
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagpupunyagi", "Pag-iisa", "Pagbitaw", "Pagkamuhi"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Pag-alis", "Paglimot", "Paglisan", "Pagbabalik"],
+    "answer": 2
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Paglimot", "Pagdadamdam", "Pag-amin", "Pagngiti"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Relapse", "Pagbangon", "Pag-unlad", "Paglimot"],
+    "answer": 0
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagtanggap", "Pagpapatawad", "Pagsisisi", "Pagbabalik-tanaw"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Tinulungan", "Tinanggap", "Pinaasa", "Minahal"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Pag-ibig at Sakit", "Trabaho", "Tagumpay", "Pagkain"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Ligaya", "Pighati", "Galak", "Pagkainip"],
+    "answer": 1
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Pagsisisi", "Saya", "Pagkagulat", "Pagmamalaki"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Pag-asa", "Pag-ibig", "Tadhana", "Gunita"],
+    "answer": 3
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagpupunyagi", "Pag-iisa", "Pagbitaw", "Pagkamuhi"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Paglimot", "Pag-alis", "Paglisan", "Pagbabalik"],
+    "answer": 2
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pagngiti", "Paglimot", "Pagdadamdam", "Pag-amin"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Paglimot", "Pagbangon", "Pag-unlad", "Relapse"],
+    "answer": 3
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagpapatawad", "Pagbabalik-tanaw", "Pagsisisi", "Pagtanggap"],
+    "answer": 2
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Pinaasa", "Tinulungan", "Minahal", "Tinanggap"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Pag-ibig at Sakit", "Pagkain", "Tagumpay", "Trabaho"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng labis na lungkot dahil sa pagkawala ng minamahal?",
+    "options": ["Pagkainip", "Galak", "Pighati", "Ligaya"],
+    "answer": 2
+  },
+  {
+    "question": "Alin sa mga ito ang karaniwang nararamdaman pagkatapos ng hiwalayan?",
+    "options": ["Saya", "Pagmamalaki", "Pagkagulat", "Pagsisisi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa hindi makalimutang nakaraan?",
+    "options": ["Tadhana", "Pag-asa", "Gunita", "Pag-ibig"],
+    "answer": 2
+  },
+  {
+    "question": "Alin ang nagpapakita ng pag-asa kahit nasaktan na?",
+    "options": ["Pagbitaw", "Pag-iisa", "Pagkamuhi", "Pagpupunyagi"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang tawag sa pag-alis ng isang taong mahal mo?",
+    "options": ["Paglisan", "Pag-alis", "Paglimot", "Pagbabalik"],
+    "answer": 0
+  },
+  {
+    "question": "Anong damdamin ang dulot ng hindi nasabing nararamdaman?",
+    "options": ["Pagdadamdam", "Pagngiti", "Paglimot", "Pag-amin"],
+    "answer": 0
+  },
+  {
+    "question": "Ano ang tawag sa pakiramdam ng muling pagbabalik sa nakaraan?",
+    "options": ["Paglimot", "Pag-unlad", "Pagbangon", "Relapse"],
+    "answer": 3
+  },
+  {
+    "question": "Alin sa mga ito ang hindi bahagi ng paghilom?",
+    "options": ["Pagtanggap", "Pagsisisi", "Pagbabalik-tanaw", "Pagpapatawad"],
+    "answer": 1
+  },
+  {
+    "question": "Ano ang salitang nangangahulugang 'nagbigay ng labis na pag-asa pero iniwan sa huli'?",
+    "options": ["Tinanggap", "Tinulungan", "Minahal", "Pinaasa"],
+    "answer": 3
+  },
+  {
+    "question": "Ano ang madalas na tema sa mga OPM tungkol sa puso?",
+    "options": ["Tagumpay", "Pagkain", "Trabaho", "Pag-ibig at Sakit"],
+    "answer": 3
+  }
+]

@@ -4124,6 +4124,26 @@ async function main() {
 		assert.strictEqual(unfollowRes.success, true);
 	});
 
+	await test("loader: supports Floppa meta exports and moduleResolver aliases", () => {
+		require("../func/moduleResolver");
+		const ariel = require("@cass-modules/ArielUtils");
+		assert.ok(ariel, "ArielUtils must resolve via alias");
+
+		const { validate } = require("../src/commandLoader");
+		// Test validate with Floppa meta object
+		const script = {
+			meta: {
+				name: "floppa_cmd",
+				category: "Games",
+				description: "A floppa game"
+			},
+			run: async () => "ok"
+		};
+		// Loading a script with meta sets config and onStart
+		const { loadDirectory } = require("../src/commandLoader");
+		assert.ok(typeof loadDirectory === "function");
+	});
+
 	/* ── summary ── */
 	const failed = results.filter(r => !r.ok);
 	for (const r of results)

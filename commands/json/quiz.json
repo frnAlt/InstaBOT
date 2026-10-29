@@ -1,0 +1,182 @@
+[
+  {
+    "question": "What is the capital of Germany?",
+    "options": ["Madrid", "Berlin", "Paris", "London"],
+    "answer": 1
+  },
+  {
+    "question": "Which planet is known as the Red Planet?",
+    "options": ["Jupiter", "Mars", "Saturn", "Venus"],
+    "answer": 1
+  },
+  {
+    "question": "In what year did World War II end?",
+    "options": ["1940", "1950", "1939", "1945"],
+    "answer": 3
+  },
+  {
+    "question": "Who wrote 'Romeo and Juliet'?",
+    "options": [
+      "Charles Dickens",
+      "William Shakespeare",
+      "Homer",
+      "Jane Austen"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "What is the largest mammal on Earth?",
+    "options": ["Hippopotamus", "Elephant", "Giraffe", "Blue Whale"],
+    "answer": 3
+  },
+  {
+    "question": "Which country is known as the Land of the Rising Sun?",
+    "options": ["South Korea", "Japan", "China", "Vietnam"],
+    "answer": 1
+  },
+  {
+    "question": "What is the currency of Australia?",
+    "options": ["Yen", "Australian Dollar", "Pound Sterling", "Euro"],
+    "answer": 1
+  },
+  {
+    "question": "Who painted the Mona Lisa?",
+    "options": [
+      "Vincent van Gogh",
+      "Claude Monet",
+      "Leonardo da Vinci",
+      "Pablo Picasso"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "What is the capital of Brazil?",
+    "options": ["Rio de Janeiro", "Brasília", "São Paulo", "Salvador"],
+    "answer": 1
+  },
+  {
+    "question": "In what year did the Titanic sink?",
+    "options": ["1915", "1920", "1930", "1912"],
+    "answer": 3
+  },
+  {
+    "question": "Which element has the chemical symbol 'H'?",
+    "options": ["Helium", "Carbon", "Hydrogen", "Oxygen"],
+    "answer": 2
+  },
+  {
+    "question": "Who is known as the 'Father of Computer Science'?",
+    "options": ["Bill Gates", "Mark Zuckerberg", "Alan Turing", "Steve Jobs"],
+    "answer": 2
+  },
+  {
+    "question": "What is the largest ocean on Earth?",
+    "options": [
+      "Arctic Ocean",
+      "Atlantic Ocean",
+      "Indian Ocean",
+      "Pacific Ocean"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "Which country is famous for the Great Barrier Reef?",
+    "options": ["Mexico", "Thailand", "Brazil", "Australia"],
+    "answer": 3
+  },
+  {
+    "question": "Who wrote '1984'?",
+    "options": [
+      "J.K. Rowling",
+      "Ray Bradbury",
+      "Aldous Huxley",
+      "George Orwell"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "What is the tallest mountain in the world?",
+    "options": ["K2", "Kangchenjunga", "Lhotse", "Mount Everest"],
+    "answer": 3
+  },
+  {
+    "question": "Who is the author of 'To Kill a Mockingbird'?",
+    "options": [
+      "F. Scott Fitzgerald",
+      "Ernest Hemingway",
+      "J.D. Salinger",
+      "Harper Lee"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "What is the main ingredient in guacamole?",
+    "options": ["Lime", "Onion", "Tomato", "Avocado"],
+    "answer": 3
+  },
+  {
+    "question": "Which gas makes up the majority of Earth's atmosphere?",
+    "options": ["Argon", "Carbon Dioxide", "Nitrogen", "Oxygen"],
+    "answer": 2
+  },
+  {
+    "question": "Who founded Microsoft?",
+    "options": ["Mark Zuckerberg", "Bill Gates", "Steve Jobs", "Jeff Bezos"],
+    "answer": 1
+  },
+  {
+    "question": "What is the largest desert in the world?",
+    "options": ["Sahara", "Antarctica", "Gobi", "Arctic"],
+    "answer": 0
+  },
+  {
+    "question": "In which year did the first manned moon landing occur?",
+    "options": ["1980", "1961", "1975", "1969"],
+    "answer": 3
+  },
+  {
+    "question": "Who wrote 'The Great Gatsby'?",
+    "options": [
+      "Jane Austen",
+      "Ernest Hemingway",
+      "Charles Dickens",
+      "F. Scott Fitzgerald"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "What is the capital of China?",
+    "options": ["Shanghai", "Beijing", "Hong Kong", "Guangzhou"],
+    "answer": 1
+  },
+  {
+    "question": "Which famous scientist developed the theory of general relativity?",
+    "options": [
+      "Stephen Hawking",
+      "Albert Einstein",
+      "Galileo Galilei",
+      "Isaac Newton"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "What is the currency of Japan?",
+    "options": ["Ringgit", "Yen", "Baht", "Won"],
+    "answer": 1
+  },
+  {
+    "question": "Which country is known as the 'Land of the Midnight Sun'?",
+    "options": ["Finland", "Sweden", "Denmark", "Norway"],
+    "answer": 3
+  },
+  {
+    "question": "Who painted 'Starry Night'?",
+    "options": [
+      "Pablo Picasso",
+      "Leonardo da Vinci",
+      "Claude Monet",
+      "Vincent van Gogh"
+    ],
+    "answer": 3
+  }
+]

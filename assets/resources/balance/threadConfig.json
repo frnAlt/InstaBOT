@@ -1,0 +1,26 @@
+{
+  "web:web.0": {
+    "0": "s",
+    "1": "o",
+    "2": "r",
+    "3": "t",
+    "4": "H",
+    "5": "e",
+    "6": "l",
+    "7": "p",
+    "currency": 0,
+    "sortHelp": "name"
+  },
+  "7200585553382526": {
+    "currency": 0,
+    "sortHelp": "category"
+  },
+  "web:MA": {
+    "currency": 0,
+    "sortHelp": "category"
+  },
+  "wss:main": {
+    "currency": 0,
+    "sortHelp": "name"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "wss:admin": {
+    "isBanned": false,
+    "disallowed": [],
+    "banned": {
+      "reason": "",
+      "date": 0
+    },
+    "isMuted": false,
+    "muted": {
+      "reason": "",
+      "date": 0
+    },
+    "isBannedThread": false,
+    "bannedThread": {
+      "reason": "",
+      "date": 0
+    }
+  },
+  "100075058221244": {
+    "webMode": true
+  }
+}

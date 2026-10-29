@@ -1,0 +1,556 @@
+{
+  "greatSeptimus": {
+    "wildName": "Harmonious Choir: The Great Septimus",
+    "wildIcon": "🎶",
+    "wildType": "Divine Entity",
+    "HP": 6000,
+    "ATK": 45,
+    "DF": 5,
+    "fakeHP": 25000,
+    "fakeATK": 230,
+    "fakeDEF": 180,
+    "winDias": 3,
+    "flavor": {
+      "check": "A symphony of ethereal notes fills the air as The Great Septimus makes its presence known. The harmony beckons you to face your destiny.",
+      "encounter": [
+        "The Harmonious Choir's song swells as The Great Septimus steps forth from the void, its divine presence overwhelming the battlefield."
+      ],
+      "neutral": [
+        "The Great Septimus stands motionless, its eyes glowing with the power of an ancient melody. The song reverberates through your very soul.",
+        "A wave of divine sound echoes as The Great Septimus raises its hands, signaling the beginning of the trial.",
+        "The celestial symphony swirls around you, and The Great Septimus is its unyielding conductor.",
+        "You can feel the rhythm of the universe itself. The Great Septimus commands the flow of time with every note played.",
+        "Every step The Great Septimus takes is perfectly in tune with the song of the cosmos.",
+        "The Great Septimus' presence radiates an overwhelming force, the music of the heavens swirling in the air.",
+        "The melody of fate is unavoidable—do you have the strength to endure?"
+      ],
+      "lowHP": [
+        "The celestial song falters as the Great Septimus' power begins to wane, but its will remains unbroken.",
+        "The harmony of the Great Septimus is weakening, but the final note has not yet been sung.",
+        "The music fades into silence as The Great Septimus is pushed to its limits."
+      ],
+      "run": [
+        "The Great Septimus' celestial presence begins to fade, its song falling silent as it retreats into the ether."
+      ],
+      "satisfied": [
+        "The Great Septimus acknowledges your strength, its melody calming as it returns to the heavens, leaving a lingering sense of accomplishment."
+      ]
+    },
+    "dialogues": {
+      "neutral": [
+        "I am the harmony that binds the cosmos.",
+        "The song of fate is eternal. You cannot escape it.",
+        "The melody of the universe guides my every action.",
+        "Can you hear the music? It sings of your destiny.",
+        "A single note can change the course of everything.",
+        "You are but a fleeting echo in this divine symphony.",
+        "The rhythm of the stars cannot be defied."
+      ],
+      "satisfied": [
+        "Your strength resonates with the harmony of the cosmos. You have earned my respect.",
+        "You have proven yourself worthy of the song of the heavens."
+      ],
+      "lowHP": [
+        "Do not mistake this moment for weakness. The music still plays.",
+        "The song may fade, but I will rise again.",
+        "My power is everlasting—this is not the end."
+      ]
+    },
+    "acts": {
+      "Gaze": {
+        "flavor": "You instructed the leader to meet the Great Septimus' gaze, its divine eyes glowing with the power of eternal music.",
+        "pet": ["[leader]"],
+        "mercyPts": 20
+      },
+      "Resonance": {
+        "flavor": "You asked {name} to resonate with the divine melody, disrupting the Great Septimus’ control over the harmony.",
+        "pet": ["[slot:1]"],
+        "petLine": ["Let the music echo!", "Resonance amplified!"],
+        "response": [
+          "You think you can match the song of eternity?",
+          "This is not a battle you can win with mere noise.",
+          "The symphony is beyond your reach."
+        ],
+        "mercyPts": 30
+      },
+      "Crescendo": {
+        "flavor": "You commanded {name} to unleash a crescendo of energy, forcing the Great Septimus into a final confrontation of power and will.",
+        "pet": ["[slot:1]", "[slot:2]"],
+        "petLine": ["The crescendo builds!", "Let the heavens sing!"],
+        "mercyPts": 40,
+        "response": [
+          "The crescendo is nothing compared to the divine song I lead.",
+          "You cannot overpower the music of the universe.",
+          "This is just a fleeting moment in an eternal symphony."
+        ]
+      },
+      "Dissonance": {
+        "flavor": "You told {pet} to disrupt the harmony with a sudden dissonance, attempting to fracture the Great Septimus' control over the celestial song.",
+        "pet": ["[slot:2]"],
+        "petLine": ["Create the dissonance!", "Break the harmony!"],
+        "mercyPts": 35,
+        "response": [
+          "Dissonance cannot challenge the divine symphony.",
+          "Your noise is but a shadow of the true song.",
+          "The song will always find its way back to harmony."
+        ]
+      }
+    },
+    "attacks": {
+      "harmony": "Harmonious Resonance Ω",
+      "symphony": "Celestial Symphony γ",
+      "crescendo": "Crescendo of Eternity β",
+      "dissonance": "Disruptive Dissonance Ω",
+      "chorus": "Chorus of the Heavens α",
+      "aria": "Aria of Ascension π",
+      "silence": "Silence of the Cosmos γ",
+      "rupture": "Rupture of Time π",
+      "echo": "Echo of Infinity α",
+      "chord": "Divine Chord β",
+      "refrain": "Refrain of Eternity Ω",
+      "tone": "Sacred Tone α",
+      "pulse": "Pulse of Creation β",
+      "beat": "Celestial Beat γ"
+    },
+    "goldFled": 15000,
+    "goldSpared": 75000
+  },
+  "meow": {
+    "wildName": "Meow",
+    "wildIcon": "🦖",
+    "wildType": "dinosaur",
+    "HP": 400,
+    "ATK": 25,
+    "DF": 15,
+    "fakeHP": 800,
+    "fakeATK": 50,
+    "fakeDEF": 30,
+    "flavor": {
+      "check": "A Meow is a type of dinosaur that roams the plains. Careful, it might pounce!",
+      "encounter": ["Meow has appeared with a mighty roar!"],
+      "neutral": [
+        "Meow seems uninterested in your presence.",
+        "The dinosaur is eyeing you cautiously.",
+        "Meow is basking in the sun, ignoring your approach.",
+        "The ground trembles slightly as Meow shifts its weight."
+      ],
+      "lowHP": [
+        "Meow's movements are slowing down.",
+        "It looks like Meow is getting tired.",
+        "The dinosaur seems to be struggling."
+      ],
+      "run": ["Meow has decided to retreat back into the wilderness."],
+      "satisfied": [
+        "Meow has acknowledged your strength and returns to its habitat peacefully."
+      ]
+    },
+    "dialogues": {
+      "neutral": [
+        "Rrraaawwrrr!",
+        "Meow.. meow..",
+        "I am the ruler of this land!",
+        "Roaaar!",
+        "What are you looking at, puny animals?",
+        "I smell fear in the air...",
+        "Don't make sudden moves around me!"
+      ],
+      "satisfied": ["Purrfect!", "You're not so bad after all."],
+      "lowHP": [
+        "I'm not done yet!",
+        "You'll regret this...",
+        "This won't be the last you see of me!"
+      ]
+    },
+    "acts": {
+      "Check": {},
+      "Pet": {
+        "flavor": "You told {name} to pet Meow gently.",
+        "pet": ["[leader]"],
+        "mercyPts": 10,
+        "petLine": ["There, there, you're a good dino."],
+        "response": ["Meow seems to enjoy the petting.", "Purrrr..."]
+      },
+      "Feed": {
+        "flavor": "You offered some food to Meow.",
+        "pet": ["[slot:1]"],
+        "petLine": ["Here, have some food!"],
+        "mercyPts": 20,
+        "response": ["Meow devours the food happily.", "Yum!"]
+      },
+      "Play": {
+        "flavor": "You played fetch with Meow.",
+        "pet": ["[slot:2]"],
+        "petLine": ["Go get the stick!"],
+        "mercyPts": 15,
+        "response": ["Meow chases after the stick excitedly.", "Wheee!"]
+      },
+      "Cuddle": {
+        "flavor": "You gave Meow a warm cuddle.",
+        "pet": ["cat"],
+        "petLine": ["Let's cuddle!"],
+        "mercyPts": 25,
+        "response": ["Meow purrs contentedly.", "This is nice..."]
+      }
+    },
+    "attacks": {
+      "pounce": "Ferocious Pounce α",
+      "roar": "Mighty Roar α",
+      "swipe": "Claw Swipe α",
+      "tailwhip": "Tail Whip α",
+      "stomp": "Ground Stomp α",
+      "leap": "Ferocious Pounce β",
+      "bellow": "Mighty Roar β",
+      "slash": "Claw Swipe β",
+      "swish": "Tail Whip β",
+      "crush": "Ground Stomp β"
+    },
+    "goldFled": 200,
+    "goldSpared": 400
+  },
+  "flier": {
+    "wildName": "Flier 𝔼𝕏",
+    "wildIcon": "🦅",
+    "wildType": "eagle",
+    "HP": 500,
+    "ATK": 30,
+    "DF": 10,
+    "fakeHP": 1000,
+    "fakeATK": 45,
+    "fakeDEF": 100,
+    "flavor": {
+      "check": "A flier is a type of eagle that can be found in the forest. Do you really believe on those stats?",
+      "encounter": ["Flier 𝔼𝕏 has appeared from the sky!"],
+      "neutral": [
+        "Looks like the bird doesn't even care to what's happening around it.",
+        "𝔼𝕏 stands for EXPLORE!",
+        "Flier 𝔼𝕏 is preparing a swift attack.",
+        "What would an eagle might do? Call their parents?",
+        "Flier 𝔼𝕏 is flying, you and your pets already know that, how about lying..?",
+        "Fly + Lier + Explorer = Flier 𝔼𝕏",
+        "an 𝔼𝕏 without 𝔼 is actually Twitter, obviously fitting because flier is a bird."
+      ],
+      "lowHP": [
+        "Looks like the bird is shakin' it up.",
+        "Flier 𝔼𝕏 has low HP.",
+        "This is what birds get for allegedly lying about it's stats"
+      ],
+      "run": ["Flier 𝔼𝕏 has fled away and your pets are too slow to catch up."],
+      "satisfied": [
+        "Flier 𝔼𝕏 was convinced and it is ready to return to its regular life."
+      ]
+    },
+    "dialogues": {
+      "neutral": [
+        "Lmao who do you think I am?",
+        "Fly fly..",
+        "I'm the best flier around!",
+        "Bahduiwkemfoxosjsndn",
+        "Payku.",
+        "Who wants some 10000000$?",
+        "I have 10 HighRoll pass in my inventory.",
+        "I would offer you some cash, but I'm not a cashier.",
+        "+pantita"
+      ],
+      "satisfied": ["Happy ^w^", "< 3"],
+      "lowHP": [
+        "I'm dying.. Oh not yet.",
+        "I have a backup plan bois! I will use my Cosmic Crunch 𝔼𝕏!",
+        "My HP is high enough to keep me alive.",
+        "I'm not shaking."
+      ]
+    },
+    "acts": {
+      "Check": {},
+      "Smile": {
+        "flavor": "You told the leader to smile, Flier 𝔼𝕏 smiles back.",
+        "pet": ["[leader]"],
+        "mercyPts": 12
+      },
+      "Convince": {
+        "flavor": "You told {name} to convince Flier 𝔼𝕏 that we are not hating him and we're just looking for friends.",
+        "pet": ["[slot:1]"],
+        "petLine": [
+          "We're not hating you, we're just looking for friends ^^",
+          "I could give you a hug if you want! Just befriend us! ^^"
+        ],
+        "response": [
+          "Nah I'm good.",
+          "...",
+          "I don't need friends, I already have 🔥 **EagleTreats** 𝔼𝕏"
+        ],
+        "mercyPts": 25
+      },
+      "Warmify": {
+        "flavor": "You told your dragon {name} to blow a little amount of fire enough to give flier a little warmth.",
+        "pet": ["dragon"],
+        "petLine": ["Here, take this. It's a little bit of warmth. ^^"],
+        "mercyPts": 45,
+        "response": [
+          "Bro's wasting some fire energy 💀",
+          "What I'm eating is already fire, I don't need that.",
+          ".."
+        ]
+      },
+      "Cheerbark": {
+        "flavor": "You told your dog {name} to bark a little bit to cheer him up.",
+        "pet": ["dog"],
+        "petLine": ["Arf Arf! Do you like it?"],
+        "mercyPts": 40,
+        "response": ["Bruh.", ".....", "No"]
+      }
+    },
+    "attacks": {
+      "crouch": "Air Attack γ",
+      "sit": "Ground Shake β",
+      "slowdown": "Never a Swift Attack γ",
+      "fastrun": "Never a Swift Attack Ω",
+      "jump": "Ground Attack α",
+      "spin": "Air Typhoon γ",
+      "jumphigh": "Air Attack Ω",
+      "worship": "Worship Me α",
+      "ignore": "Worship Me π"
+    },
+    "goldFled": 800,
+    "goldSpared": 1200
+  },
+  "stardust": {
+    "wildName": "Stardust 𝕏",
+    "wildIcon": "🐉",
+    "wildType": "dragon",
+    "HP": 2750,
+    "ATK": 45,
+    "DF": 45,
+    "fakeHP": 1500,
+    "fakeATK": 60,
+    "fakeDEF": 150,
+    "flavor": {
+      "check": "Stardust 𝕏 is a mystical dragon with a deceptive aura. Are you sure you're seeing its real stats?",
+      "encounter": [
+        "Stardust 𝕏 descends from the cosmos with a shadowy presence!"
+      ],
+      "neutral": [
+        "Stardust 𝕏 seems to be plotting something quietly.",
+        "𝕏 marks the spot where destruction begins.",
+        "The air around Stardust 𝕏 feels heavy with tension.",
+        "What could a dragon like this be hiding?",
+        "Stardust 𝕏 silently observes, waiting for the right moment.",
+        "Dragons are symbols of power... but what does this one represent?",
+        "Is Stardust 𝕏 even from this world? It feels like it doesn't belong here."
+      ],
+      "lowHP": [
+        "Stardust 𝕏's cosmic energy is flickering.",
+        "The dragon's celestial glow is dimming.",
+        "This creature was never meant to be defeated easily."
+      ],
+      "run": [
+        "Stardust 𝕏 vanishes into thin air, leaving only a trail of stardust."
+      ],
+      "satisfied": [
+        "Stardust 𝕏 seems to acknowledge your strength and retreats into the cosmos peacefully."
+      ]
+    },
+    "dialogues": {
+      "neutral": [
+        "You can't comprehend the power of the stars.",
+        "My claws tear through the fabric of reality.",
+        "I'm no mere beast, I'm a force of nature.",
+        "Don't think you can escape my shadow.",
+        "I am Stardust, born from the collision of worlds.",
+        "Your fate is written in the stars... and it's grim.",
+        "Can you survive a cosmic storm?",
+        "The void calls, and I will answer.",
+        "Do you hear the hum of the universe? It's my battle cry."
+      ],
+      "satisfied": ["Your strength is admirable.", "You live... for now."],
+      "lowHP": [
+        "I am far from finished...",
+        "You may weaken me, but I rise like the stars.",
+        "My energy wanes, but my spirit is eternal.",
+        "A dragon never falls easily."
+      ]
+    },
+    "acts": {
+      "Check": {},
+      "Intimidate": {
+        "flavor": "You told {name} to try to intimidate Stardust 𝕏.",
+        "pet": ["[leader]"],
+        "mercyPts": 15,
+        "response": [
+          "You think you can intimidate a dragon?",
+          "Hah, mere mortals.",
+          "Your threats are as meaningless as dust."
+        ]
+      },
+      "Compliment": {
+        "flavor": "You told {name} to compliment Stardust 𝕏 on its magnificent scales.",
+        "pet": ["[slot:1]"],
+        "petLine": [
+          "Your scales are shining like the stars! You look amazing!",
+          "You're one of the most majestic dragons I've ever seen!"
+        ],
+        "response": [
+          "Flattery won't save you, but I appreciate the gesture.",
+          "Hmph, such words are beneath me.",
+          "Keep talking, mortal, it amuses me."
+        ],
+        "mercyPts": 30
+      },
+      "StardustOffer": {
+        "flavor": "You told your dragon {name} to offer Stardust 𝕏 some cosmic energy.",
+        "pet": ["dragon"],
+        "petLine": [
+          "Here, take some of my energy. It will help you shine even brighter."
+        ],
+        "mercyPts": 50,
+        "response": [
+          "Cosmic energy, huh? Intriguing...",
+          "I'll take it, but don't think this makes us allies.",
+          "Your energy is nothing compared to mine."
+        ]
+      },
+      "Song": {
+        "flavor": "You told your pet {name} to sing a soothing melody to calm Stardust 𝕏.",
+        "pet": ["phoenix"],
+        "petLine": ["Let my song ease your restless soul."],
+        "mercyPts": 40,
+        "response": [
+          "That melody... it's calming.",
+          "A lullaby for the end of days?",
+          "Hmm..."
+        ]
+      }
+    },
+    "attacks": {
+      "crouch": "Shadow Strike γ",
+      "sit": "Celestial Crush β",
+      "slowdown": "Astral Blaze γ",
+      "fastrun": "Astral Blaze Ω",
+      "jump": "Meteor Dive α",
+      "spin": "Cosmic Whirlwind γ",
+      "jumphigh": "Meteor Dive Ω",
+      "worship": "Stardust Wave α",
+      "ignore": "Eternal Silence π"
+    },
+    "goldFled": 8000,
+    "goldSpared": 12000
+  },
+  "titan": {
+    "wildName": "Titan of Time 𝕋𝕀",
+    "wildIcon": "⌛",
+    "wildType": "colossal",
+    "HP": 5000,
+    "ATK": 40,
+    "DF": -15,
+    "fakeHP": 20000,
+    "fakeATK": 250,
+    "fakeDEF": 200,
+    "winDias": 1,
+    "flavor": {
+      "check": "A titan that controls time itself. Are you really prepared to face such a beast?",
+      "encounter": ["The Titan of Time 𝕋𝕀 emerges from the temporal rift!"],
+      "neutral": [
+        "The Titan stands still, as if contemplating the very fabric of existence.",
+        "𝕋𝕀 stands for TIME!",
+        "The Titan of Time 𝕋𝕀 is observing the flow of time around you.",
+        "Do you think you can manipulate time better than the Titan?",
+        "Time flies, and so does the Titan of Time 𝕋𝕀.",
+        "Tick-tock, says the Titan, your time is running out.",
+        "Without time, nothing would change. Without change, there's no progress."
+      ],
+      "lowHP": [
+        "The Titan is losing its grip on time.",
+        "Titan of Time 𝕋𝕀 has low HP.",
+        "Time's up for the Titan's lies about its stats."
+      ],
+      "run": [
+        "The Titan of Time 𝕋𝕀 vanishes into the rift, escaping your grasp."
+      ],
+      "satisfied": [
+        "The Titan of Time 𝕋𝕀 acknowledges your strength and returns to its temporal domain."
+      ]
+    },
+    "dialogues": {
+      "neutral": [
+        "Time waits for no one.",
+        "I control the very essence of existence.",
+        "Tick-tock, your end is nigh.",
+        "You think you can beat time?",
+        "I am the beginning and the end.",
+        "All things must pass.",
+        "Tick-tock, tick-tock...",
+        "Time is a flat circle.",
+        "I see all your possible futures."
+      ],
+      "satisfied": ["You have earned my respect.", "You defy time itself."],
+      "lowHP": [
+        "I am not yet defeated.",
+        "Time will heal me.",
+        "You cannot escape time.",
+        "I will rise again."
+      ]
+    },
+    "acts": {
+      "Check": {},
+      "Freeze": {
+        "flavor": "You told the leader to freeze the Titan of Time 𝕋𝕀 momentarily.",
+        "pet": ["[leader]"],
+        "mercyPts": 15
+      },
+      "Rewind": {
+        "flavor": "You asked {name} to rewind time to confuse the Titan.",
+        "pet": ["[slot:1]"],
+        "petLine": ["Let's rewind and try again!", "Time rewind!"],
+        "response": [
+          "You think you can outdo me?",
+          "Foolish attempt.",
+          "Time is on my side."
+        ],
+        "mercyPts": 20
+      },
+      "Accelerate": {
+        "flavor": "You told your pet {name} to accelerate time around the Titan.",
+        "pet": ["[slot:1]", "[slot:2]"],
+        "petLine": ["Speed it up!"],
+        "mercyPts": 30,
+        "response": [
+          "I control time, not you.",
+          "Pathetic.",
+          "Time bends to my will."
+        ]
+      },
+      "Pause": {
+        "flavor": "You told your {pet} to pause time around the Titan to slow it down.",
+        "pet": ["[slot:2]"],
+        "petLine": ["Pause!"],
+        "mercyPts": 25,
+        "response": [
+          "You cannot stop time.",
+          "Nice try.",
+          "Time flows endlessly."
+        ]
+      }
+    },
+    "attacks": {
+      "timestop": "Temporal Freeze Ω",
+      "freeze": "Temporal Freeze γ",
+      "rewind": "Temporal Rewind β",
+      "revert": "Temporal Rewind Ω",
+      "accelerate": "Time Rush π",
+      "rush": "Time Rush α",
+      "slowdown": "Time Lapse γ",
+      "delay": "Time Lapse π",
+      "collapse": "Temporal Collapse α",
+      "implode": "Temporal Collapse β",
+      "warp": "Time Warp β",
+      "twist": "Time Warp γ",
+      "distort": "Temporal Distortion Ω",
+      "alter": "Temporal Distortion π",
+      "sync": "Chrono Sync α",
+      "align": "Chrono Sync Ω",
+      "pulse": "Time Pulse β",
+      "beat": "Time Pulse γ"
+    },
+    "goldFled": 12000,
+    "goldSpared": 50000
+  }
+}

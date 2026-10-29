@@ -4144,6 +4144,97 @@ async function main() {
 		assert.ok(typeof loadDirectory === "function");
 	});
 
+	await test("commands: balance, work, daily, bank economy flow", async () => {
+		const balanceCmd = require("../commands/balance");
+		const workCmd = require("../commands/work");
+		const dailyCmd = require("../commands/daily");
+		const bankCmd = require("../commands/bank");
+
+		let moneyStore = 500;
+		let bankStore = 100;
+		const fakeUsersData = {
+			getMoney: async () => moneyStore,
+			addMoney: async (uid, amt) => { moneyStore += amt; return moneyStore; },
+			subtractMoney: async (uid, amt) => { moneyStore -= amt; return moneyStore; },
+			getName: async () => "Tester",
+			get: async () => ({ bank: bankStore, name: "Tester" }),
+			set: async (uid, data) => { if (data.bank !== undefined) bankStore = data.bank; }
+		};
+
+		const replies = [];
+		const msg = { reply: (txt) => { replies.push(txt); return { messageID: "m1" }; } };
+
+		// 1. Check balance
+		await balanceCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: [], message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("Wallet:") && replies[replies.length - 1].includes("Bank:"));
+
+		// 2. Work shift
+		await workCmd.run({ event: { senderID: "u1", threadID: "t1" }, message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("Earned:") || replies[replies.length - 1].includes("Shift:"));
+		assert.ok(moneyStore > 500, "work must add money");
+
+		// 3. Daily reward
+		await dailyCmd.run({ event: { senderID: "u1", threadID: "t1" }, message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("Reward:") || replies[replies.length - 1].includes("Streak:"));
+
+		// 4. Bank deposit
+		await bankCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: ["deposit", "500"], message: msg, usersData: fakeUsersData });
+		assert.strictEqual(bankStore, 600);
+	});
+
+	await test("commands: shop, buy, fish, mine, slot, and ttt game engines", async () => {
+		const shopCmd = require("../commands/shop");
+		const buyCmd = require("../commands/buy");
+		const fishCmd = require("../commands/fish");
+		const mineCmd = require("../commands/mine");
+		const slotCmd = require("../commands/slot");
+		const tttCmd = require("../commands/ttt");
+
+		let moneyStore = 50000;
+		const inv = [];
+		const fakeUsersData = {
+			getMoney: async () => moneyStore,
+			addMoney: async (uid, amt) => { moneyStore += amt; return moneyStore; },
+			subtractMoney: async (uid, amt) => { moneyStore -= amt; return moneyStore; },
+			getName: async () => "Tester",
+			get: async () => ({ data: { inventory: [...inv] } }),
+			set: async (uid, data) => {
+				if (data.inventory) {
+					inv.length = 0;
+					inv.push(...data.inventory);
+				}
+			}
+		};
+
+		const replies = [];
+		const msg = { reply: (txt) => { replies.push(txt); return { messageID: "m1" }; } };
+
+		// Shop
+		await shopCmd.run({ event: { threadID: "t1" }, args: [], message: msg });
+		assert.ok(replies[replies.length - 1].includes("Catalog") || replies[replies.length - 1].includes("Shop") || replies[replies.length - 1].includes("rod_basic"));
+
+		// Buy
+		await buyCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: ["rod_basic"], message: msg, usersData: fakeUsersData });
+		assert.ok(inv.includes("rod_basic"));
+
+		// Fish
+		await fishCmd.run({ event: { senderID: "u1", threadID: "t1" }, message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("Catch:") || replies[replies.length - 1].includes("Value:"));
+
+		// Mine
+		await mineCmd.run({ event: { senderID: "u1", threadID: "t1" }, message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("Extracted:") || replies[replies.length - 1].includes("Sold For:"));
+
+		// Slot
+		await slotCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: ["100"], message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("Won:") || replies[replies.length - 1].includes("Lost:") || replies[replies.length - 1].includes("Balance:"));
+
+		// TTT
+		await tttCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: ["new"], message: msg, usersData: fakeUsersData });
+		assert.ok(replies[replies.length - 1].includes("Player:") || replies[replies.length - 1].includes("ttt <1-9>"));
+		await tttCmd.run({ event: { senderID: "u1", threadID: "t1" }, args: ["5"], message: msg, usersData: fakeUsersData });
+	});
+
 	/* ── summary ── */
 	const failed = results.filter(r => !r.ok);
 	for (const r of results)
